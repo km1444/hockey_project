@@ -1,0 +1,19 @@
+<tr>
+  <td>.</td>
+  <td class="first">
+    <a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' post.name__name %}">
+      {{ post.name__name }}
+    </a>
+  <td>{{ post.game }}</td>
+  {% if table_name == 'Career Leaders for Points' %}
+        <td>{{ post.point }}</td>
+      {% elif table_name == 'Career Leaders for Goals' or table_name == 'Single Season Leaders for Goals' %}
+        <td>{{ post.goal }}</td>
+      {% elif table_name == 'Career Leaders for Assist' or table_name == 'Single Season Leaders for Assist' %}
+        <td>{{ post.assist }}</td>
+      {% elif table_name == 'Single Season Leaders for Points' %}
+        <td>{{ post.point }}</td>
+        {% elif table_name == 'Career Leaders for Penalty' or table_name == 'Single Season Leaders for Penalty' %}
+        <td>{{ post.penalty }}</td>
+  {% endif %}
+</tr>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Профайл пользователя {{ player.name }} {% endblock title %}
+{% block content %}
+  <div class="container col-5 py-1">
+    <h1>{{ player.name }}</h1>
+    <h4>Position : {{ position }}</h4>
+  </div>
+    <div class="container col-5 p-1 my-1">
+      <table class="table table-striped table-bordered table-hover table-sm">
+        <thead>
+          <tr>
+            <th>Season</th>
+            <th>Age</th>
+            <th>Team</th>
+            <th>Game</th>
+            <th>Goal</th>
+            <th>Assist</th>
+            <th>Point</th>
+            <th>Penalty</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in page_obj %}
+            {% include 'includes\profile_inc.html' %}
+          {% endfor %}
+        </tbody>
+        <tr>
+          <th>{{ count }}</th>
+          <th></th>
+          <th></th>
+          <th>{{ game }}</th>
+          <th>{{ goal }}</th>
+          <th>{{ assist }}</th>
+          <th>{{ point }}</th>
+          <th>{{ penalty }}</th>
+        </tr>
+      </table>
+    </div>
+  
+{% endblock content %}

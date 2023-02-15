@@ -4,7 +4,6 @@ colorama==0.4.6
 coverage==6.5.0
 cssbeautifier==1.14.7
 Django==2.2.19
-django-debug-toolbar==3.2.4
 djlint==1.9.3
 EditorConfig==0.12.3
 exceptiongroup==1.1.0

@@ -1,0 +1,10 @@
+  <tr>
+    <!--<td>{{ post.name }}</td>-->
+    <td  class="first"><a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' post.name.name %}"> {{ post.name.name }}</a></td>
+    <td>{{ post.age }}</td>
+    <td>{{ post.game }}</td>
+    <td>{{ post.goal }}</td>
+    <td>{{ post.assist }}</td>
+    <td class="table-warning">{{ post.point }}</td>
+    <td>{{ post.penalty }}</td>
+  </tr>

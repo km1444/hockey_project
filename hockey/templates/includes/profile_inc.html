@@ -1,0 +1,17 @@
+<tr>
+    <td>
+        <a href="{% url 'rating:best_of_season' post.season %}">
+            {{ post.season }}</td>
+        </a>
+    <td>{{ post.age }}</td>
+    <td>
+        <a href="{% url 'rating:team_players_in_season' post.team post.season %}"> 
+            {{ post.team }}
+        </a>
+    </td>
+    <td>{{ post.game }}</td>
+    <td>{{ post.goal }}</td>
+    <td>{{ post.assist }}</td>
+    <td class="table-warning">{{ post.point }}</td>
+    <td>{{ post.penalty }}</td>
+</tr>
