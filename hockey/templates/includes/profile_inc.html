@@ -1,8 +1,9 @@
 <tr>
     <td>
-        <a href="{% url 'rating:best_of_season' post.season %}">
-            {{ post.season }}</td>
+        <a href="{% url 'rating:create_table' post.season %}">
+            {{ post.season }}
         </a>
+    </td>
     <td>{{ post.age }}</td>
     <td>
         <a href="{% url 'rating:team_players_in_season' post.team post.season %}"> 

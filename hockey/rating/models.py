@@ -3,8 +3,12 @@ from django.db import models
 
 class Team(models.Model):
     title = models.CharField("Название команды", max_length=200)
+    city = models.CharField("Город", max_length=100, blank=True)
     slug = models.SlugField("Уникальное имя", max_length=100, unique=True)
     # description = models.TextField("Описание")
+
+    def natural_key(self):
+        return (self.title)
 
     def __str__(self):
         return self.title
@@ -17,6 +21,9 @@ class Team(models.Model):
 class Player(models.Model):
     name = models.TextField("Текст")
     year_of_birth = models.SmallIntegerField("Год рождения")
+
+    def natural_key(self):
+        return (self.name)
 
     def __str__(self):
         return f'{self.name} {self.year_of_birth}'
@@ -112,3 +119,43 @@ class Statistic(models.Model):
         verbose_name = "Статистика"
         verbose_name_plural = "Статистика"
         ordering = ('-point', '-goal', 'game')
+
+
+class Team_for_table(models.Model):
+    rank = models.IntegerField('Место')
+    name = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables',
+        verbose_name="Команда"
+    )
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables'
+    )
+    games = models.IntegerField()
+    wins = models.IntegerField()
+    ties = models.IntegerField()
+    losses = models.IntegerField()
+    points = models.IntegerField()
+    points_percentage = models.FloatField(default=0)
+    goals_for = models.IntegerField()
+    goals_against = models.IntegerField()
+
+    @property
+    def get_points_percentage(self):
+        max_point = self.games * 2
+        return round((self.points / max_point * 100), 1)
+
+    def save(self, *args, **kwargs):
+        self.points_percentage = self.get_points_percentage
+        super(Team_for_table, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ('-points_percentage',)

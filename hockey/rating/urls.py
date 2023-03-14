@@ -26,4 +26,5 @@ urlpatterns = [
     path('players/<str:stat_rule>/', views.statistic, name='games_career'),
     path('players/<str:stat_rule>/', views.statistic, name='penalty_season'),
     path('players/<str:stat_rule>/', views.statistic, name='penalty_career'),
+    path('table/<str:season>/', views.create_table, name='create_table')
 ]

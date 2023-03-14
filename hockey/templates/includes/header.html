@@ -18,96 +18,166 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 top-menu">
         <li class="nav-item">
           {% with request.resolver_match.view_name as view_name %}
-            <a class="nav-link" {% if view_name  == 'about:author' %} active {% endif %}
-               href="">Об авторе</a>
+            <a class="nav-link" {% if view_name  == 'about:author' %} active {% endif %} href="">Об авторе</a>
           {% endwith %}
         </li>
         <div class="dropdown">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle"
-             href="#"
-             id="navbarDropdown"
-             role="button"
-             data-bs-toggle="dropdown"
-             aria-expanded="false">
-            Teams
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Teams
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
-              <a class="dropdown-item"
-                 href="{% url 'rating:all_time_all_player_one_team' team="ЦСКА" %}">ЦСКА</a>
-            </li>
-            <li>
-              <a class="dropdown-item"
-                 href="{% url 'rating:all_time_all_player_one_team' team="Динамо" %}">Динамо</a>
-            </li>
-            <li>
-              <a class="dropdown-item"
-                 href="{% url 'rating:all_time_all_player_one_team' team="Спартак" %}">Спартак</a>
-            </li>
-            <li>
-              <a class="dropdown-item"
-                 href="{% url 'rating:all_time_all_player_one_team' team="Крылья Советов" %}">Крылья Советов</a>
-            </li>
-            <li>
-              <hr class="dropdown-divider"/>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </li>
-      </div>
-      <div class="dropdown">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle"
-             href="#"
-             id="navbarDropdown"
-             role="button"
-             data-bs-toggle="dropdown"
-             aria-expanded="false">
-            Leaders
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
-              <p class="dropdown-item stat-menu">Goal :  
-                <a href ="{% url 'rating:goals_career' stat_rule="goals_career" %}">Career </a>|
-                <a href ="{% url 'rating:goal_season' stat_rule="goals_season" %}"> Season</a>
-              </p> 
-            </li>
-            <li>
-              <p class="dropdown-item stat-menu">Assist : 
-                <a href ="{% url 'rating:assist_career' stat_rule="assist_career" %}">Career</a>| 
-                <a href ="{% url 'rating:assist_season' stat_rule="assist_season" %}">Season</a>
-              </p>  
-            </li>
-            <li>
-              <p class="dropdown-item stat-menu">Points : 
-                <a href ="{% url 'rating:index' %}">Career</a>| 
-                <a href ="{% url 'rating:point_season' stat_rule="point_season" %}">Season</a>
-              </p>  
-            </li>
-            <li>
-              <p class="dropdown-item stat-menu">Games : 
-                <a href ="{% url 'rating:games_career' stat_rule="games_career" %}">Career</a>
-              </p>  
-            </li>
-            <li>
-              <p class="dropdown-item stat-menu">Penalty : 
-                <a href ="{% url 'rating:penalty_career' stat_rule="penalty_career" %}">Career</a>| 
-                <a href ="{% url 'rating:penalty_season' stat_rule="penalty_season" %}">Season</a>
-              </p> 
-            </li>
-            <li>
-              <hr class="dropdown-divider"/>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </li>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item"
+                    href="{% url 'rating:all_time_all_player_one_team' team="ЦСКА" %}">ЦСКА
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Динамо" %}">
+                    Динамо
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Спартак" %}">
+                    Спартак
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Крылья Советов" %}">
+                    Крылья Советов
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Химик" %}">
+                    Химик
+                  </a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider"/>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+          </li>
+        </div>
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Leaders
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <p class="dropdown-item stat-menu">Goal :  
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:goals_career' stat_rule="goals_career" %}">Career </a>
+                    <text> | </text>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:goal_season' stat_rule="goals_season" %}"> Season</a>
+                  </p> 
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Assist : 
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:assist_career' stat_rule="assist_career" %}">Career</a>
+                    <text> | </text>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:assist_season' stat_rule="assist_season" %}">Season</a>
+                  </p>   
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Points : 
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:index' %}">Career</a>
+                    <text> | </text>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:point_season' stat_rule="point_season" %}">Season</a>
+                  </p>  
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Games : 
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:games_career' stat_rule="games_career" %}">Career</a>
+                  </p>  
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Penalty : 
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:penalty_career' stat_rule="penalty_career" %}">Career</a>
+                    <text> | </text>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:penalty_season' stat_rule="penalty_season" %}">Season</a>
+                  </p> 
+                </li>
+                <li>
+                  <hr class="dropdown-divider"/>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+          </li>
+        </div>
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Seasons
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1970-71" %}">
+                    1970-71
+                  </a> 
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1971-72" %}">
+                    1971-72
+                  </a>  
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1972-73" %}">
+                    1972-73
+                  </a>  
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1973-74" %}">
+                    1973-74
+                  </a>  
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1974-75" %}">
+                    1974-75
+                  </a> 
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1975-76" %}">
+                    1975-76
+                  </a> 
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1976-77" %}">
+                    1976-77
+                  </a> 
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1977-78" %}">
+                    1977-78
+                  </a> 
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1978-79" %}">
+                    1978-79
+                  </a> 
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1979-80" %}">
+                    1979-80
+                  </a> 
+                </li>
+                <li>
+                  <hr class="dropdown-divider"/>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+          </li>
+        </div>
       </ul>
     </div>
+
+    <div>
       <form class="d-flex" role="search">
         <input class="form-control me-2"
                type="search"

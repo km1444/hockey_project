@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container col-5 p-1 my-1">
+  <h1 align="center"> {{ table_name }} </h1>
+</div>
+
 <div class="container col-4 p-1 my-1">
-  <h1> {{ table_name }} </h1>
   <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
     <thead>
       <tr>
-        <th>Rank</th>
+        <th width="15px">Rank</th>
         <th>Игрок</th>
         <th>Игры</th>
           {% if table_name == 'Career Leaders for Points' or table_name == 'Single Season Leaders for Points' %}
@@ -18,15 +21,20 @@
             {% elif table_name == 'Career Leaders for Penalty' or table_name == 'Single Season Leaders for Penalty' %}
             <th>Penalty</th>
           {% endif %}
+
+          {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' %}
+            <td>Season</td>
+          {% endif %}
       </tr>
     </thead>
     <tbody>
       {% for post in page_obj %}
-        {% include 'includes\player_list_all_time.html' %}
+        {% include 'includes/player_list_all_time.html' %}
       {% endfor %}
     </tbody>
   </table>
   {% include 'posts/includes/paginator.html' %}
 </div>
+
 {% endblock %}
   
