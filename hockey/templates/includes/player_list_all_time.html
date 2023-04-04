@@ -1,7 +1,7 @@
 <tr>
   <td>.</td>
   <td class="first">
-    <a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' post.name__name %}">
+    <a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' post.name__id %}">
       {{ post.name__name }}
     </a>
   <td>{{ post.game }}</td>
@@ -17,7 +17,7 @@
       <td>{{ post.penalty }}</td>
   {% endif %}
 
-  {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' %}
+  {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' or table_name == 'Single Season Leaders for Assist' or table_name == 'Single Season Leaders for Penalty' %}
     <td>{{ post.season__name }}</td>
   {% endif %}
 </tr>

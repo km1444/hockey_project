@@ -4,12 +4,14 @@ from .models import Player, Position, Season, Statistic, Team, Team_for_table
 
 
 class StatisticAdmin(admin.ModelAdmin):
-    # Перечисляем поля, которые должны отображаться в админке
     list_display = ('name', 'season', 'team', 'point')
-    # Добавляем интерфейс для поиска по тексту постов
     search_fields = ('name',)
-    # Добавляем возможность фильтрации по дате
     list_filter = ('name',)
+    fields = [
+        'name', 'team', 'season', 'position',
+        ('game', 'goal', 'assist', 'penalty')
+    ]
+    empty_value_display = '-empty-'
 
 
 class PlayerAdmin(admin.ModelAdmin):

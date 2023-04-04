@@ -10,8 +10,8 @@
     <thead>
       <tr>
         <th width="15px">Rank</th>
-        <th>Игрок</th>
-        <th>Игры</th>
+        <th>Player</th>
+        <th>Games</th>
           {% if table_name == 'Career Leaders for Points' or table_name == 'Single Season Leaders for Points' %}
             <th>Points</th>
             {% elif table_name == 'Career Leaders for Goals' or table_name == 'Single Season Leaders for Goals' %}
@@ -22,7 +22,7 @@
             <th>Penalty</th>
           {% endif %}
 
-          {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' %}
+          {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' or table_name == 'Single Season Leaders for Assist' or table_name == 'Single Season Leaders for Penalty' %}
             <td>Season</td>
           {% endif %}
       </tr>

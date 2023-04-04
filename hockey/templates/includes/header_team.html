@@ -1,0 +1,29 @@
+<div style="display:flex; padding-left: 10px">
+	<div class="media-item logo">
+		<img class="teamlogo" src="" alt="">
+	</div>
+  <div style="font: 14px; color: #000;">
+    <h1>
+      <span>
+        <a href="{% url 'rating:all_time_all_player_one_team' team %}">
+          {{team}}
+        </a>
+      </span>
+    </h1>
+    <p><strong>Team Name:</strong> {{ team }}</p>
+    <p><strong>All-time Goals Leader</strong>: 
+      <a href="{% url 'rating:player_detail' top_goal.name__id %}">
+        {{ top_goal.name__name }}
+      </a>, {{ top_goal.goal }} 
+    </p>
+    <p><strong>All-time Points Leader</strong>: <a href="{% url 'rating:player_detail' top_point.name__id %}">
+      {{ top_point.name__name }}
+    </a>, {{ top_point.point }}  </p>
+    <p><strong>Most Goals, Season</strong>: <a href="{% url 'rating:player_detail' top_s_goal.name__id %}">
+      {{ top_s_goal.name__name }}
+    </a>, {{ top_s_goal.goal }} </p>
+    <p><strong>Most Points, Season</strong>: <a href="{% url 'rating:player_detail' top_s_point.name__id %}">
+      {{ top_s_point.name__name }}
+    </a>, {{ top_s_point.point }} </p>
+  </div>
+</div>

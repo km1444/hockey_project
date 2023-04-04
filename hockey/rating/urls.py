@@ -11,20 +11,28 @@ urlpatterns = [
         views.team_players_in_season,
         name='team_players_in_season'
     ),
-    path('player/<str:name>/', views.player_detail, name='player_detail'),
-    path('year/<str:season>', views.best_of_season, name='best_of_season'),
     path(
-        'team/<str:team>',
+        'leaders/<str:team>/',
+        views.leaders_career,
+        name='leaders_career'
+    ),
+    path(
+        'season_leaders/<str:team>/',
+        views.season_leaders,
+        name='season_leaders'
+    ),
+    path('player/<int:id>/', views.player_detail, name='player_detail'),
+    path('players/<str:stat_rule>/', views.statistic, name='statistic'),
+    path(
+        'year/<str:season>/<str:stat_rule>/',
+        views.best_of_season,
+        name='best_of_season'
+    ),
+    path(
+        'team/<str:team>/',
         views.all_time_all_player_one_team,
         name='all_time_all_player_one_team'
     ),
-    path('players/<str:stat_rule>/', views.statistic, name='goals_career'),
-    path('players/<str:stat_rule>/', views.statistic, name='goal_season'),
-    path('players/<str:stat_rule>/', views.statistic, name='assist_career'),
-    path('players/<str:stat_rule>/', views.statistic, name='assist_season'),
-    path('players/<str:stat_rule>/', views.statistic, name='point_season'),
-    path('players/<str:stat_rule>/', views.statistic, name='games_career'),
-    path('players/<str:stat_rule>/', views.statistic, name='penalty_season'),
-    path('players/<str:stat_rule>/', views.statistic, name='penalty_career'),
-    path('table/<str:season>/', views.create_table, name='create_table')
+    path('table/<str:season>/', views.create_table, name='create_table'),
+    path('history/<str:team>/', views.history_team, name='history_team')
 ]

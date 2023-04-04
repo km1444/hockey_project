@@ -2,9 +2,15 @@
 
 {% block content %}
 <div class="container col-6 py-2">
-  <h3>Cезон: {{ season }}</h3>
-  <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' previous_season %}" role="button"> Previous season </a>
-  <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' next_season %}" role="button"> Next season </a>
+  <h3>
+    Cезон: 
+    <a href="{% url 'rating:create_table' season %}">
+      {{ season }}
+    </a>
+  </h3>
+  <h3>Best of {{ stat_rule }}s </h3>
+  <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' previous_season 'point' %}" role="button"> Previous season </a>
+  <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' next_season 'point' %}" role="button"> Next season </a>
 </div>
   <div class="container col-6 p-1 my-1">
     <table class="table table-striped table-bordered table-hover table-sm">
@@ -14,10 +20,10 @@
         <th>Age</th>
         <th>Team</th>
         <th>Game</th>
-        <th>Goal</th>
-        <th>Assist</th>
-        <th>Point</th>
-        <th>Penalty</th>
+        <th><a href="{% url 'rating:best_of_season' season 'goal' %}"> Goal </a></th>
+        <th><a href="{% url 'rating:best_of_season' season 'assist' %}"> Assist </a></th>
+        <th><a href="{% url 'rating:best_of_season' season 'point' %}"> Point </a></th>
+        <th><a href="{% url 'rating:best_of_season' season 'penalty' %}"> Penalty </a></th>
       </tr>
     </thead>
     <tbody>

@@ -1,6 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{% url 'rating:index' %}">
       <i class="fa-solid fa-hockey-sticks"></i>
       <span style="color:red">H</span>OCKEY
@@ -53,6 +52,41 @@
                   </a>
                 </li>
                 <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="СКА" %}">
+                    СКА
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Трактор" %}">
+                    Трактор
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Торпедо" %}">
+                    Торпедо
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Сибирь" %}">
+                    Сибирь
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Локомотив" %}">
+                    Локомотив
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Автомобилист" %}">
+                    Автомобилист
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Динамо Р" %}">
+                    Динамо Р
+                  </a>
+                </li>
+                <li>
                   <hr class="dropdown-divider"/>
                 </li>
                 <li>
@@ -69,35 +103,35 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <p class="dropdown-item stat-menu">Goal :  
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:goals_career' stat_rule="goals_career" %}">Career </a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="goals_career" %}">Career </a>
                     <text> | </text>
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:goal_season' stat_rule="goals_season" %}"> Season</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="goals_season" %}"> Season</a>
                   </p> 
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Assist : 
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:assist_career' stat_rule="assist_career" %}">Career</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="assist_career" %}">Career</a>
                     <text> | </text>
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:assist_season' stat_rule="assist_season" %}">Season</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="assist_season" %}">Season</a>
                   </p>   
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Points : 
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:index' %}">Career</a>
                     <text> | </text>
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:point_season' stat_rule="point_season" %}">Season</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="point_season" %}">Season</a>
                   </p>  
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Games : 
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:games_career' stat_rule="games_career" %}">Career</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="games_career" %}">Career</a>
                   </p>  
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Penalty : 
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:penalty_career' stat_rule="penalty_career" %}">Career</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="penalty_career" %}">Career</a>
                     <text> | </text>
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:penalty_season' stat_rule="penalty_season" %}">Season</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="penalty_season" %}">Season</a>
                   </p> 
                 </li>
                 <li>
@@ -186,5 +220,6 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
-  </div>
-</nav>
+  </nav>
+
+
