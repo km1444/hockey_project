@@ -4,10 +4,11 @@ html {
 
 body {
 	font-family: 'Roboto', sans-serif;
-	font-size: 16px;
+	font-size: 14px;
+	line-height: 1.25;
 	font-weight: 400;
 	color: #000;
-	background-color: #fff;
+	background-color: #c9cbcd;;
 	min-width: 320px;
 }
 
@@ -190,4 +191,12 @@ h5 {
 
 .col{
 	padding: 4px;
+}
+
+#wrap {
+	background: #fff; 
+	box-shadow: 0 0 27px #404445;
+	padding-top: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
 }

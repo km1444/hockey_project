@@ -6,6 +6,8 @@
 
 {% block content%}
 
+
+
   <div class="container col-5 py-2">
     <a href="{% url 'rating:all_time_all_player_one_team' team %}"><h1>{{ team }}</h1></a>
     <h3>Cезон: {{ season }}</h3> 
@@ -34,6 +36,6 @@
     </tbody>
     </table>      
   </div>         
-    <!-- Остальные посты. после последнего нет черты -->
-    {% include 'posts/includes/paginator.html' %}
+
+
 {% endblock %}

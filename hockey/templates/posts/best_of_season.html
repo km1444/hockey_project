@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container col-6 py-2">
+<div class="container col-7 py-2">
   <h3>
     Cезон: 
     <a href="{% url 'rating:create_table' season %}">
@@ -12,9 +12,9 @@
   <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' previous_season 'point' %}" role="button"> Previous season </a>
   <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' next_season 'point' %}" role="button"> Next season </a>
 </div>
-  <div class="container col-6 p-1 my-1">
-    <table class="table table-striped table-bordered table-hover table-sm">
-    <thead>
+<div class="container col-7 p-1 my-1">
+  <table class="table table-striped table-bordered table-hover table-sm">
+      <thead>
       <tr>
         <th>Player</th>
         <th>Age</th>
@@ -25,12 +25,12 @@
         <th><a href="{% url 'rating:best_of_season' season 'point' %}"> Point </a></th>
         <th><a href="{% url 'rating:best_of_season' season 'penalty' %}"> Penalty </a></th>
       </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
       {% for post in page_obj %}
         {% include 'includes/best_of_year_inc.html' %}
       {% endfor %}
-    </tbody>
+      </tbody>
   </table>
   {% include 'posts/includes/paginator.html' %}
 </div>

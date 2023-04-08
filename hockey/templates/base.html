@@ -25,14 +25,16 @@
     </title>
   </head>
     <body>
-      <header>
-        {% include 'includes/header.html' %}
-      </header>
-      <main>
-        {% block content %}{% endblock %}
-      </main>
-      <footer>
-        {% include 'includes/footer.html' %}
-      </footer>
+      <div id="wrap" class="container-lg">
+        <header>
+          {% include 'includes/header.html' %}
+        </header>
+        <main>
+          {% block content %}{% endblock %}
+        </main>
+        <footer>
+          {% include 'includes/footer.html' %}
+        </footer>
+      </div>
     </body>
 </html>

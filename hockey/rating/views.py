@@ -1,11 +1,11 @@
 # import json
-
 # from django.core import serializers
 from django.core.paginator import Paginator
-from django.db.models import Count, Max, Sum
+from django.db import models
+from django.db.models import Case, Count, IntegerField, Max, Sum
+from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, render
 
-# from django.db.models.functions import Concat
 # from django.http import HttpResponse
 from .models import Player, Statistic, Team_for_table
 from .secondary import (
@@ -95,9 +95,9 @@ def best_of_season(request, season, stat_rule):
         player_scores = Statistic.objects.filter(
             season__name=season).order_by('-penalty', 'game', )
     player_scores_2 = Statistic.objects.filter(
-    season__name=season, name__name='Палилов Владимир') \
+    season__name=season, name__name='Викулов Владимир') \
         .values('name__name').annotate(
-            team=Count('team'),
+            # teams=StringAgg('team__title'),
             game=Sum('game'),
             goal=Sum('goal'),
             assist=Sum('assist'),

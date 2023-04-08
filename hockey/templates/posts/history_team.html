@@ -5,17 +5,19 @@
 {% endblock %}
 
 {% block content %}
-{% include 'includes/header_team.html' %}
 
-{% include 'includes/submenu_team.html' %}
 
-<div class="container col-5 p-1 my-1">
-  <h1 align="left"> {{ count_season }} Seasons</h1>
-</div>
+  {% include 'includes/header_team.html' %}
 
-<div class="container col-5 p-1 my-1">
-  <table class="table table-striped table-bordered table-hover table-sm">
-    <thead>
+  {% include 'includes/submenu_team.html' %}
+
+  <div class="container col-5 p-1 my-1">
+    <h1 align="left"> {{ count_season }} Seasons</h1>
+  </div>
+
+  <div class="container col-5 p-1 my-1">
+    <table class="table table-striped table-bordered table-hover table-sm">
+      <thead>
       <tr>
         <th>Season</th>
         <th>Team</th>
@@ -28,8 +30,8 @@
         <th>Finish</th>
         <th>Coaches</th>
       </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
       {% for team in team_view %}
       <tr>
         <td><a href="{% url 'rating:create_table' team.season %}">
@@ -46,10 +48,9 @@
         <td></td>
       </tr>
       {% endfor %}
-    </tbody>
-  </table>
-  {% include 'posts/includes/paginator.html' %}
-</div>
+      </tbody>
+    </table>
+  </div>
 
 
 {% endblock %}

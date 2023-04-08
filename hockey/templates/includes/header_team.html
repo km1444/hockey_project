@@ -10,7 +10,7 @@
         </a>
       </span>
     </h1>
-    <p><strong>Team Name:</strong> {{ team }}</p>
+    {% comment %} <p>Team Name: {{ team }}</p> {% endcomment %}
     <p><strong>All-time Goals Leader</strong>: 
       <a href="{% url 'rating:player_detail' top_goal.name__id %}">
         {{ top_goal.name__name }}
