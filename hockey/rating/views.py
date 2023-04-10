@@ -1,12 +1,12 @@
-# import json
-# from django.core import serializers
+from aggregates import StringAgg
 from django.core.paginator import Paginator
 from django.db import models
-from django.db.models import Case, Count, IntegerField, Max, Sum
+from django.db.models import (
+    Aggregate, Case, CharField, Count, F, Func, IntegerField, Max, Sum, Value,
+)
 from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, render
 
-# from django.http import HttpResponse
 from .models import Player, Statistic, Team_for_table
 from .secondary import (
     prev_next_season, top_goal, top_point, top_season_goal, top_season_point,
@@ -84,38 +84,38 @@ def player_detail(request, id):
 def best_of_season(request, season, stat_rule):
     if stat_rule == 'goal':
         player_scores = Statistic.objects.filter(
-            season__name=season).order_by('-goal', 'game', '-point')
+            season__name=season).order_by('-goal', 'game', '-point')[:20]
     if stat_rule == 'assist':
         player_scores = Statistic.objects.filter(
-            season__name=season).order_by('-assist', 'game', '-point')
+            season__name=season).order_by('-assist', 'game', '-point')[:20]
     if stat_rule == 'point':
         player_scores = Statistic.objects.filter(
-            season__name=season).order_by('-point', '-goal', 'game')
+            season__name=season).order_by('-point', '-goal', 'game')[:20]
     if stat_rule == 'penalty':
         player_scores = Statistic.objects.filter(
-            season__name=season).order_by('-penalty', 'game', )
-    player_scores_2 = Statistic.objects.filter(
-    season__name=season, name__name='Викулов Владимир') \
-        .values('name__name').annotate(
-            # teams=StringAgg('team__title'),
-            game=Sum('game'),
-            goal=Sum('goal'),
-            assist=Sum('assist'),
-            point=Sum('point'),
-            penalty=Sum('penalty')
-            ).order_by('-point', '-goal', 'game')
-    print(player_scores_2)
+            season__name=season).order_by('-penalty', 'game', )[:20]
+    # player_scores_2 = Statistic.objects.filter(
+    #     season__name=season, name__name='Викулов Владимир') \
+    #     .values('name__name').annotate(
+    #         team=GroupConcat('team', ordering='team DESC', separator=' | '),
+    #         game=Sum('game'),
+    #         goal=Sum('goal'),
+    #         assist=Sum('assist'),
+    #         point=Sum('point'),
+    #         penalty=Sum('penalty')
+    #         ).order_by('-point', '-goal', 'game')
+    # print(player_scores_2)
     # print(player_scores[0])
     # print(dir(player_scores[0].name))
-    paginator = Paginator(player_scores, 15)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    # paginator = Paginator(player_scores, 15)
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
     template = 'posts/best_of_season.html'
     context = {
         'season': season,
         'previous_season': prev_next_season(season)[1],
         'next_season': prev_next_season(season)[0],
-        'page_obj': page_obj,
+        'page_obj': player_scores,
         'stat_rule': stat_rule
     }
     return render(request, template, context)

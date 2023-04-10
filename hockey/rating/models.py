@@ -73,7 +73,7 @@ class Statistic(models.Model):
     team = models.ForeignKey(
         Team,
         on_delete=models.CASCADE,
-        default=14,
+        default=12,
         blank=True,
         null=True,
         related_name='statistics',
@@ -83,7 +83,7 @@ class Statistic(models.Model):
         Season,
         verbose_name='Сезон',
         on_delete=models.CASCADE,
-        default=7,
+        default=9,
         related_name='statistics'
     )
     position = models.ForeignKey(
