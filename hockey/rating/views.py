@@ -1,4 +1,4 @@
-from aggregates import StringAgg
+# from aggregates import StringAgg
 from django.core.paginator import Paginator
 from django.db import models
 from django.db.models import (
