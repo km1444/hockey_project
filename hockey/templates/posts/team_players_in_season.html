@@ -9,7 +9,7 @@
 
 
   <div class="container col-5 py-2">
-    <a href="{% url 'rating:all_time_all_player_one_team' team %}"><h1>{{ team }}</h1></a>
+    <a href="{% url 'rating:history_team' team %}"><h1>{{ team }}</h1></a>
     <h3>Cезон: {{ season }}</h3> 
     <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team previous_season %}" role="button"> Previous season </a>
     <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team next_season %}" role="button"> Next season </a>

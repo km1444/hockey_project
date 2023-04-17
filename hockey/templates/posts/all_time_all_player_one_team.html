@@ -21,7 +21,10 @@
       <th>Rank</th>
       <th>Player</th>
       <th>Games</th>
-      <th>Points</th>
+      <th>Goals</th>
+      <th>Assists</th>
+      <th class="table-warning">Points</th>
+      <th>Penalty</th>
     </tr>
   </thead>
   <tbody>
@@ -29,7 +32,26 @@
       {% include 'includes/all_time_all_player_one_team_inc.html' %}
     {% endfor %}
   </tbody>
+  <tbody id="all" style="display: none">
+    {% for post in page_obj_2 %}
+      {% include 'includes/all_time_all_player_one_team_inc.html' %}
+    {% endfor %}
+  </tbody>
   </table>
+
+  <button id="myBtn">Show all</button>
+
+  <p id="demo"></p>
+
+
+  <script>
+    document.getElementById("myBtn").addEventListener("click", displayHidden);
+
+    function displayHidden() {
+        document.getElementById("all").style.display = "";
+      }
+  </script>
+
   {% include 'posts/includes/paginator.html' %}
 </div>
 {% endblock %}

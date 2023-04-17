@@ -5,5 +5,8 @@
        href="{% url 'rating:player_detail' post.name__id %}"> {{ post.name__name }}</a>
   </td>
   <td>{{ post.games }}</td>
-  <td>{{ post.points }}</td>
+  <td>{{ post.goals }}</td>
+  <td>{{ post.assists }}</td>
+  <td class="table-warning">{{ post.points }}</td>
+  <td>{{ post.penalty }}</td>
 </tr>

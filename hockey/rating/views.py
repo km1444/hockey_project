@@ -1,10 +1,7 @@
 # from aggregates import StringAgg
-from django.core.paginator import Paginator
-from django.db import models
-from django.db.models import (
-    Aggregate, Case, CharField, Count, F, Func, IntegerField, Max, Sum, Value,
-)
-from django.db.models.functions import Concat
+# from django.core.paginator import Paginator
+# from django.db import models
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render
 
 from .models import Player, Statistic, Team_for_table
@@ -62,7 +59,7 @@ def player_detail(request, id):
         assist=Sum('assist'),
         point=Sum('point'),
         penalty=Sum('penalty')
-        ).order_by('-game')
+    ).order_by('-game')
     position = player_seasons[0].position
     template = 'posts/profile.html'
     context = {
@@ -125,16 +122,21 @@ def all_time_all_player_one_team(request, team):
     total_points_for_players = Statistic.objects.all() \
         .filter(team__title=team) \
         .values('name__id', 'name__name') \
-        .annotate(games=Sum('game'), points=Sum('point')) \
-        .order_by('-points', 'games')[:20]
+        .annotate(
+        games=Sum('game'), goals=Sum('goal'), assists=Sum('assist'),
+        points=Sum('point'), penalty=Sum('penalty')
+        ).order_by('-points', '-goals', 'games')
+    total_points_for_players_20 = total_points_for_players[:20]
+    total_points_for_players_all = total_points_for_players[20:]
     template = 'posts/all_time_all_player_one_team.html'
     context = {
-        'page_obj': total_points_for_players,
+        'page_obj': total_points_for_players_20,
+        'page_obj_2': total_points_for_players_all,
         'team': team,
         'top_goal': top_goal(team),
         'top_point': top_point(team),
         'top_s_goal': top_season_goal(team),
-        'top_s_point': top_season_point(team)
+        'top_s_point': top_season_point(team),
     }
     return render(request, template, context)
 
@@ -303,13 +305,16 @@ def season_leaders(request, team):
             'name__id', 'name__name', 'goal', 'season__name') \
         .order_by('-goal')[:10]
     top_10_assist = Statistic.objects.filter(
-        team__title=team).values('name__id', 'name__name', 'assist', 'season__name') \
+        team__title=team).values(
+        'name__id', 'name__name', 'assist', 'season__name') \
         .order_by('-assist')[:10]
     top_10_point = Statistic.objects.filter(
-        team__title=team).values('name__id', 'name__name', 'point', 'season__name') \
+        team__title=team).values(
+        'name__id', 'name__name', 'point', 'season__name') \
         .order_by('-point')[:10]
     top_10_penalty = Statistic.objects.filter(
-        team__title=team).values('name__id', 'name__name', 'penalty', 'season__name') \
+        team__title=team).values(
+        'name__id', 'name__name', 'penalty', 'season__name') \
         .order_by('-penalty')[:10]
     context = {
         'top_10_goal': top_10_goal,
@@ -327,10 +332,11 @@ def season_leaders(request, team):
 
 
 def history_team(request, team):
-    team_view = Team_for_table.objects.filter(name__title=team).order_by('-season')
+    team_view = Team_for_table.objects.filter(
+        name__title=team).order_by('-season')
     count_season = team_view.count()
     context = {
-        'team_view': team_view, 
+        'team_view': team_view,
         'team': team,
         'count_season': count_season,
         'top_goal': top_goal(team),

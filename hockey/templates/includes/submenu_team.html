@@ -3,7 +3,7 @@
       <li><a href="{% url 'rating:history_team' team %}"> {{ team }} history </a></li>
       <li><a href="{% url 'rating:season_leaders' team %}">Season Leaders</a></li>
       <li><a href="{% url 'rating:leaders_career' team %}">Career Leaders</a></li>
-      <li><a href="">Skaters</a></li>
+      <li><a href="{% url 'rating:all_time_all_player_one_team' team %}">Skaters</a></li>
       <li><a href="">Goalies</a></li>
     </ul>
   </div>

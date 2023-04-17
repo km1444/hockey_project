@@ -5,7 +5,7 @@ from .models import Player, Position, Season, Statistic, Team, Team_for_table
 
 class StatisticAdmin(admin.ModelAdmin):
     list_display = ('name', 'season', 'team', 'point')
-    search_fields = ('name',)
+    search_fields = ('name__name',)
     list_filter = ('name',)
     fields = [
         'name', 'team', 'season', 'position',

@@ -28,62 +28,82 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <a class="dropdown-item"
-                    href="{% url 'rating:all_time_all_player_one_team' team="ЦСКА" %}">ЦСКА
+                    href="{% url 'rating:history_team' team="ЦСКА" %}">ЦСКА
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Динамо" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Динамо" %}">
                     Динамо
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Спартак" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Спартак" %}">
                     Спартак
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Крылья Советов" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Крылья Советов" %}">
                     Крылья Советов
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Химик" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Химик" %}">
                     Химик
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="СКА" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="СКА" %}">
                     СКА
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Трактор" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Трактор" %}">
                     Трактор
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Торпедо" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Торпедо" %}">
                     Торпедо
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Сибирь" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Сибирь" %}">
                     Сибирь
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Локомотив" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Локомотив" %}">
                     Локомотив
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Автомобилист" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Автомобилист" %}">
                     Автомобилист
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:all_time_all_player_one_team' team="Динамо Р" %}">
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Динамо Р" %}">
                     Динамо Р
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Сокол" %}">
+                    Сокол
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Салават Юлаев" %}">
+                    Салават Юлаев
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Ижсталь" %}">
+                    Ижсталь
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:history_team' team="Кристалл" %}">
+                    Кристалл
                   </a>
                 </li>
                 <li>
@@ -200,6 +220,11 @@
                   </a> 
                 </li>
                 <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season="1980-81" %}">
+                    1980-81
+                  </a> 
+                </li>
+                <li>
                   <hr class="dropdown-divider"/>
                 </li>
                 <li>
@@ -211,13 +236,13 @@
       </ul>
     </div>
 
-    <div>
+    <div id="SearchField">
       <form class="d-flex" role="search">
         <input class="form-control me-2"
                type="search"
                placeholder="Search"
                aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-outline-success me-2" type="submit">Search</button>
       </form>
     </div>
   </nav>

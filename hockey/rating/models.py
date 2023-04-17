@@ -16,6 +16,7 @@ class Team(models.Model):
     class Meta:
         verbose_name = "Команда"
         verbose_name_plural = "Команды"
+        ordering = ('title',)
 
 
 class Player(models.Model):
@@ -73,7 +74,7 @@ class Statistic(models.Model):
     team = models.ForeignKey(
         Team,
         on_delete=models.CASCADE,
-        default=12,
+        default=1,
         blank=True,
         null=True,
         related_name='statistics',
@@ -83,13 +84,13 @@ class Statistic(models.Model):
         Season,
         verbose_name='Сезон',
         on_delete=models.CASCADE,
-        default=9,
+        default=11,
         related_name='statistics'
     )
     position = models.ForeignKey(
         Position,
         on_delete=models.CASCADE,
-        default=2,
+        default=1,
         blank=True,
         null=True,
         related_name='statistics',
