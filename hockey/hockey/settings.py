@@ -8,7 +8,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'dr=o^v+7-*f*n&uk_(!gto0#*q%^ucv6&l_qikog&mu-w4ewzo'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['158.160.41.209', '127.0.0.1', 'localhost']
 
@@ -61,10 +61,10 @@ WSGI_APPLICATION = 'hockey.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 if DEBUG:
     DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.sqlite3',
-           'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-       }
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
 else:
     DATABASES = {
@@ -76,7 +76,7 @@ else:
             'HOST': os.getenv('DB_HOST'),
             'PORT': os.getenv('DB_PORT')
         }
-    } 
+    }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 

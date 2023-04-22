@@ -79,40 +79,26 @@ def player_detail(request, id):
 
 
 def best_of_season(request, season, stat_rule):
+    # queryset_season = Statistic.objects.filter(season__name=season)
     if stat_rule == 'goal':
         player_scores = Statistic.objects.filter(
             season__name=season).order_by('-goal', 'game', '-point')[:20]
     if stat_rule == 'assist':
-        player_scores = Statistic.objects.filter(
-            season__name=season).order_by('-assist', 'game', '-point')[:20]
+        player_scores = Statistic.objects.filter(season__name=season).order_by(
+            '-assist', 'game', '-point')[:20]
     if stat_rule == 'point':
         player_scores = Statistic.objects.filter(
             season__name=season).order_by('-point', '-goal', 'game')[:20]
     if stat_rule == 'penalty':
         player_scores = Statistic.objects.filter(
             season__name=season).order_by('-penalty', 'game', )[:20]
-    # player_scores_2 = Statistic.objects.filter(
-    #     season__name=season, name__name='Викулов Владимир') \
-    #     .values('name__name').annotate(
-    #         team=GroupConcat('team', ordering='team DESC', separator=' | '),
-    #         game=Sum('game'),
-    #         goal=Sum('goal'),
-    #         assist=Sum('assist'),
-    #         point=Sum('point'),
-    #         penalty=Sum('penalty')
-    #         ).order_by('-point', '-goal', 'game')
-    # print(player_scores_2)
-    # print(player_scores[0])
-    # print(dir(player_scores[0].name))
-    # paginator = Paginator(player_scores, 15)
-    # page_number = request.GET.get('page')
-    # page_obj = paginator.get_page(page_number)
     template = 'posts/best_of_season.html'
     context = {
         'season': season,
         'previous_season': prev_next_season(season)[1],
         'next_season': prev_next_season(season)[0],
         'page_obj': player_scores,
+        # 'page_obj_all': player_scores_all,
         'stat_rule': stat_rule
     }
     return render(request, template, context)
@@ -123,15 +109,14 @@ def all_time_all_player_one_team(request, team):
         .filter(team__title=team) \
         .values('name__id', 'name__name') \
         .annotate(
-        games=Sum('game'), goals=Sum('goal'), assists=Sum('assist'),
-        points=Sum('point'), penalty=Sum('penalty')
-        ).order_by('-points', '-goals', 'games')
-    total_points_for_players_20 = total_points_for_players[:20]
-    total_points_for_players_all = total_points_for_players[20:]
+            games=Sum('game'), goals=Sum('goal'), assists=Sum('assist'),
+            points=Sum('point'), penalty=Sum('penalty')).order_by(
+        '-points', '-goals', 'games')
+    # total_points_for_players_20 = total_points_for_players
+    # total_points_for_players_all = total_points_for_players[20:]
     template = 'posts/all_time_all_player_one_team.html'
     context = {
-        'page_obj': total_points_for_players_20,
-        'page_obj_2': total_points_for_players_all,
+        'page_obj': total_points_for_players,
         'team': team,
         'top_goal': top_goal(team),
         'top_point': top_point(team),

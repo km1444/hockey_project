@@ -193,7 +193,7 @@ h5 {
     margin: 0 -1px;
 }
 
-.col{
+.col {
 	padding: 4px;
 }
 
@@ -203,4 +203,43 @@ h5 {
 	padding-top: 0px;
 	padding-left: 0px;
 	padding-right: 0px;
+}
+
+/* .table_sort table {
+    border-collapse: collapse;
+}
+
+.table_sort th {
+    color: #ffebcd;
+    background: #008b8b;
+    cursor: pointer;
+}
+
+.table_sort td, */
+.table_sort th {
+    cursor: pointer;
+}
+
+/*
+.table_sort tbody tr:nth-child(even) {
+    background: #e3e3e3;
+}
+
+th.sorted[data-order="1"],
+th.sorted[data-order="-1"] {
+    position: relative;
+}
+
+th.sorted[data-order="1"]::after,
+th.sorted[data-order="-1"]::after {
+    right: 8px;
+    position: absolute;
+} */
+
+th.sorted[data-order="-1"]::after {
+    content: "▼"
+}
+
+th.sorted[data-order="1"]::after {
+    content: "▲"
 }

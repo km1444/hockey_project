@@ -33,6 +33,16 @@
       {% endfor %}
       </tbody>
   </table>
+
+  <button id="myBtn">Show all</button>
+
+  <script>
+    document.getElementById("myBtn").addEventListener("click", displayHidden);
+
+    function displayHidden() {
+        document.getElementById("all").style.display = "";
+      }
+  </script>
   {% include 'posts/includes/paginator.html' %}
 </div>
   
