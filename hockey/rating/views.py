@@ -4,7 +4,7 @@
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render
 
-from .models import Player, Statistic, Team_for_table
+from .models import Player, Statistic, TeamForTable
 from .secondary import (
     prev_next_season, top_goal, top_point, top_season_goal, top_season_point,
 )
@@ -203,7 +203,7 @@ def statistic(request, stat_rule):
 
 
 def create_table(request, season):
-    teams = Team_for_table.objects.all() \
+    teams = TeamForTable.objects.all() \
         .filter(season__name=season).order_by('rank')
     next_season = season[:2] + str(int((season)[2:4]) + 1) + \
         season[4:5] + str(int(season[5:]) + 1)
@@ -317,7 +317,7 @@ def season_leaders(request, team):
 
 
 def history_team(request, team):
-    team_view = Team_for_table.objects.filter(
+    team_view = TeamForTable.objects.filter(
         name__title=team).order_by('-season')
     count_season = team_view.count()
     context = {

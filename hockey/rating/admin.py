@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Player, Position, Season, Statistic, Team, Team_for_table
+from .models import Player, Position, Season, Statistic, Team, TeamForTable
 
 
 class StatisticAdmin(admin.ModelAdmin):
@@ -23,7 +23,7 @@ class PlayerAdmin(admin.ModelAdmin):
     list_filter = ('name',)
 
 
-class Team_for_tableAdmin(admin.ModelAdmin):
+class TeamForTableAdmin(admin.ModelAdmin):
     list_display = ('name', 'points')
     # Добавляем интерфейс для поиска по тексту постов
     search_fields = ('name',)
@@ -36,4 +36,4 @@ admin.site.register(Player, PlayerAdmin)
 admin.site.register(Statistic, StatisticAdmin)
 admin.site.register(Position)
 admin.site.register(Season)
-admin.site.register(Team_for_table, Team_for_tableAdmin)
+admin.site.register(TeamForTable, TeamForTableAdmin)
