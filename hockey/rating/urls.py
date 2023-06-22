@@ -1,4 +1,5 @@
 from django.urls import path
+from rating.views import SearchResultsView
 
 from . import views
 
@@ -34,5 +35,6 @@ urlpatterns = [
         name='all_time_all_player_one_team'
     ),
     path('table/<str:season>/', views.create_table, name='create_table'),
-    path('history/<str:team>/', views.history_team, name='history_team')
+    path('history/<str:team>/', views.history_team, name='history_team'),
+    path('search/', SearchResultsView.as_view(), name='search_result'),
 ]

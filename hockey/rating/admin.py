@@ -1,6 +1,9 @@
 from django.contrib import admin
 
-from .models import Player, Position, Season, Statistic, Team, TeamForTable
+from .models import (
+    PersonPlayoff, Player, Playoff, Position, Season, Statistic, Team,
+    TeamForTable, TeamForTable2Round,
+)
 
 
 class StatisticAdmin(admin.ModelAdmin):
@@ -15,20 +18,33 @@ class StatisticAdmin(admin.ModelAdmin):
 
 
 class PlayerAdmin(admin.ModelAdmin):
-    # Перечисляем поля, которые должны отображаться в админке
     list_display = ('name', 'year_of_birth')
-    # Добавляем интерфейс для поиска по тексту постов
     search_fields = ('name',)
-    # Добавляем возможность фильтрации по дате
     list_filter = ('name',)
 
 
 class TeamForTableAdmin(admin.ModelAdmin):
-    list_display = ('name', 'points')
-    # Добавляем интерфейс для поиска по тексту постов
+    list_display = ('points', 'name', 'season')
     search_fields = ('name',)
-    # Добавляем возможность фильтрации по дате
     list_filter = ('name',)
+
+
+class TeamForTable2RoundAdmin(admin.ModelAdmin):
+    list_display = ('name', 'points')
+    search_fields = ('name',)
+    list_filter = ('name',)
+
+
+class PlayoffAdmin(admin.ModelAdmin):
+    list_display = ('study', 'result_serie', 'team_1', 'team_2')
+    search_fields = ('study',)
+    list_filter = ('study',)
+
+
+class PersonPlayoffAdmin(admin.ModelAdmin):
+    list_display = ('result', 'team', 'season')
+    search_fields = ('team',)
+    list_filter = ('team',)
 
 
 admin.site.register(Team)
@@ -37,3 +53,6 @@ admin.site.register(Statistic, StatisticAdmin)
 admin.site.register(Position)
 admin.site.register(Season)
 admin.site.register(TeamForTable, TeamForTableAdmin)
+admin.site.register(TeamForTable2Round, TeamForTable2RoundAdmin)
+admin.site.register(Playoff, PlayoffAdmin)
+admin.site.register(PersonPlayoff, PersonPlayoffAdmin)

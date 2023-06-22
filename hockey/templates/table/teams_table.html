@@ -9,6 +9,66 @@
   <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' next_season %}" role="button"> Next season </a>
 </div>
 
+{% if playoff %}
+<div class="container col-4 p-1 my-1">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <tbody>
+      {% for elem in playoff %}
+      <tr>
+        <td>{{ elem.study }}</td>
+        <td>{{ elem.result_serie }}</td>
+        <td class="first">
+            <a href="{% url 'rating:team_players_in_season' elem.team_1 elem.season %}">
+                {{ elem.team_1 }}
+            </a>
+        </td>
+        <td class="first">
+          <a href="{% url 'rating:team_players_in_season' elem.team_2 elem.season %}">
+              {{ elem.team_2 }}
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% if teams2round %}
+<div class="container col-4 p-1 my-1">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Teams</th>
+        <th>Games</th>
+        <th>Wins</th>
+        <th>Ties</th>
+        <th>Los</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for team in teams2round %}
+      <tr>
+        <td>{{ team.rank }}</td>
+        <td class="first">
+            <a href="{% url 'rating:team_players_in_season' team.name team.season %}">
+                {{ team.name }}
+            </a>
+        </td>
+        <td>{{ team.games }}</td>
+        <td>{{ team.wins }}</td>
+        <td>{{ team.ties }}</td>
+        <td>{{ team.losses }}</td>
+        <td>{{ team.points }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
 <div class="container col-4 p-1 my-1">
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>

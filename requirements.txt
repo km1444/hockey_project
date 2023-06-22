@@ -50,3 +50,4 @@ tqdm==4.64.1
 typing_extensions==4.1.1
 urllib3==1.26.9
 zipp==3.7.0
+djangorestframework==3.12.4

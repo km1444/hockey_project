@@ -19,9 +19,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'rating.apps.RatingConfig',
     'debug_toolbar',
     'core.apps.CoreConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processors.year.year',
+                'core.context_processors.all_seasons.all_seasons',
+                'core.context_processors.all_team.all_team',
             ],
         },
     },

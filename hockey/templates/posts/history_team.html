@@ -11,11 +11,11 @@
 
   {% include 'includes/submenu_team.html' %}
 
-  <div class="container col-5 p-1 my-1">
+  <div class="container col-6 p-1 my-1">
     <h1 align="left"> {{ count_season }} Seasons</h1>
   </div>
 
-  <div class="container col-5 p-1 my-1">
+  <div class="container col-6 p-1 my-1">
     <table class="table table-striped table-bordered table-hover table-sm">
       <thead>
       <tr>
@@ -28,25 +28,40 @@
         <th>PTS</th>
         <th>PTS%</th>
         <th>Finish</th>
+        <th>Playoffs</th>
         <th>Coaches</th>
       </tr>
       </thead>
       <tbody>
       {% for team in team_view %}
       <tr>
-        <td><a href="{% url 'rating:create_table' team.season %}">
-          {{ team.season }}
-      </a></td>
+        <td><a href="{% url 'rating:create_table' team.season %}">{{ team.season }}</a></td>
         <td>{{ team.name }}</td>
         <td>{{ team.games }}</td>
         <td>{{ team.wins }}</td>
         <td>{{ team.ties }}</td>
         <td>{{ team.losses }}</td>
-        <td>{{ team.points }}</td>
+        <td><b>{{ team.points }}</b></td>
         <td>{{ team.points_percentage }}</td>
         <td>{{ team.rank }}</td>
         <td></td>
+        <td>{{ team.coach }}</td>
       </tr>
+      {% if team.round_2 %}
+      <tr>
+        <td></td>
+        <td>{{ team.round_2.name }}</td>
+        <td>{{ team.round_2.games }}</td>
+        <td>{{ team.round_2.wins }}</td>
+        <td>{{ team.round_2.ties }}</td>
+        <td>{{ team.round_2.losses }}</td>
+        <td><b>{{ team.round_2.points }}</b></td>
+        <td>{{ team.round_2.points_percentage }}</td>
+        <td>{{ team.round_2.rank }}</td>
+        <td>{{ team.playoff.result}}</td>
+        <td>{{ team.round_2.coach }}</td>
+      </tr>
+      {% endif %}
       {% endfor %}
       </tbody>
     </table>
