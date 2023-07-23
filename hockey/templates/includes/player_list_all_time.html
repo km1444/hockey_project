@@ -11,13 +11,13 @@
       <td>{{ post.point }}</td>
     {% elif table_name == 'Career Leaders for Goals' or table_name == 'Single Season Leaders for Goals' %}
       <td>{{ post.goal }}</td>
-    {% elif table_name == 'Career Leaders for Assist' or table_name == 'Single Season Leaders for Assist' %}
+    {% elif table_name == 'Career Leaders for Assists' or table_name == 'Single Season Leaders for Assists' %}
       <td>{{ post.assist }}</td>
-    {% elif table_name == 'Career Leaders for Penalty' or table_name == 'Single Season Leaders for Penalty' %}
+    {% elif table_name == 'Career Leaders for Penaltys' or table_name == 'Single Season Leaders for Penaltys' %}
       <td>{{ post.penalty }}</td>
   {% endif %}
 
-  {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' or table_name == 'Single Season Leaders for Assist' or table_name == 'Single Season Leaders for Penalty' %}
+  {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' or table_name == 'Single Season Leaders for Assist' or table_name == 'Single Season Leaders for Penaltys' %}
     <td>{{ post.season__name }}</td>
   {% endif %}
 </tr>

@@ -1,18 +1,29 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Профайл пользователя {{ player.name }}
+  {{ team }}
 {% endblock %}
 
 {% block content%}
-
-
-
   <div class="container col-5 py-2">
-    <a href="{% url 'rating:history_team' team %}"><h1>{{ team }}</h1></a>
-    <h3>Cезон: {{ season }}</h3> 
-    <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team previous_season %}" role="button"> Previous season </a>
-    <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team next_season %}" role="button"> Next season </a>
+    {% for team in team_info %}
+      <h1> 
+        <a href="{% url 'rating:history_team' team.name %}">
+          {{ team.current_name }} 
+        </a>
+      </h1> 
+      <h2>
+      {{ team.name.city}}
+      </h2>
+    {% endfor %}
+    
+      <h3>Cезон: {{ season }}</h3>
+      <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team previous_season %}" role="button">
+        Previous season
+      </a>
+      <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team next_season %}" role="button">
+        Next season
+      </a>
   </div>
   
   <div class="container col-5">
@@ -32,6 +43,37 @@
     <tbody>
     {% for post in page_obj %}
       {% include 'includes/team_players_in_season_inc.html' %}
+    {% endfor %}
+    </tbody>
+    </table>      
+  </div>
+
+  <div class="container col-5">
+    <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Game</th>
+        <th>Goal</th>
+        <th>Penalty</th>
+      </tr>
+      </thead>
+    <tbody>
+    {% for goalkeeper in goalkeepers %}
+    <tr>
+      <td>.</td>
+      <td  class="first">
+        <a class="text-decoration-none text-reset" href="{% url 'rating:goalkeeper_detail' goalkeeper.name.id %}"> 
+          {{ goalkeeper.name.name }}
+        </a>
+      </td>
+      <td>{{ goalkeeper.age }}</td>
+      <td>{{ goalkeeper.game }}</td>
+      <td>{{ goalkeeper.goal_against }}</td>
+      <td>{{ goalkeeper.penalty }}</td>
+    </tr>
     {% endfor %}
     </tbody>
     </table>      

@@ -26,7 +26,7 @@ class PlayerDetail(generics.ListAPIView):
 
     def get_queryset(self):
         player = get_object_or_404(Player, id=self.kwargs.get('id'))
-        return player.statistics.all()
+        return player.statistics.all().order_by('-season')
 
 
 class PlayerListTeamSeason(generics.ListAPIView):
@@ -56,8 +56,12 @@ class TeamHistory(generics.ListAPIView):
 
 
 class SeasonLeadersTeam(generics.ListAPIView):
+    """Лучшие результаты по очкам за сезон в истории клуба"""
     serializer_class = StatisticSerializer
 
     def get_queryset(self):
         team = get_object_or_404(Team, title=self.kwargs.get('team'))
-        return team.statistics.all().order_by('-point')[:1]
+        queryset_top = team.statistics.all()
+        # top_10_point = queryset_top.order_by('-point')[:2]
+        top_10_goal = queryset_top.order_by('-goal')[:2]
+        return top_10_goal

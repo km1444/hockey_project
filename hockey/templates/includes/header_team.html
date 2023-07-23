@@ -1,4 +1,4 @@
-<div style="display:flex; padding-left: 10px">
+<div style="display:flex; padding-left: 10px; padding-bottom: 10px">
 	<div class="media-item logo">
 		<img class="teamlogo" src="" alt="">
 	</div>
@@ -6,11 +6,15 @@
     <h1>
       <span>
         <a href="{% url 'rating:history_team' team %}">
-          {{team}}
+          {{ team.title }}
         </a>
       </span>
     </h1>
-    {% comment %} <p>Team Name: {{ team }}</p> {% endcomment %}
+    <h3>
+      <span>
+        {{ team.city }}
+      </span>
+    </h3>
     <p><strong>All-time Goals Leader</strong>: 
       <a href="{% url 'rating:player_detail' top_goal.name__id %}">
         {{ top_goal.name__name }}

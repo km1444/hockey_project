@@ -1,14 +1,11 @@
 {% extends "base.html" %}
-
-{% block title %}
-  {{ player.name }}
-{% endblock title %}
-
+{% comment %} {% block title %}Профайл игрока {{ player.name }} {% endblock title %} {% endcomment %}
 {% block content %}
+
   <div class="container col-5 py-1">
-    <h1>{{ player.name }}</h1>
+    <h1>{{ name.name }}</h1>
     <h4>Position : {{ position }}</h4>
-    <h4>Born : {{ player.year_of_birth }}</h4>
+    <h4>Born : {{ name.year_of_birth }}</h4>
   </div>
     <div class="container col-5 p-1 my-1">
       <table class="table table-bordered table-hover table-sm">
@@ -19,8 +16,6 @@
             <th>Team</th>
             <th>Game</th>
             <th>Goal</th>
-            <th>Assist</th>
-            <th>Point</th>
             <th>Penalty</th>
           </tr>
         </thead>
@@ -39,9 +34,7 @@
                 </a>
             </td>
             <td>{{ post.game }}</td>
-            <td>{{ post.goal }}</td>
-            <td>{{ post.assist }}</td>
-            <td class="table-warning">{{ post.point }}</td>
+            <td>{{ post.goal_against }}</td>
             <td>{{ post.penalty }}</td>
           </tr>
           {% endfor %}
@@ -53,8 +46,6 @@
           <th></th>
           <th>{{ game }}</th>
           <th>{{ goal }}</th>
-          <th>{{ assist }}</th>
-          <th>{{ point }}</th>
           <th>{{ penalty }}</th>
         </tr>
         {% if amount_teams != 1 %}
@@ -69,8 +60,6 @@
             </td>
             <td>{{ elem.game }}</td>
             <td>{{ elem.goal }}</td>
-            <td>{{ elem.assist }}</td>
-            <td>{{ elem.point }}</td>
             <td>{{ elem.penalty }}</td>
           </tr>
           {% endfor %}

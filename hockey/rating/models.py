@@ -74,7 +74,7 @@ class Statistic(models.Model):
     team = models.ForeignKey(
         Team,
         on_delete=models.CASCADE,
-        default=4,
+        default=8,
         blank=True,
         null=True,
         related_name='statistics',
@@ -84,7 +84,7 @@ class Statistic(models.Model):
         Season,
         verbose_name='Сезон',
         on_delete=models.CASCADE,
-        default=20,
+        default=22,
         related_name='statistics'
     )
     position = models.ForeignKey(
@@ -125,6 +125,59 @@ class Statistic(models.Model):
         ordering = ('-point', '-goal', 'game')
 
 
+class GolkeeperStatistic(models.Model):
+    name = models.ForeignKey(
+        Player,
+        verbose_name="Игрок",
+        on_delete=models.CASCADE,
+        related_name='golkeeperstatistic'
+    )
+    age = models.SmallIntegerField('Возраст', default=14)
+    team = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        # default=1,
+        blank=True,
+        null=True,
+        related_name='golkeeperstatistic',
+        verbose_name="Команда"
+    )
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        default=22,
+        related_name='golkeeperstatistic'
+    )
+    position = models.ForeignKey(
+        Position,
+        on_delete=models.CASCADE,
+        default=3,
+        blank=True,
+        null=True,
+        related_name='golkeeperstatistic',
+        verbose_name="Позиция"
+    )
+    game = models.SmallIntegerField("Игры", default=1)
+    goal_against = models.SmallIntegerField("Голы", default=0)
+    penalty = models.SmallIntegerField("Штраф", default=0)
+
+    @property
+    def get_age(self):
+        year_of_birth_player = self.name.year_of_birth
+        season = int(self.season.name[:4])
+        return season - year_of_birth_player
+
+    def save(self, *args, **kwargs):
+        self.age = self.get_age
+        super(GolkeeperStatistic, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Статистик Вратаря"
+        verbose_name_plural = "Статистика Вратарей"
+        ordering = ('game',)
+
+
 class Playoff(models.Model):
     """модель для заполнения сетки плейофф"""
     number = models.IntegerField('Номер серии')
@@ -146,6 +199,8 @@ class Playoff(models.Model):
         related_name='playoff_1',
         verbose_name="Команда_1"
     )
+    current_name_team_1 = models.CharField(
+        ("Текущее название"), max_length=50, blank=True)
     team_2 = models.ForeignKey(
         Team,
         on_delete=models.CASCADE,
@@ -154,6 +209,8 @@ class Playoff(models.Model):
         related_name='playoff_2',
         verbose_name="Команда_2"
     )
+    current_name_team_2 = models.CharField(
+        ("Текущее название"), max_length=50, blank=True)
 
     class Meta:
         verbose_name = ("Серия")
@@ -193,6 +250,8 @@ class TeamForTable2Round(models.Model):
         related_name='team_for_tables_2_round',
         verbose_name="Команда"
     )
+    current_name = models.CharField(
+        ("Текущее название"), max_length=50, blank=True)
     season = models.ForeignKey(
         Season,
         verbose_name='Сезон',
@@ -220,16 +279,133 @@ class TeamForTable2Round(models.Model):
         super(TeamForTable2Round, self).save(*args, **kwargs)
 
     class Meta:
+        verbose_name = "Команда 1 группы 2 раунда"
+        verbose_name_plural = "Команды 1 группы 2 раунда"
         ordering = ('-points_percentage',)
 
     def __str__(self):
         return f'{self.name}, {self.season}'
 
 
+class TeamForTable2Round2(models.Model):
+    rank = models.IntegerField('Место')
+    name = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables_2_round2',
+        verbose_name="Команда"
+    )
+    current_name = models.CharField(
+        ("Текущее название"), max_length=50, blank=True)
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables_2_round2'
+    )
+    games = models.IntegerField()
+    wins = models.IntegerField()
+    ties = models.IntegerField()
+    losses = models.IntegerField()
+    points = models.IntegerField()
+    points_percentage = models.FloatField(default=0)
+    goals_for = models.IntegerField()
+    goals_against = models.IntegerField()
+
+    @property
+    def get_points_percentage(self):
+        max_point = self.games * 2
+        return round((self.points / max_point * 100), 1)
+
+    def save(self, *args, **kwargs):
+        self.points_percentage = self.get_points_percentage
+        super(TeamForTable2Round2, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Команда 2 группы 2 раунда"
+        verbose_name_plural = "Команды 2 группы 2 раунда"
+        ordering = ('-points_percentage',)
+
+    def __str__(self):
+        return f'{self.name}, {self.season}'
+
+
+class TeamForTable2Round3(models.Model):
+    rank = models.IntegerField('Место')
+    name = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables_2_round3',
+        verbose_name="Команда"
+    )
+    current_name = models.CharField(
+        ("Текущее название"), max_length=50, blank=True)
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables_2_round3'
+    )
+    games = models.IntegerField()
+    wins = models.IntegerField()
+    ties = models.IntegerField()
+    losses = models.IntegerField()
+    points = models.IntegerField()
+    points_percentage = models.FloatField(default=0)
+    goals_for = models.IntegerField()
+    goals_against = models.IntegerField()
+
+    @property
+    def get_points_percentage(self):
+        max_point = self.games * 2
+        return round((self.points / max_point * 100), 1)
+
+    def save(self, *args, **kwargs):
+        self.points_percentage = self.get_points_percentage
+        super(TeamForTable2Round3, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Команда 3 группы 2 раунда"
+        verbose_name_plural = "Команды 3 группы 2 раунда"
+        ordering = ('-points_percentage',)
+
+    def __str__(self):
+        return f'{self.name}, {self.season}'
+
+
+class PersonRound2(models.Model):
+    table1 = models.ForeignKey(
+        TeamForTable2Round,
+        verbose_name=(""),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,)
+    table2 = models.ForeignKey(
+        TeamForTable2Round2,
+        verbose_name=(""),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,)
+    table3 = models.ForeignKey(
+        TeamForTable2Round3,
+        verbose_name=(""),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,)
+
+
 class TeamForTable(models.Model):
     rank = models.IntegerField('Место')
     round_2 = models.ForeignKey(
-        TeamForTable2Round,
+        PersonRound2,
         blank=True,
         null=True,
         on_delete=models.CASCADE,
@@ -250,6 +426,8 @@ class TeamForTable(models.Model):
         related_name='team_for_tables',
         verbose_name="Команда"
     )
+    current_name = models.CharField(
+        ("Текущее название"), max_length=50, blank=True)
     season = models.ForeignKey(
         Season,
         verbose_name='Сезон',
@@ -278,7 +456,222 @@ class TeamForTable(models.Model):
         super(TeamForTable, self).save(*args, **kwargs)
 
     class Meta:
+        verbose_name = "Команда основной или 1 группы 1 раунда"
+        verbose_name_plural = "Команды основной или 1 группы 1 раунда"
         ordering = ('season__name',)
 
     def __str__(self):
         return f'{self.name}, {self.season}'
+
+
+class TeamForTable2(models.Model):
+    rank = models.IntegerField('Место')
+    round_2 = models.ForeignKey(
+        TeamForTable2Round,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='team_for_tables2',
+    )
+    playoff = models.ForeignKey(
+        PersonPlayoff,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='team_for_tables2',
+    )
+    name = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables2',
+        verbose_name="Команда"
+    )
+    current_name = models.CharField(
+        ("Текущее название"), max_length=50, blank=True)
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables2'
+    )
+    games = models.IntegerField()
+    wins = models.IntegerField()
+    ties = models.IntegerField()
+    losses = models.IntegerField()
+    points = models.IntegerField()
+    points_percentage = models.FloatField(default=0)
+    goals_for = models.IntegerField()
+    goals_against = models.IntegerField()
+    coach = models.CharField("Тренер", max_length=50, blank=True)
+
+    @property
+    def get_points_percentage(self):
+        max_point = self.games * 2
+        return round((self.points / max_point * 100), 1)
+
+    def save(self, *args, **kwargs):
+        self.points_percentage = self.get_points_percentage
+        super(TeamForTable2, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Команда 2 группы 1 раунда"
+        verbose_name_plural = "Команды 2 группы 1 раунда"
+        ordering = ('season__name',)
+
+    def __str__(self):
+        return f'{self.name}, {self.season}'
+
+
+class TeamForTable3(models.Model):
+    rank = models.IntegerField('Место')
+    round_2 = models.ForeignKey(
+        TeamForTable2Round,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='team_for_tables3',
+    )
+    playoff = models.ForeignKey(
+        PersonPlayoff,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='team_for_tables3',
+    )
+    name = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables3',
+        verbose_name="Команда"
+    )
+    current_name = models.CharField(
+        ("Текущее название"), max_length=50, blank=True)
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables3'
+    )
+    games = models.IntegerField()
+    wins = models.IntegerField()
+    ties = models.IntegerField()
+    losses = models.IntegerField()
+    points = models.IntegerField()
+    points_percentage = models.FloatField(default=0)
+    goals_for = models.IntegerField()
+    goals_against = models.IntegerField()
+    coach = models.CharField("Тренер", max_length=50, blank=True)
+
+    @property
+    def get_points_percentage(self):
+        max_point = self.games * 2
+        return round((self.points / max_point * 100), 1)
+
+    def save(self, *args, **kwargs):
+        self.points_percentage = self.get_points_percentage
+        super(TeamForTable3, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Команда 3 группы 1 раунда"
+        verbose_name_plural = "Команды 3 группы 1 раунда"
+        ordering = ('season__name',)
+
+    def __str__(self):
+        return f'{self.name}, {self.season}'
+
+
+class TeamForTable4(models.Model):
+    rank = models.IntegerField('Место')
+    round_2 = models.ForeignKey(
+        TeamForTable2Round,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='team_for_tables4',
+    )
+    playoff = models.ForeignKey(
+        PersonPlayoff,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='team_for_tables4',
+    )
+    name = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables4',
+        verbose_name="Команда"
+    )
+    current_name = models.CharField(
+        ("Текущее название"), max_length=50, blank=True)
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables4'
+    )
+    games = models.IntegerField()
+    wins = models.IntegerField()
+    ties = models.IntegerField()
+    losses = models.IntegerField()
+    points = models.IntegerField()
+    points_percentage = models.FloatField(default=0)
+    goals_for = models.IntegerField()
+    goals_against = models.IntegerField()
+    coach = models.CharField("Тренер", max_length=50, blank=True)
+
+    @property
+    def get_points_percentage(self):
+        max_point = self.games * 2
+        return round((self.points / max_point * 100), 1)
+
+    def save(self, *args, **kwargs):
+        self.points_percentage = self.get_points_percentage
+        super(TeamForTable4, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Команда 4 группы 1 раунда"
+        verbose_name_plural = "Команды 4 группы 1 раунда"
+        ordering = ('season__name',)
+
+    def __str__(self):
+        return f'{self.name}, {self.season}'
+
+
+class DescriptionTable(models.Model):
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='description_table'
+    )
+    description_playoff = models.CharField(
+        'Название плейофф', blank=True, max_length=50)
+    description_1gr_2round = models.CharField(
+        'Название таблицы 1гр 2 р', blank=True, max_length=50)
+    description_2gr_2round = models.CharField(
+        'Название таблицы 2 гр 2 р', blank=True, max_length=50)
+    description_3gr_2round = models.CharField(
+        'Название таблицы 3 гр 2 р', blank=True, max_length=50)
+    description_1gr_1round = models.CharField(
+        'Название таблицы 1 гр 1 р', blank=True, max_length=50)
+    description_2gr_1round = models.CharField(
+        'Название таблицы 2 гр 1 р', blank=True, max_length=50)
+    description_3gr_1round = models.CharField(
+        'Название таблицы 3 гр 1 р', blank=True, max_length=50)
+    description_4gr_1round = models.CharField(
+        'Название таблицы 4 гр 1 р', blank=True, max_length=50)

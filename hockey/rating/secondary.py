@@ -25,7 +25,7 @@ def top_season_goal(team):
             'name__id', 'name__name', 'goal', 'season__name') \
         .order_by('-goal')[:1]
     return top_s_goal[0]
-    
+
 
 def top_season_point(team):
     top_s_point = Statistic.objects.filter(
