@@ -57,35 +57,61 @@ def team_players_in_season(request, team, season):
 def player_detail(request, id):
     player = get_object_or_404(Player, id=id)
     player_seasons = player.statistics.order_by('season__name')
-    count = player_seasons.values('season').distinct().count()
-    game = sum(i.game for i in player_seasons)
-    goal = sum(i.goal for i in player_seasons)
-    assist = sum(i.assist for i in player_seasons)
-    point = sum(i.point for i in player_seasons)
-    penalty = sum(i.penalty for i in player_seasons)
-    amount_teams = player_seasons.values('team__title').distinct().count()
-    group_teams = player_seasons.values('team__title').annotate(
-        game=Sum('game'),
-        goal=Sum('goal'),
-        assist=Sum('assist'),
-        point=Sum('point'),
-        penalty=Sum('penalty')
-    ).order_by('-game')
-    position = player_seasons[0].position
-    template = 'posts/profile.html'
-    context = {
-        'player': player,
-        'count': count,
-        'page_obj': player_seasons,
-        'game': game,
-        'goal': goal,
-        'assist': assist,
-        'point': point,
-        'penalty': penalty,
-        'position': position,
-        'group_teams': group_teams,
-        'amount_teams': amount_teams,
-    }
+    if player_seasons:
+        game = sum(i.game for i in player_seasons)
+        goal = sum(i.goal for i in player_seasons)
+        assist = sum(i.assist for i in player_seasons)
+        point = sum(i.point for i in player_seasons)
+        penalty = sum(i.penalty for i in player_seasons)
+        amount_teams = player_seasons.values('team__title').distinct().count()
+        group_teams = player_seasons.values('team__title').annotate(
+            game=Sum('game'),
+            goal=Sum('goal'),
+            assist=Sum('assist'),
+            point=Sum('point'),
+            penalty=Sum('penalty')
+        ).order_by('-game')
+        count = player_seasons.values('season').distinct().count()
+        position = player_seasons[0].position
+        template = 'posts/profile.html'
+        context = {
+            'player': player,
+            'count': count,
+            'page_obj': player_seasons,
+            'game': game,
+            'goal': goal,
+            'assist': assist,
+            'point': point,
+            'penalty': penalty,
+            'position': position,
+            'group_teams': group_teams,
+            'amount_teams': amount_teams,
+        }
+    else:
+        player_seasons = player.golkeeperstatistic.order_by('season__name')
+        game = sum(i.game for i in player_seasons)
+        goal_against = sum(i.goal_against for i in player_seasons)
+        penalty = sum(i.penalty for i in player_seasons)
+        amount_teams = player_seasons.values('team__title').distinct().count()
+        group_teams = player_seasons.values('team__title').annotate(
+            game=Sum('game'),
+            goal_against=Sum('goal_against'),
+            penalty=Sum('penalty')
+        ).order_by('-game')
+        count = player_seasons.values('season').distinct().count()
+        position = player_seasons[0].position
+        template = 'posts/profile_golie.html'
+        context = {
+            'name': player,
+            'count': count,
+            'page_obj': player_seasons,
+            'game': game,
+            'goal_against': goal_against,
+            'penalty': penalty,
+            'position': position,
+            'group_teams': group_teams,
+            'amount_teams': amount_teams,
+        }
     return render(request, template, context)
 
 

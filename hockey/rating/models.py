@@ -74,7 +74,7 @@ class Statistic(models.Model):
     team = models.ForeignKey(
         Team,
         on_delete=models.CASCADE,
-        default=8,
+        default=15,
         blank=True,
         null=True,
         related_name='statistics',

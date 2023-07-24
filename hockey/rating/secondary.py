@@ -5,9 +5,10 @@ from .models import Statistic
 
 def top_goal(team):
     top = Statistic.objects.filter(
-        team__title=team).values('name__id', 'name__name') \
-        .annotate(goal=Sum('goal')) \
-        .order_by('-goal')[:1]
+        team__title=team).values(
+            'name__id',
+            'name__name').annotate(
+                goal=Sum('goal')).order_by('-goal')[:1]
     return top[0]
 
 
