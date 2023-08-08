@@ -19,7 +19,7 @@ class Team(models.Model):
 
 
 class Player(models.Model):
-    name = models.TextField("Текст")
+    name = models.TextField("Игрок")
     year_of_birth = models.SmallIntegerField("Год рождения")
 
     def natural_key(self):
@@ -74,9 +74,7 @@ class Statistic(models.Model):
     team = models.ForeignKey(
         Team,
         on_delete=models.CASCADE,
-        default=15,
-        blank=True,
-        null=True,
+        default=1,
         related_name='statistics',
         verbose_name="Команда"
     )
@@ -84,7 +82,7 @@ class Statistic(models.Model):
         Season,
         verbose_name='Сезон',
         on_delete=models.CASCADE,
-        default=22,
+        default=1,
         related_name='statistics'
     )
     position = models.ForeignKey(
@@ -120,17 +118,23 @@ class Statistic(models.Model):
         super(Statistic, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "Статистика"
-        verbose_name_plural = "Статистика"
-        ordering = ('-point', '-goal', 'game')
+        verbose_name = 'Статистика полевого игрока'
+        verbose_name_plural = 'Статистика полевых игроков'
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_statistic',
+                fields=['name', 'team', 'season']
+            )
+        ]
+        ordering = ('-season',)
 
 
-class GolkeeperStatistic(models.Model):
+class GoalkeeperStatistic(models.Model):
     name = models.ForeignKey(
         Player,
         verbose_name="Игрок",
         on_delete=models.CASCADE,
-        related_name='golkeeperstatistic'
+        related_name='goalkeeperstatistic'
     )
     age = models.SmallIntegerField('Возраст', default=14)
     team = models.ForeignKey(
@@ -139,7 +143,7 @@ class GolkeeperStatistic(models.Model):
         # default=1,
         blank=True,
         null=True,
-        related_name='golkeeperstatistic',
+        related_name='goalkeeperstatistic',
         verbose_name="Команда"
     )
     season = models.ForeignKey(
@@ -147,7 +151,7 @@ class GolkeeperStatistic(models.Model):
         verbose_name='Сезон',
         on_delete=models.CASCADE,
         default=22,
-        related_name='golkeeperstatistic'
+        related_name='goalkeeperstatistic'
     )
     position = models.ForeignKey(
         Position,
@@ -155,7 +159,7 @@ class GolkeeperStatistic(models.Model):
         default=3,
         blank=True,
         null=True,
-        related_name='golkeeperstatistic',
+        related_name='goalkeeperstatistic',
         verbose_name="Позиция"
     )
     game = models.SmallIntegerField("Игры", default=1)
@@ -170,7 +174,7 @@ class GolkeeperStatistic(models.Model):
 
     def save(self, *args, **kwargs):
         self.age = self.get_age
-        super(GolkeeperStatistic, self).save(*args, **kwargs)
+        super(GoalkeeperStatistic, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Статистик Вратаря"

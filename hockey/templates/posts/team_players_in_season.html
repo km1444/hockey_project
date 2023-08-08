@@ -12,12 +12,12 @@
           {{ team.current_name }} 
         </a>
       </h1> 
-      <h2>
+      <h4>
       {{ team.name.city}}
-      </h2>
+      </h4>
     {% endfor %}
     
-      <h3>Cезон: {{ season }}</h3>
+      <h4>Cезон: {{ season }}</h4>
       <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team previous_season %}" role="button">
         Previous season
       </a>
@@ -26,9 +26,12 @@
       </a>
   </div>
   
-  <div class="container col-5">
+  <div class="container col-5 py-2">
     <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
       <thead>
+        <tr>
+          <h4>Scoring Regular Season</h4>
+        </tr>
       <tr>
         <th>#</th>
         <th>Name</th>
@@ -45,12 +48,18 @@
       {% include 'includes/team_players_in_season_inc.html' %}
     {% endfor %}
     </tbody>
-    </table>      
+    </table>
+    <a class="btn btn-outline-secondary" href="{% url 'rating:create_statistic' team season %}" role="button">
+      Add Player
+    </a>      
   </div>
 
-  <div class="container col-5">
+  <div class="container col-5 py-2">
     <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
       <thead>
+        <tr>
+          <h4>Goalies Regular Season</h4>
+        </tr>
       <tr>
         <th>#</th>
         <th>Name</th>
@@ -64,7 +73,7 @@
     {% for goalkeeper in goalkeepers %}
     <tr>
       <td>.</td>
-      <td  class="first">
+      <td class="first">
         <a class="text-decoration-none text-reset" href="{% url 'rating:goalkeeper_detail' goalkeeper.name.id %}"> 
           {{ goalkeeper.name.name }}
         </a>
@@ -76,6 +85,9 @@
     </tr>
     {% endfor %}
     </tbody>
-    </table>      
+    </table>
+    <a class="btn btn-outline-secondary" href="{% url 'rating:create_goalkeeper_statistic' team season %}" role="button">
+      Add Goalkeeper
+    </a>       
   </div>         
 {% endblock %}

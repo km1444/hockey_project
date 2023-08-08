@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (
-    DescriptionTable, GolkeeperStatistic, PersonPlayoff, PersonRound2, Player,
+    DescriptionTable, GoalkeeperStatistic, PersonPlayoff, PersonRound2, Player,
     Playoff, Position, Season, Statistic, Team, TeamForTable, TeamForTable2,
     TeamForTable2Round, TeamForTable2Round2, TeamForTable2Round3,
     TeamForTable3, TeamForTable4,
@@ -79,7 +79,7 @@ class PersonPlayoffAdmin(admin.ModelAdmin):
     list_filter = ('team',)
 
 
-class GolkeeperStatisticAdmin(admin.ModelAdmin):
+class GoalkeeperStatisticAdmin(admin.ModelAdmin):
     list_display = ('name', 'season', 'team',)
     search_fields = ('name__name',)
     list_filter = ('name',)
@@ -109,6 +109,6 @@ admin.site.register(TeamForTable2Round2, TeamForTable2RoundAdmin)
 admin.site.register(TeamForTable2Round3, TeamForTable2RoundAdmin)
 admin.site.register(Playoff, PlayoffAdmin)
 admin.site.register(PersonPlayoff, PersonPlayoffAdmin)
-admin.site.register(GolkeeperStatistic, GolkeeperStatisticAdmin)
+admin.site.register(GoalkeeperStatistic, GoalkeeperStatisticAdmin)
 admin.site.register(DescriptionTable, DescriptionTableAdmin)
 admin.site.register(PersonRound2, PersonRound2Admin)

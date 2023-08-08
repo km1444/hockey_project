@@ -2,12 +2,15 @@
 # from django.core.paginator import Paginator
 # from django.db import models
 from django.db.models import Q, Sum
+# from django.http import HttpResponseRedirect
+# from django.views.generic.edit import CreateView
 # from django.http import Http404
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 
+from .forms import AddGoalkeeperStatisticForm, AddPlayerForm, AddStatisticForm
 from .models import (
-    DescriptionTable, GolkeeperStatistic, Player, Playoff, Statistic, Team,
+    DescriptionTable, GoalkeeperStatistic, Player, Playoff, Statistic, Team,
     TeamForTable, TeamForTable2, TeamForTable2Round, TeamForTable2Round2,
     TeamForTable2Round3, TeamForTable3, TeamForTable4,
 )
@@ -33,8 +36,8 @@ def index(request):
 def team_players_in_season(request, team, season):
     team_statistic = Statistic.objects.filter(
         team__title=team, season__name=season
-    )
-    goalkeepers = GolkeeperStatistic.objects.filter(
+    ).order_by('-point', '-goal', 'game')
+    goalkeepers = GoalkeeperStatistic.objects.filter(
         team__title=team, season__name=season
     ).order_by('-game')
     team_info = TeamForTable.objects.filter(
@@ -115,13 +118,13 @@ def player_detail(request, id):
     return render(request, template, context)
 
 
-class GolkeeperStatisticListView(ListView):
-    model = GolkeeperStatistic
+class GoalkeeperStatisticListView(ListView):
+    model = GoalkeeperStatistic
     template_name = 'posts/profile_golie.html'
     context_object_name = 'page_obj'
 
     def get_queryset(self):
-        return GolkeeperStatistic.objects.filter(
+        return GoalkeeperStatistic.objects.filter(
             name__id=self.kwargs['pk']).order_by('-season')
 
     def get_context_data(self, **kwargs):
@@ -407,3 +410,62 @@ class SearchResultsView(ListView):
             Q(name__icontains=query.title()) | Q(
                 year_of_birth__icontains=query)
         ).order_by('name')
+
+
+def add_statistic(request, team, season):
+    """Функция добавления статистической записи об игроке,
+    с автозаполнением полей с названием команды и сезона"""
+    form = AddStatisticForm(team, season, request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('rating:team_players_in_season', team, season)
+    form = AddStatisticForm(team, season)
+    context = {
+        'form': form,
+        'team': team,
+        'season': season
+    }
+    return render(request, 'forms/create_statistic.html', context)
+
+
+def add_player(request, team, season):
+    """Добавление игрока в базу"""
+    form = AddPlayerForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect(
+            'rating:create_statistic', team, season)
+    form = AddPlayerForm()
+    return render(request, 'forms/create_player.html', {'form': form})
+
+
+def add_goalkeeper_statistic(request, team, season):
+    """Добавление статистики о голкипере"""
+    form = AddGoalkeeperStatisticForm(team, season, request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('rating:team_players_in_season', team, season)
+    form = AddGoalkeeperStatisticForm(team, season)
+    context = {
+        'form': form,
+        'team': team,
+        'season': season
+    }
+    return render(
+        request,
+        'forms/create_goalkeeper_statistic.html',
+        context
+    )
+
+
+def add_player_goalkeeper(request, team, season):
+    """Добавление игрока в базу со страницы с добавлением статистики по
+    вратарю. Использует туже форму что и полевой игрок, но из-за редиректа
+    другая функция"""
+    form = AddPlayerForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect(
+            'rating:create_goalkeeper_statistic', team, season)
+    form = AddPlayerForm()
+    return render(request, 'forms/create_player.html', {'form': form})
