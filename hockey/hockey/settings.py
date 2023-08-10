@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'core.apps.CoreConfig',
     'api.apps.ApiConfig',
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,6 @@ else:
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'rating:index'

@@ -17,7 +17,12 @@
       </h4>
     {% endfor %}
     
-      <h4>Cезон: {{ season }}</h4>
+      <h4>
+        Cезон:
+        <a class="text-decoration-none text-reset" href="{% url 'rating:create_table' season %}">
+          {{ season }}
+        </a>
+      </h4>
       <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team previous_season %}" role="button">
         Previous season
       </a>
@@ -49,9 +54,12 @@
     {% endfor %}
     </tbody>
     </table>
-    <a class="btn btn-outline-secondary" href="{% url 'rating:create_statistic' team season %}" role="button">
-      Add Player
-    </a>      
+    <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
+    {% if request.user.is_authenticated %}
+      <a class="btn btn-outline-secondary" href="{% url 'rating:create_statistic' team season %}" role="button">
+        Add Player
+      </a> 
+    {% endif %}    
   </div>
 
   <div class="container col-5 py-2">
@@ -86,8 +94,11 @@
     {% endfor %}
     </tbody>
     </table>
-    <a class="btn btn-outline-secondary" href="{% url 'rating:create_goalkeeper_statistic' team season %}" role="button">
-      Add Goalkeeper
-    </a>       
+    <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
+    {% if request.user.is_authenticated %}
+      <a class="btn btn-outline-secondary" href="{% url 'rating:create_goalkeeper_statistic' team season %}" role="button">
+        Add Goalkeeper
+      </a>
+    {% endif %}      
   </div>         
 {% endblock %}

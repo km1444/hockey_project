@@ -1,10 +1,11 @@
 # from aggregates import StringAgg
 # from django.core.paginator import Paginator
 # from django.db import models
-from django.db.models import Q, Sum
 # from django.http import HttpResponseRedirect
 # from django.views.generic.edit import CreateView
 # from django.http import Http404
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 
@@ -91,7 +92,7 @@ def player_detail(request, id):
             'amount_teams': amount_teams,
         }
     else:
-        player_seasons = player.golkeeperstatistic.order_by('season__name')
+        player_seasons = player.goalkeeperstatistic.order_by('season__name')
         game = sum(i.game for i in player_seasons)
         goal_against = sum(i.goal_against for i in player_seasons)
         penalty = sum(i.penalty for i in player_seasons)
@@ -412,6 +413,7 @@ class SearchResultsView(ListView):
         ).order_by('name')
 
 
+@login_required
 def add_statistic(request, team, season):
     """Функция добавления статистической записи об игроке,
     с автозаполнением полей с названием команды и сезона"""
@@ -428,6 +430,7 @@ def add_statistic(request, team, season):
     return render(request, 'forms/create_statistic.html', context)
 
 
+@login_required
 def add_player(request, team, season):
     """Добавление игрока в базу"""
     form = AddPlayerForm(request.POST or None)
@@ -439,6 +442,7 @@ def add_player(request, team, season):
     return render(request, 'forms/create_player.html', {'form': form})
 
 
+@login_required
 def add_goalkeeper_statistic(request, team, season):
     """Добавление статистики о голкипере"""
     form = AddGoalkeeperStatisticForm(team, season, request.POST or None)
@@ -458,6 +462,7 @@ def add_goalkeeper_statistic(request, team, season):
     )
 
 
+@login_required
 def add_player_goalkeeper(request, team, season):
     """Добавление игрока в базу со страницы с добавлением статистики по
     вратарю. Использует туже форму что и полевой игрок, но из-за редиректа
