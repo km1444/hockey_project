@@ -63,7 +63,7 @@ class ViewTests(TestCase):
             ): 'posts/profile.html',
             reverse(
                 'rating:statistic',
-                kwargs={'stat_rule': 'goals_career'}
+                kwargs={'stat_rule': 'goal_career'}
             ): 'posts/index.html',
             # reverse('rating:statistic'): 'posts/index.html',
             # reverse('rating:statistic'): 'posts/index.html',

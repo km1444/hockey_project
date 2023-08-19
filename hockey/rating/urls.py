@@ -34,6 +34,11 @@ urlpatterns = [
         views.all_time_all_player_one_team,
         name='all_time_all_player_one_team'
     ),
+    path(
+        'goalkeepers/<str:team>/',
+        views.goalie_list_team,
+        name='goalie_list_team'
+    ),
     path('table/<str:season>/', views.create_table, name='create_table'),
     path('history/<str:team>/', views.history_team, name='history_team'),
     path('search/', SearchResultsView.as_view(), name='search_result'),

@@ -1,9 +1,39 @@
 {% load static %}
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'rating:index' %}">
-      <i class="fa-solid fa-hockey-sticks"></i>
-      <span style="color:red">H</span>OCKEY
-    </a>
+<div id="header">
+  <ul id="subnav">
+    {% if request.user.is_authenticated %}
+      <li> 
+        <a href="{% url 'users:logout' %}">Выйти</a>
+      </li>
+      <li>
+        <a>Пользователь: {{ user.username }}</a>
+      <li>
+    {% else %}
+      <li class="nav-item">
+        <a href="{% url 'users:login' %}">Войти</a>
+      </li>
+      {% comment %} <li>
+        <a href="{% url 'users:signup' %}">Регистрация</a>
+      </li> {% endcomment %}
+    {% endif %}
+  </ul>
+
+    <nav class="navbar navbar-light justify-content-between" id="mid-subnav">
+          <a class="navbar-brand" href="{% url 'rating:index' %}">
+            <i class="fa-solid fa-hockey-sticks"></i>
+            <span style="color:red">H</span>OCKEY
+          </a>
+          
+            <form class="d-flex" role="search" action="{% url 'rating:search_result' %}" methog="get">
+              <input name='q' class="form-control me-2"
+                type="search"
+                placeholder="Person or year of birth"
+                aria-label="Search"/>
+              <button class="btn btn-outline-success me-2" type="submit">Search</button>
+            </form>
+    </nav>
+  
+  <nav class="navbar navbar-expand-sm navbar-light bg-light" id="bot-subnav">
     <button class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -14,12 +44,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 top-menu">
-        <li class="nav-item">
+      <ul class="navbar-nav me-auto mb-2 pt-2 mb-lg-0 top-menu">
+        {% comment %} <li class="nav-item">
           {% with request.resolver_match.view_name as view_name %}
             <a class="nav-link" {% if view_name  == 'about:author' %} active {% endif %} href="">Об авторе</a>
           {% endwith %}
-        </li>
+        </li> {% endcomment %}
         <div class="dropdown">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -102,51 +132,7 @@
         </div>
       </ul>
     </div>
-
-    <div>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 top-menu">
-        {% if request.user.is_authenticated %}
-          {% comment %} <li class="nav-item"> 
-            {% with request.resolver_match.view_name as view_name %}
-              <a class="nav-link {% if view_name  == 'posts:post_create' %}active{% endif %}"
-              href="{% url '' %}">Новая запись</a>
-            {% endwith %}
-          </li> 
-          <li class="nav-item"> 
-            <a class="nav-link link-light" href="<!--  -->">Изменить пароль</a>
-          </li>{% endcomment %}
-          <li class="nav-item"> 
-            <a class="nav-link link-light" href="{% url 'users:logout' %}">Выйти</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link link-light" >Пользователь: {{ user.username }}</a>
-          <li>
-          {% else %}
-          <li class="nav-item">
-            {% with request.resolver_match.view_name as view_name %}
-              <a class="nav-link {% if view_name  == 'users:login' %}active{% endif %}" 
-              href="{% url 'users:login' %}">Войти</a>
-            {% endwith %}
-          </li>
-          <li class="nav-item">
-            {% with request.resolver_match.view_name as view_name %}
-              <a class="nav-link {% if view_name  == 'users:signup' %}active{% endif %}" 
-              href="{% url 'users:signup' %}">Регистрация</a>
-            {% endwith %}
-          </li>
-        {% endif %}
-      </ul>
-    </div>
-
-    <div id="SearchField">
-      <form class="d-flex" role="search" action="{% url 'rating:search_result' %}" methog="get">
-        <input name='q' class="form-control me-2"
-               type="search"
-               placeholder="Search"
-               aria-label="Search"/>
-        <button class="btn btn-outline-success me-2" type="submit">Search</button>
-      </form>
-    </div>
   </nav>
+</div>
 
 

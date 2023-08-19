@@ -11,7 +11,7 @@
 {% include 'includes/submenu_team.html' %}
 
 <div class="container col-5 p-1 my-1">
-  <h4 align="center"> Career Leaders for Points </h4>
+  <h4 align="center"> Goalkeepers </h4>
 </div>
 
 <div class="container col-4 p-1 my-1">
@@ -22,14 +22,21 @@
           <th data-type="string">Player</th>
           <th data-type="number">Games</th>
           <th data-type="number">Goals</th>
-          <th data-type="number">Assists</th>
-          <th data-type="number">Points</th>
           <th data-type="number">Penalty</th>
         </tr>
       </thead>
       <tbody>
         {% for post in page_obj %}
-          {% include 'includes/all_time_all_player_one_team_inc.html' %}
+        <tr>
+            <td>.</td>
+            <td class="first">
+              <a class="text-decoration-none text-reset"
+                 href="{% url 'rating:goalkeeper_detail' post.name__id %}"> {{ post.name__name }}</a>
+            </td>
+            <td>{{ post.games }}</td>
+            <td>{{ post.goals }}</td>
+            <td>{{ post.penalty }}</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>

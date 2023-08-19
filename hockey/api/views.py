@@ -1,6 +1,6 @@
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
-from rating.models import Player, Statistic, Team
+from rating.models import Player, Statistic, Team, TeamForTable
 from rest_framework import generics
 
 from .serializers import (
@@ -51,8 +51,8 @@ class TeamHistory(generics.ListAPIView):
     serializer_class = TeamForTableSerializer
 
     def get_queryset(self):
-        team = get_object_or_404(Team, title=self.kwargs.get('team'))
-        return team.team_for_tables.all().order_by('season__name')
+        return TeamForTable.objects.filter(
+            name__title=self.kwargs.get('team')).order_by('season__name')
 
 
 class SeasonLeadersTeam(generics.ListAPIView):

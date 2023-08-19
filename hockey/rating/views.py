@@ -186,6 +186,26 @@ def all_time_all_player_one_team(request, team):
     return render(request, template, context)
 
 
+def goalie_list_team(request, team):
+    team = Team.objects.get(title=team)
+    total_goalkeeper = GoalkeeperStatistic.objects.filter(
+        team__title=team).values(
+            'name__id', 'name__name').annotate(
+                games=Sum('game'),
+                goals=Sum('goal_against'),
+                penalty=Sum('penalty')).order_by('-games')
+    template = 'posts/goalie_list_team.html'
+    context = {
+        'page_obj': total_goalkeeper,
+        'team': team,
+        'top_goal': top_goal(team),
+        'top_point': top_point(team),
+        'top_s_goal': top_season_goal(team),
+        'top_s_point': top_season_point(team),
+    }
+    return render(request, template, context)
+
+
 def statistic(request, stat_rule):
     rule = stat_rule.split('_')
     if rule[1] == 'career':
@@ -338,34 +358,19 @@ def leaders_career(request, team):
 
 def season_leaders(request, team):
     team = Team.objects.get(title=team)
-    top_10_goal = Statistic.objects.filter(
+    query_list = Statistic.objects.filter(
         team__title=team).values(
             'name__id',
             'name__name',
-            'goal',
-            'season__name').order_by(
-                '-goal')[:10]
-    top_10_assist = Statistic.objects.filter(
-        team__title=team).values(
-            'name__id',
-            'name__name',
-            'assist',
-            'season__name').order_by(
-                '-assist')[:10]
-    top_10_point = Statistic.objects.filter(
-        team__title=team).values(
-            'name__id',
-            'name__name',
-            'point',
-            'season__name').order_by(
-                '-point')[:10]
-    top_10_penalty = Statistic.objects.filter(
-        team__title=team).values(
-            'name__id',
-            'name__name',
-            'penalty',
-            'season__name').order_by(
-                '-penalty')[:10]
+            'season__name').annotate(
+                goal=Sum('goal'),
+                assist=Sum('assist'),
+                point=Sum('point'),
+                penalty=Sum('penalty'))
+    top_10_goal = query_list.order_by('-goal')[:10]
+    top_10_assist = query_list.order_by('-assist')[:10]
+    top_10_point = query_list.order_by('-point')[:10]
+    top_10_penalty = query_list.order_by('-penalty')[:10]
     context = {
         'top_10_goal': top_10_goal,
         'top_10_assist': top_10_assist,
