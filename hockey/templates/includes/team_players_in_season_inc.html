@@ -7,4 +7,16 @@
     <td>{{ post.assist }}</td>
     <td class="table-warning">{{ post.point }}</td>
     <td>{{ post.penalty }}</td>
+    {% if request.user.is_authenticated %}
+      <td>
+        <p>
+          <a href="{% url 'rating:edit_skater_statistic' team season post.id %}">
+            Edit
+          </a>
+          <a href="{% url 'rating:delete_skater_statistic' team season post.id %}">
+            Delete
+          </a>
+        </p>
+      </td>
+    {% endif %}
   </tr>

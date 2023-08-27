@@ -1,5 +1,8 @@
 from django.urls import path
-from rating.views import GoalkeeperStatisticListView, SearchResultsView
+from rating.views import (
+    GoalkeeperStatisticListView, SearchResultsView, SkaterStatisticDeleteView,
+    SkaterStatisticUpdateView,
+)
 
 from . import views
 
@@ -66,5 +69,26 @@ urlpatterns = [
         'create_player_goalkeeper/<str:team>/<str:season>',
         views.add_player_goalkeeper,
         name='create_player_goalkeeper'
+    ),
+    path(
+        'edit_skater_statistic/<str:team>/<str:season>/<int:id>',
+        # views.edit_skater_statistic,
+        SkaterStatisticUpdateView.as_view(),
+        name='edit_skater_statistic'
+    ),
+    path(
+        'delete_skater_statistic/<str:team>/<str:season>/<int:id>',
+        SkaterStatisticDeleteView.as_view(),
+        name='delete_skater_statistic'
+    ),
+    path(
+        'edit_goalkeeper_statistic/<str:team>/<str:season>/<int:id>',
+        views.edit_goalkeeper_statistic,
+        name='edit_goalkeeper_statistic'
+    ),
+    path(
+        'delete_goalkeeper_statistic/<str:team>/<str:season>/<int:id>',
+        views.delete_goalkeeper_statistic,
+        name='delete_goalkeeper_statistic'
     ),
 ]

@@ -4,12 +4,17 @@
 # from django.http import HttpResponseRedirect
 # from django.views.generic.edit import CreateView
 # from django.http import Http404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
+from django.views.generic.edit import DeleteView, UpdateView
 
-from .forms import AddGoalkeeperStatisticForm, AddPlayerForm, AddStatisticForm
+from .forms import (
+    AddGoalkeeperStatisticForm, AddPlayerForm, AddStatisticForm,
+    EditGoalkeeperStatisticForm, EditStatisticForm,
+)
 from .models import (
     DescriptionTable, GoalkeeperStatistic, Player, Playoff, Statistic, Team,
     TeamForTable, TeamForTable2, TeamForTable2Round, TeamForTable2Round2,
@@ -479,3 +484,95 @@ def add_player_goalkeeper(request, team, season):
             'rating:create_goalkeeper_statistic', team, season)
     form = AddPlayerForm()
     return render(request, 'forms/create_player.html', {'form': form})
+
+
+class SkaterStatisticUpdateView(UpdateView):
+    form_class = EditStatisticForm
+    pk_url_kwarg = 'id'
+    template_name = "forms/create_statistic.html"
+
+    def get_queryset(self):
+        return Statistic.objects.filter(
+            id=self.kwargs['id'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['team'] = self.kwargs['team']
+        context['season'] = self.kwargs['season']
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse(
+            'rating:team_players_in_season',
+            kwargs={
+                'team': self.kwargs['team'], 'season': self.kwargs['season']
+            },
+        )
+
+
+class SkaterStatisticDeleteView(DeleteView):
+    pk_url_kwarg = 'id'
+    template_name = "forms/statistical_record_confirm_delete.html"
+
+    def get_queryset(self):
+        return Statistic.objects.filter(
+            id=self.kwargs['id'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['team'] = self.kwargs['team']
+        context['season'] = self.kwargs['season']
+        return context
+
+    def get_success_url(self, **kwargs):
+        return reverse(
+            'rating:team_players_in_season',
+            kwargs={
+                'team': self.kwargs['team'], 'season': self.kwargs['season']
+            },
+        )
+
+
+@login_required
+def edit_goalkeeper_statistic(request, team, season, id):
+    """Редактирование статистики голкипера"""
+    statistic = get_object_or_404(GoalkeeperStatistic, id=id)
+    form = EditGoalkeeperStatisticForm(
+        request.POST or None,
+        instance=statistic
+    )
+    if form.is_valid():
+        form.save()
+        return redirect('rating:team_players_in_season', team, season)
+    form = EditGoalkeeperStatisticForm(instance=statistic)
+    context = {
+        'form': form,
+        'team': team,
+        'season': season
+    }
+    return render(
+        request,
+        'forms/create_goalkeeper_statistic.html',
+        context
+    )
+
+
+@login_required
+def delete_goalkeeper_statistic(request, team, season, id):
+    """удаление статистической записи по вратарю"""
+    statistic = get_object_or_404(GoalkeeperStatistic, id=id)
+    context = {
+        'statistic': statistic,
+        'team': team,
+        'season': season
+    }
+    if request.method == 'GET':
+        return render(
+            request, 'forms/statistical_record_confirm_delete.html', context
+        )
+    elif request.method == 'POST':
+        statistic.delete()
+        messages.success(
+            request, 'The statistical record has been deleted successfully.'
+        )
+        return redirect('rating:team_players_in_season', team, season)

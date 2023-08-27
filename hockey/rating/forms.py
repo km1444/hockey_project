@@ -35,6 +35,15 @@ class AddStatisticForm(forms.ModelForm):
         self.fields['name'].initial = Player.objects.last()
 
 
+class EditStatisticForm(forms.ModelForm):
+    class Meta:
+        model = Statistic
+        fields = (
+            'name', 'position',
+            'game', 'goal', 'assist', 'penalty'
+        )
+
+
 class AddPlayerForm(forms.ModelForm):
     class Meta:
         model = Player
@@ -71,3 +80,12 @@ class AddGoalkeeperStatisticForm(forms.ModelForm):
         self.fields['season'].initial = Season.objects.get(
             name=season)
         self.fields['name'].initial = Player.objects.last()
+
+
+class EditGoalkeeperStatisticForm(forms.ModelForm):
+    class Meta:
+        model = GoalkeeperStatistic
+        fields = (
+            'name', 'team', 'season', 'position',
+            'game', 'goal_against', 'penalty'
+        )

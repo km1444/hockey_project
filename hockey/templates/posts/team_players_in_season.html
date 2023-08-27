@@ -46,6 +46,11 @@
         <th>Assist</th>
         <th>Point</th>
         <th>Penalty</th>
+        {% if request.user.is_authenticated %}
+            <th>
+              Edit
+            </th>
+          {% endif %}
       </tr>
       </thead>
     <tbody>
@@ -68,31 +73,50 @@
         <tr>
           <h4>Goalies Regular Season</h4>
         </tr>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Game</th>
-        <th>Goal</th>
-        <th>Penalty</th>
-      </tr>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Game</th>
+          <th>Goal</th>
+          <th>Penalty</th>
+          {% if request.user.is_authenticated %}
+            <th>
+              Edit
+            </th>
+          {% endif %}
+        </tr>
       </thead>
-    <tbody>
-    {% for goalkeeper in goalkeepers %}
-    <tr>
-      <td>.</td>
-      <td class="first">
-        <a class="text-decoration-none text-reset" href="{% url 'rating:goalkeeper_detail' goalkeeper.name.id %}"> 
-          {{ goalkeeper.name.name }}
-        </a>
-      </td>
-      <td>{{ goalkeeper.age }}</td>
-      <td>{{ goalkeeper.game }}</td>
-      <td>{{ goalkeeper.goal_against }}</td>
-      <td>{{ goalkeeper.penalty }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
+      <tbody>
+        {% for goalkeeper in goalkeepers %}
+        <tr>
+          <td>.</td>
+          <td class="first">
+            <a class="text-decoration-none text-reset" href="{% url 'rating:goalkeeper_detail' goalkeeper.name.id %}"> 
+              {{ goalkeeper.name.name }}
+            </a>
+          </td>
+          <td>{{ goalkeeper.age }}</td>
+          <td>{{ goalkeeper.game }}</td>
+          <td>{{ goalkeeper.goal_against }}</td>
+          <td>{{ goalkeeper.penalty }}</td>
+          
+          {% if request.user.is_authenticated %}
+          <td>
+            <p>
+            <a href="{% url 'rating:edit_goalkeeper_statistic' team season goalkeeper.id %}">
+              Edit
+            </a>
+            <a href="{% url 'rating:delete_goalkeeper_statistic' team season goalkeeper.id %}">
+              Delete
+            </a>
+          </p>
+          </td>
+          {% endif %}
+          
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
     <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
     {% if request.user.is_authenticated %}

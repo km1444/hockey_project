@@ -134,23 +134,22 @@ class GoalkeeperStatistic(models.Model):
         Player,
         verbose_name="Игрок",
         on_delete=models.CASCADE,
+        default=1,
         related_name='goalkeeperstatistic'
     )
     age = models.SmallIntegerField('Возраст', default=14)
     team = models.ForeignKey(
         Team,
         on_delete=models.CASCADE,
-        # default=1,
-        blank=True,
-        null=True,
+        default=1,
         related_name='goalkeeperstatistic',
         verbose_name="Команда"
     )
     season = models.ForeignKey(
         Season,
         verbose_name='Сезон',
+        default=1,
         on_delete=models.CASCADE,
-        default=22,
         related_name='goalkeeperstatistic'
     )
     position = models.ForeignKey(
@@ -177,9 +176,15 @@ class GoalkeeperStatistic(models.Model):
         super(GoalkeeperStatistic, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "Статистик Вратаря"
+        verbose_name = "Статистика Вратаря"
         verbose_name_plural = "Статистика Вратарей"
-        ordering = ('game',)
+        constraints = [
+            models.UniqueConstraint(
+                name='unique_goalkeeper_statistic',
+                fields=['name', 'team', 'season']
+            )
+        ]
+        ordering = ('-season',)
 
 
 class Playoff(models.Model):
