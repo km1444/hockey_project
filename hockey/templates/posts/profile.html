@@ -28,14 +28,14 @@
           {% for post in page_obj %}
           <tr>
             <td>
-                <a href="{% url 'rating:create_table' post.season %}">
-                    {{ post.season }}
+                <a href="{% url 'rating:create_table' post.season__name %}">
+                    {{ post.season__name }}
                 </a>
             </td>
             <td>{{ post.age }}</td>
             <td>
-                <a href="{% url 'rating:team_players_in_season' post.team post.season %}"> 
-                    {{ post.team }}
+                <a href="{% url 'rating:team_players_in_season' post.team__title post.season__name %}"> 
+                    {{ post.team__title }}
                 </a>
             </td>
             <td>{{ post.game }}</td>

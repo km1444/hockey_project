@@ -1,7 +1,7 @@
 <tr>
     <td>{{ team.rank }}</td>
     <td class="first">
-        <a href="{% url 'rating:team_players_in_season' team.name team.season %}">
+        <a href="{% url 'rating:team_players_in_season' team.name__title team.season__name %}">
             {{ team.current_name }}
         </a>
     </td>

@@ -23,14 +23,14 @@
           {% for post in page_obj %}
           <tr>
             <td>
-                <a href="{% url 'rating:create_table' post.season %}">
-                    {{ post.season }}
+                <a href="{% url 'rating:create_table' post.season__name %}">
+                    {{ post.season__name }}
                 </a>
             </td>
             <td>{{ post.age }}</td>
             <td>
-                <a href="{% url 'rating:team_players_in_season' post.team post.season %}"> 
-                    {{ post.team }}
+                <a href="{% url 'rating:team_players_in_season' post.team__title post.season__name %}"> 
+                    {{ post.team__title }}
                 </a>
             </td>
             <td>{{ post.game }}</td>
@@ -45,7 +45,7 @@
           <th></th>
           <th></th>
           <th>{{ game }}</th>
-          <th>{{ goal }}</th>
+          <th>{{ goal_against }}</th>
           <th>{{ penalty }}</th>
         </tr>
         {% if amount_teams != 1 %}
@@ -59,7 +59,7 @@
                 </a>
             </td>
             <td>{{ elem.game }}</td>
-            <td>{{ elem.goal }}</td>
+            <td>{{ elem.goal_against }}</td>
             <td>{{ elem.penalty }}</td>
           </tr>
           {% endfor %}

@@ -3,13 +3,23 @@ from rest_framework import serializers
 
 
 class PlayerSerializer(serializers.ModelSerializer):
-    # name = serializers.StringRelatedField(many=True, read_only=True)
-    total_game = serializers.IntegerField()
-    total_point = serializers.IntegerField()
+    game = serializers.IntegerField()
+    point = serializers.IntegerField()
+    name__name = serializers.StringRelatedField(read_only=True)
 
     class Meta:
-        model = Player
-        fields = ('id', 'name', 'total_game', 'total_point')
+        model = Statistic
+        fields = ('name__name', 'game', 'point')
+
+
+class PlayerMostGoalsSerializer(serializers.ModelSerializer):
+    game = serializers.IntegerField()
+    goal = serializers.IntegerField()
+    name__name = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = Statistic
+        fields = ('name__name', 'game', 'goal')
 
 
 class TeamSerializer(serializers.ModelSerializer):
@@ -24,7 +34,8 @@ class StatisticSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Statistic
-        fields = ('id', 'name', 'season', 'game', 'goal', 'assist', 'point')
+        fields = (
+            'id', 'name', 'season', 'game', 'goal', 'assist', 'point')
 
 
 class PlayerDetailSerializer(serializers.ModelSerializer):

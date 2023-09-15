@@ -92,8 +92,8 @@
         <tr>
           <td>.</td>
           <td class="first">
-            <a class="text-decoration-none text-reset" href="{% url 'rating:goalkeeper_detail' goalkeeper.name.id %}"> 
-              {{ goalkeeper.name.name }}
+            <a class="text-decoration-none text-reset" href="{% url 'rating:goalkeeper_detail' goalkeeper.name %}"> 
+              {{ goalkeeper.name__name }}
             </a>
           </td>
           <td>{{ goalkeeper.age }}</td>

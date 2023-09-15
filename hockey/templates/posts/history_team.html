@@ -48,19 +48,36 @@
         <td>{{ team.coach }}</td>
       </tr>
       {% if team.round_2 %}
-      <tr>
-        <td></td>
-        <td>{{ team.round_2.table1.name }}</td>
-        <td>{{ team.round_2.table1.games }}</td>
-        <td>{{ team.round_2.table1.wins }}</td>
-        <td>{{ team.round_2.table1.ties }}</td>
-        <td>{{ team.round_2.table1.losses }}</td>
-        <td><b>{{ team.round_2.table1.points }}</b></td>
-        <td>{{ team.round_2.table1.points_percentage }}</td>
-        <td>{{ team.round_2.table1.rank }}</td>
-        <td>{{ team.playoff.table1.result}}</td>
-        <td>{{ team.round_2.table1.coach }}</td>
-      </tr>
+        {% if team.round_2.table1 %}
+          <tr>
+            <td></td>
+            <td>{{ team.round_2.table1.current_name }}</td>
+            <td>{{ team.round_2.table1.games }}</td>
+            <td>{{ team.round_2.table1.wins }}</td>
+            <td>{{ team.round_2.table1.ties }}</td>
+            <td>{{ team.round_2.table1.losses }}</td>
+            <td><b>{{ team.round_2.table1.points }}</b></td>
+            <td>{{ team.round_2.table1.points_percentage }}</td>
+            <td>{{ team.round_2.table1.rank }}</td>
+            <td>{{ team.playoff.table1.result}}</td>
+            <td>{{ team.round_2.table1.coach }}</td>
+          </tr>
+        {% endif %}
+        {% if team.round_2.table2 %}
+          <tr>
+            <td></td>
+            <td>{{ team.round_2.table2.current_name }}</td>
+            <td>{{ team.round_2.table2.games }}</td>
+            <td>{{ team.round_2.table2.wins }}</td>
+            <td>{{ team.round_2.table2.ties }}</td>
+            <td>{{ team.round_2.table2.losses }}</td>
+            <td><b>{{ team.round_2.table2.points }}</b></td>
+            <td>{{ team.round_2.table2.points_percentage }}</td>
+            <td>{{ team.round_2.table2.rank }}</td>
+            <td>{{ team.playoff.table2.result}}</td>
+            <td>{{ team.round_2.table2.coach }}</td>
+          </tr>
+        {% endif %}
       {% endif %}
       {% endfor %}
       </tbody>

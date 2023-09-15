@@ -4,8 +4,8 @@ from rating.models import Player, Statistic, Team, TeamForTable
 from rest_framework import generics
 
 from .serializers import (
-    PlayerSerializer, StatisticSerializer, TeamForTableSerializer,
-    TeamSerializer,
+    PlayerMostGoalsSerializer, PlayerSerializer, StatisticSerializer,
+    TeamForTableSerializer, TeamSerializer,
 )
 
 
@@ -14,10 +14,22 @@ class PlayerList(generics.ListAPIView):
     serializer_class = PlayerSerializer
 
     def get_queryset(self):
-        return Player.objects.values('name').annotate(
-            total_game=Sum('statistics__game'),
-            total_point=Sum('statistics__point')
-        ).order_by('-total_point')[:10]
+        data = Statistic.objects.values(
+            'name__name').annotate(
+                game=Sum('game'), point=Sum('point')).order_by(
+                    '-point', 'game')[:10]
+        return data
+
+
+class PlayerMostGoalsList(generics.ListAPIView):
+    serializer_class = PlayerMostGoalsSerializer
+
+    def get_queryset(self):
+        data = Statistic.objects.values(
+            'name__name').annotate(
+                game=Sum('game'), goal=Sum('goal')).order_by(
+                    '-goal', 'game')[:10]
+        return data
 
 
 class PlayerDetail(generics.ListAPIView):
