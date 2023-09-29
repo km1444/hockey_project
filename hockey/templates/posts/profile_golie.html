@@ -2,12 +2,13 @@
 {% comment %} {% block title %}Профайл игрока {{ player.name }} {% endblock title %} {% endcomment %}
 {% block content %}
 
-  <div class="container col-5 py-1">
+  <div class="container col-sm-5 py-1">
     <h1>{{ name.name }}</h1>
     <h4>Position : {{ position }}</h4>
     <h4>Born : {{ name.year_of_birth }}</h4>
   </div>
-    <div class="container col-5 p-1 my-1">
+  
+    <div class="container col-sm-5 p-1 my-1">
       <table class="table table-bordered table-hover table-sm">
         <thead>
           <tr>

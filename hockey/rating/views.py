@@ -454,10 +454,46 @@ def season_leaders(request, team):
     return render(request, template, context)
 
 
+# def history_team(request, team):
+#     """ функция формирования содержимого страницы с историей команды """
+#     team_view = TeamForTable.objects.filter(name__title=team).values(
+#         'season__name',
+#         'current_name',
+#         'games',
+#         'wins',
+#         'ties',
+#         'losses',
+#         'points',
+#         'points_percentage',
+#         'rank',
+#         'playoff__result',
+#         'coach',
+#         'round_2__table1'
+#     ).order_by('-season__name')
+#     for el in team_view:
+#         print(el['round_2__table1'])
+#     team = Team.objects.get(title=team)
+#     count_season = team_view.count()
+#     context = {
+#         'team_view': team_view,
+#         # 'team_view_2round': team_view_2round,
+#         'team': team,
+#         'count_season': count_season,
+#         'top_goal': top_goal(team),
+#         'top_point': top_point(team),
+#         'top_s_goal': top_season_goal(team),
+#         'top_s_point': top_season_point(team)
+#     }
+#     template = 'posts/history_team.html'
+#     return render(request, template, context)
+
+
 def history_team(request, team):
     """ функция формирования содержимого страницы с историей команды """
     team_view = TeamForTable.objects.filter(
         name__title=team).order_by('-season__name')
+    print(TeamForTable.objects.filter(
+        name__title=team).order_by('-season__name').query)
     team = Team.objects.get(title=team)
     count_season = team_view.count()
     context = {

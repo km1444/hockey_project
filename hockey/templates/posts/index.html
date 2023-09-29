@@ -1,29 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
 
-<div class="container col-5 p-1 my-1">
+<div class="container col-sm-4 p-1 my-1">
   <h4 align="center"> {{ table_name }} </h4>
 </div>
 
-<div class="container col-4 p-1 my-1">
+<div class="container col-sm-4 p-1 my-1">
   <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
     <thead>
       <tr>
-        <th width="15px">Rank</th>
+        <th>#</th>
         <th>Player</th>
-        <th>Games</th>
+        <th>GP</th>
           {% if table_name == 'Career Leaders for Points' or table_name == 'Single Season Leaders for Points' %}
-            <th>Points</th>
+            <th>PTS</th>
             {% elif table_name == 'Career Leaders for Goals' or table_name == 'Single Season Leaders for Goals' %}
-            <th>Goals</th>
+            <th>G</th>
             {% elif table_name == 'Career Leaders for Assists' or table_name == 'Single Season Leaders for Assists' %}
-            <th>Assist</th>
+            <th>A</th>
             {% elif table_name == 'Career Leaders for Penaltys' or table_name == 'Single Season Leaders for Penaltys' %}
-            <th>Penalty</th>
+            <th>PIM</th>
           {% endif %}
 
-          {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' or table_name == 'Single Season Leaders for Assist' or table_name == 'Single Season Leaders for Penaltys' %}
+          {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' or table_name == 'Single Season Leaders for Assists' or table_name == 'Single Season Leaders for Penaltys' %}
             <td>Season</td>
           {% endif %}
       </tr>

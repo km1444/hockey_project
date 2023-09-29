@@ -1,27 +1,29 @@
 {% load static %}
-<div id="header">
-  <ul id="subnav">
-    {% if request.user.is_authenticated %}
+<div class="container col-sm py-0 px-0">
+  <nav class="navbar navbar-light justify-content-between" id="top-subnav">
+    <ul>
+      {% if request.user.is_authenticated %}
       <li> 
         <a href="{% url 'users:logout' %}">Выйти</a>
       </li>
       <li>
         <a>Пользователь: {{ user.username }}</a>
       <li>
-    {% else %}
+      {% else %}
       <li class="nav-item">
         <a href="{% url 'users:login' %}">Войти</a>
       </li>
       {% comment %} <li>
         <a href="{% url 'users:signup' %}">Регистрация</a>
       </li> {% endcomment %}
-    {% endif %}
-  </ul>
+      {% endif %}
+    </ul>
+  </nav>
 
-    <nav class="navbar navbar-light justify-content-between" id="mid-subnav">
+  <nav class="navbar navbar-light justify-content-between" id="mid-subnav">
           <a class="navbar-brand" href="{% url 'rating:index' %}">
             <i class="fa-solid fa-hockey-sticks"></i>
-            <span style="color:red">H</span>OCKEY
+            <span style="color:red">45</span>seasons
           </a>
           
             <form class="d-flex" role="search" action="{% url 'rating:search_result' %}" methog="get">
@@ -31,7 +33,7 @@
                 aria-label="Search"/>
               <button class="btn btn-outline-success me-2" type="submit">Search</button>
             </form>
-    </nav>
+  </nav>
   
   <nav class="navbar navbar-expand-sm navbar-light bg-light" id="bot-subnav">
     <button class="navbar-toggler"

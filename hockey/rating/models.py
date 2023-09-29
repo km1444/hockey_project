@@ -290,7 +290,7 @@ class TeamForTable2Round(models.Model):
     class Meta:
         verbose_name = "Команда 1 группы 2 раунда"
         verbose_name_plural = "Команды 1 группы 2 раунда"
-        ordering = ('-points_percentage',)
+        ordering = ('season__name',)
 
     def __str__(self):
         return f'{self.name}, {self.season}'
@@ -337,7 +337,7 @@ class TeamForTable2Round2(models.Model):
     class Meta:
         verbose_name = "Команда 2 группы 2 раунда"
         verbose_name_plural = "Команды 2 группы 2 раунда"
-        ordering = ('-points_percentage',)
+        ordering = ('season__name',)
 
     def __str__(self):
         return f'{self.name}, {self.season}'
@@ -384,7 +384,7 @@ class TeamForTable2Round3(models.Model):
     class Meta:
         verbose_name = "Команда 3 группы 2 раунда"
         verbose_name_plural = "Команды 3 группы 2 раунда"
-        ordering = ('-points_percentage',)
+        ordering = ('season__name',)
 
     def __str__(self):
         return f'{self.name}, {self.season}'
@@ -476,7 +476,7 @@ class TeamForTable(models.Model):
 class TeamForTable2(models.Model):
     rank = models.IntegerField('Место')
     round_2 = models.ForeignKey(
-        TeamForTable2Round,
+        PersonRound2,
         blank=True,
         null=True,
         on_delete=models.CASCADE,
@@ -538,7 +538,7 @@ class TeamForTable2(models.Model):
 class TeamForTable3(models.Model):
     rank = models.IntegerField('Место')
     round_2 = models.ForeignKey(
-        TeamForTable2Round,
+        PersonRound2,
         blank=True,
         null=True,
         on_delete=models.CASCADE,
@@ -600,7 +600,7 @@ class TeamForTable3(models.Model):
 class TeamForTable4(models.Model):
     rank = models.IntegerField('Место')
     round_2 = models.ForeignKey(
-        TeamForTable2Round,
+        PersonRound2,
         blank=True,
         null=True,
         on_delete=models.CASCADE,
