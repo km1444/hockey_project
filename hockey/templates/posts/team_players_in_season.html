@@ -6,16 +6,29 @@
 
 {% block content%}
   <div class="container col-sm-5 py-2">
+    {% if team_info %}
     {% for team in team_info %}
       <h1> 
-        <a href="{% url 'rating:history_team' team.name %}">
+        <a href="{% url 'rating:history_team' team.name__title %}">
           {{ team.current_name }} 
         </a>
       </h1> 
       <h4>
-      {{ team.name.city}}
+      {{ team.name__city}}
       </h4>
     {% endfor %}
+    {% elif team_info_2 %}
+    {% for team in team_info_2 %}
+      <h1> 
+        <a href="{% url 'rating:history_team' team.name__title %}">
+          {{ team.current_name }} 
+        </a>
+      </h1> 
+      <h4>
+      {{ team.name__city}}
+      </h4>
+    {% endfor %}
+    {% endif %}
     
       <h4>
         Cезон:

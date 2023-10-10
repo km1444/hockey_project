@@ -34,20 +34,20 @@
       </thead>
       <tbody>
       {% for team in team_view %}
-      <tr>
-        <td><a href="{% url 'rating:create_table' team.season.name %}">{{ team.season }}</a></td>
-        <td>{{ team.current_name }}</td>
-        <td>{{ team.games }}</td>
-        <td>{{ team.wins }}</td>
-        <td>{{ team.ties }}</td>
-        <td>{{ team.losses }}</td>
-        <td><b>{{ team.points }}</b></td>
-        <td>{{ team.points_percentage }}</td>
-        <td>{{ team.rank }}</td>
-        <td>{{ team.playoff.result }}</td>
-        <td>{{ team.coach }}</td>
-      </tr>
-      {% if team.round_2 %}
+        <tr>
+          <td><a href="{% url 'rating:create_table' team.season.name %}">{{ team.season }}</a></td>
+          <td>{{ team.current_name }}</td>
+          <td>{{ team.games }}</td>
+          <td>{{ team.wins }}</td>
+          <td>{{ team.ties }}</td>
+          <td>{{ team.losses }}</td>
+          <td><b>{{ team.points }}</b></td>
+          <td>{{ team.points_percentage }}</td>
+          <td>{{ team.rank }}</td>
+          <td>{{ team.playoff.result }}</td>
+          <td>{{ team.coach }}</td>
+        </tr>
+        {% if team.round_2 %}
         {% if team.round_2.table1 %}
           <tr>
             <td></td>
@@ -78,8 +78,59 @@
             <td>{{ team.round_2.table2.coach }}</td>
           </tr>
         {% endif %}
-      {% endif %}
+        {% endif %}
       {% endfor %}
+
+      {% if team_view_2 %}
+        {% for team in team_view_2 %}
+          <tr>
+            <td><a href="{% url 'rating:create_table' team.season.name %}">{{ team.season }}</a></td>
+            <td>{{ team.current_name }}</td>
+            <td>{{ team.games }}</td>
+            <td>{{ team.wins }}</td>
+            <td>{{ team.ties }}</td>
+            <td>{{ team.losses }}</td>
+            <td><b>{{ team.points }}</b></td>
+            <td>{{ team.points_percentage }}</td>
+            <td>{{ team.rank }}</td>
+            <td>{{ team.playoff.result }}</td>
+            <td>{{ team.coach }}</td>
+          </tr>
+          {% if team.round_2 %}
+            {% if team.round_2.table1 %}
+              <tr>
+                <td></td>
+                <td>{{ team.round_2.table1.current_name }}</td>
+                <td>{{ team.round_2.table1.games }}</td>
+                <td>{{ team.round_2.table1.wins }}</td>
+                <td>{{ team.round_2.table1.ties }}</td>
+                <td>{{ team.round_2.table1.losses }}</td>
+                <td><b>{{ team.round_2.table1.points }}</b></td>
+                <td>{{ team.round_2.table1.points_percentage }}</td>
+                <td>{{ team.round_2.table1.rank }}</td>
+                <td>{{ team.playoff.table1.result}}</td>
+                <td>{{ team.round_2.table1.coach }}</td>
+              </tr>
+            {% endif %}
+            {% if team.round_2.table2 %}
+              <tr>
+                <td></td>
+                <td>{{ team.round_2.table2.current_name }}</td>
+                <td>{{ team.round_2.table2.games }}</td>
+                <td>{{ team.round_2.table2.wins }}</td>
+                <td>{{ team.round_2.table2.ties }}</td>
+                <td>{{ team.round_2.table2.losses }}</td>
+                <td><b>{{ team.round_2.table2.points }}</b></td>
+                <td>{{ team.round_2.table2.points_percentage }}</td>
+                <td>{{ team.round_2.table2.rank }}</td>
+                <td>{{ team.playoff.table2.result}}</td>
+                <td>{{ team.round_2.table2.coach }}</td>
+              </tr>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
       </tbody>
     </table>
   </div>

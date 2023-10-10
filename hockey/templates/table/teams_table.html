@@ -185,8 +185,8 @@
       <tr>
         <td>{{ team.rank }}</td>
         <td class="first">
-            <a href="{% url 'rating:team_players_in_season' team.name team.season %}">
-                {{ team.name }}
+            <a href="{% url 'rating:team_players_in_season' team.name__title team.season__name %}">
+                {{ team.current_name }}
             </a>
         </td>
         <td>{{ team.games }}</td>
@@ -194,7 +194,7 @@
         <td>{{ team.ties }}</td>
         <td>{{ team.losses }}</td>
         <td>{{ team.points }}</td>
-      </tr>
+    </tr>
       {% endfor %}
     </tbody>
   </table>

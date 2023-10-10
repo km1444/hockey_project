@@ -11,7 +11,9 @@ body {
 	background-color: #c9cbcd;;
 	min-width: 320px;
 }
-
+h1 {
+	margin-bottom: 0px;
+}
 #wrap {
 	background: #fff;
 	box-shadow: 0 0 27px #404445;
@@ -162,6 +164,8 @@ th {
 .submenu {
 	background: #edeeef;
 	border-top: 2px solid #c9cbcd;
+	/* position: fixed;
+	top: 0; */
 }
 
 .submenu ul {

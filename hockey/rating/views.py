@@ -67,11 +67,16 @@ def team_players_in_season(request, team, season):
     team_info = TeamForTable.objects.filter(
         name__title=team,
         season__name=season
-    )
+    ).values('current_name', 'name__title', 'name__city')
+    team_info_2 = TeamForTable2.objects.filter(
+        name__title=team,
+        season__name=season
+    ).values('current_name', 'name__title', 'name__city')
     template = 'posts/team_players_in_season.html'
     context = {
         'team': team,
         'team_info': team_info,
+        'team_info_2': team_info_2,
         'season': season,
         'previous_season': prev_next_season(season)[1],
         'next_season': prev_next_season(season)[0],
@@ -200,18 +205,29 @@ class GoalkeeperStatisticListView(ListView):
 
 
 def best_of_season(request, season, stat_rule):
-    if stat_rule == 'goal':
-        player_scores = Statistic.objects.filter(
-            season__name=season).order_by('-goal', 'game', '-point')[:20]
-    if stat_rule == 'assist':
-        player_scores = Statistic.objects.filter(season__name=season).order_by(
-            '-assist', 'game', '-point')[:20]
-    if stat_rule == 'point':
-        player_scores = Statistic.objects.filter(
-            season__name=season).order_by('-point', '-goal', 'game')[:20]
-    if stat_rule == 'penalty':
-        player_scores = Statistic.objects.filter(
-            season__name=season).order_by('-penalty', 'game', )[:20]
+    # if stat_rule == 'goal':
+    #     player_scores = Statistic.objects.filter(
+    #         season__name=season).order_by('-goal', 'game', '-point')[:20]
+    # if stat_rule == 'assist':
+    #     player_scores = Statistic.objects.filter(
+    #           season__name=season).order_by(
+    #               '-assist', 'game', '-point')[:20]
+    # if stat_rule == 'point':
+    #     player_scores = Statistic.objects.filter(
+    #         season__name=season).order_by('-point', '-goal', 'game')[:20]
+    # if stat_rule == 'penalty':
+    #     player_scores = Statistic.objects.filter(
+    #         season__name=season).order_by('-penalty', 'game', )[:20]
+    player_scores = Statistic.objects.filter(
+        season__name=season).values(
+            'name__id', 'name__name', 'age', 'team__slug').annotate(
+                # team=Sum('team__slug'),
+                game=Sum('game'),
+                goal=Sum('goal'),
+                assist=Sum('assist'),
+                point=Sum('point'),
+                penalty=Sum('penalty')).order_by(
+                    f'-{stat_rule}', '-goal', 'game')[:20]
     template = 'posts/best_of_season.html'
     context = {
         'season': season,
@@ -314,9 +330,9 @@ def create_table(request, season):
     teams = TeamForTable.objects.filter(season__name=season).values(
         'id', 'rank', 'name__title', 'season__name', 'current_name',
         'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
-    # print(TeamForTable.objects.filter(season__name=season).values(
-    #     'id', 'rank', 'name', 'season').order_by('rank').query)
-    teams2 = TeamForTable2.objects.filter(season__name=season).order_by('rank')
+    teams2 = TeamForTable2.objects.filter(season__name=season).values(
+        'id', 'rank', 'name__title', 'season__name', 'current_name',
+        'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
     teams3 = TeamForTable3.objects.filter(season__name=season).order_by('rank')
     teams4 = TeamForTable4.objects.filter(season__name=season).order_by('rank')
     teams2round = TeamForTable2Round.objects.filter(
@@ -328,13 +344,14 @@ def create_table(request, season):
         'id', 'rank', 'name__title', 'season__name', 'current_name',
         'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
     teams2round3 = TeamForTable2Round3.objects.filter(
-        season__name=season).order_by('rank')
+        season__name=season).values(
+        'id', 'rank', 'name__title', 'season__name', 'current_name',
+        'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
     playoff = Playoff.objects.filter(season__name=season).order_by('number')
     try:
         description_table = DescriptionTable.objects.get(season__name=season)
     except DescriptionTable.DoesNotExist:
         description_table = ''
-    # print(description_table.__dict__)
     query_top_5_1 = Statistic.objects.filter(
         season__name=season).values(
             'name__id',
@@ -404,15 +421,27 @@ def leaders_career(request, team):
                 game=Sum('game'),
                 goal=Sum('goal'),
                 assist=Sum('assist'),
-                penalty=Sum('penalty'))
+                point=Sum('point'),
+                penalty=Sum('penalty')
+    )
+    print(type(query_list))
+    goalkeeper_list = GoalkeeperStatistic.objects.filter(
+        team__title=team).values(
+            'name__id',
+            'name__name').annotate(
+                game=Sum('game')
+    ).order_by('-game')[:10]
     top_10_game = query_list.order_by('-game')[:10]
     top_10_goal = query_list.order_by('-goal')[:10]
     top_10_assist = query_list.order_by('-assist')[:10]
+    top_10_point = query_list.order_by('-point')[:10]
     top_10_penalty = query_list.order_by('-penalty')[:10]
     context = {
         'top_10_game': top_10_game,
         'top_10_goal': top_10_goal,
         'top_10_assist': top_10_assist,
+        'top_10_point': top_10_point,
+        'goalkeeper_list': goalkeeper_list,
         'top_10_penalty': top_10_penalty,
         'team': team,
         'top_goal': top_goal(team),
@@ -491,13 +520,17 @@ def season_leaders(request, team):
 def history_team(request, team):
     """ функция формирования содержимого страницы с историей команды """
     team_view = TeamForTable.objects.filter(
-        name__title=team).order_by('-season__name')
-    print(TeamForTable.objects.filter(
-        name__title=team).order_by('-season__name').query)
+        name__title=team).select_related(
+            'season', 'round_2').order_by('-season__name')
+    team_view_2 = TeamForTable2.objects.filter(
+        name__title=team).select_related(
+            'season', 'round_2').order_by('-season__name')
     team = Team.objects.get(title=team)
+    print(team.__dict__)
     count_season = team_view.count()
     context = {
         'team_view': team_view,
+        'team_view_2': team_view_2,
         # 'team_view_2round': team_view_2round,
         'team': team,
         'count_season': count_season,
