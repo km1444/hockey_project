@@ -526,8 +526,8 @@ def history_team(request, team):
         name__title=team).select_related(
             'season', 'round_2').order_by('-season__name')
     team = Team.objects.get(title=team)
-    print(team.__dict__)
-    count_season = team_view.count()
+    count_season = team_view.count() + team_view_2.count()
+    print(type(count_season))
     context = {
         'team_view': team_view,
         'team_view_2': team_view_2,

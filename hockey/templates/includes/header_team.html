@@ -1,8 +1,12 @@
+{% load static %}
+{% load thumbnail %}
 <div style="display:flex; padding-left: 10px; padding-bottom: 10px">
 	<div class="media-item logo">
-		<img class="teamlogo" src="" alt="">
+    {% thumbnail team.emblem "150x150" crop="center" upscale=True as im %}
+      <img class="card-img-bottom mt-2" src="{{ im.url }}">
+    {% endthumbnail %}
 	</div>
-  <div style="font: 14px; color: #000;">
+  <div style="font: 14px; color: #000; padding-left: 10px">
     <h1>
       <span>
         <a class="text-decoration-none text-reset" href="{% url 'rating:history_team' team %}">

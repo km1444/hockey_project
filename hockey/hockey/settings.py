@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'core.apps.CoreConfig',
     'api.apps.ApiConfig',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -129,6 +130,8 @@ if DEBUG:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 INTERNAL_IPS = [
     '127.0.0.1',

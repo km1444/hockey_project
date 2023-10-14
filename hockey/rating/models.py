@@ -2,6 +2,11 @@ from django.db import models
 
 
 class Team(models.Model):
+    emblem = models.ImageField(
+        'Эмблема',
+        upload_to='emblem/',
+        blank=True
+    )
     title = models.CharField("Название команды", max_length=200)
     city = models.CharField("Город", max_length=100, blank=True)
     slug = models.SlugField("Уникальное имя", max_length=100, unique=True)
