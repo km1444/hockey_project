@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'users.apps.UsersConfig',
     'sorl.thumbnail',
+    'miscellaneous.apps.MiscellaneousConfig',
 ]
 
 MIDDLEWARE = [

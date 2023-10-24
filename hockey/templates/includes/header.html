@@ -121,7 +121,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Seasons
             </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
                 {% for season in all_seasons %}
                 <li>
                   <a class="dropdown-item" href="{% url 'rating:create_table' season=season.name  %}">
@@ -130,6 +130,20 @@
                 </li>
                 {% endfor %}
               </ul>
+          </li>
+        </div>
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Other
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="{% url 'miscellaneous:filter_start' %}">
+                    Filter
+                  </a>
+                </li>
+              </ul> 
           </li>
         </div>
       </ul>

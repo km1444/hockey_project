@@ -28,6 +28,17 @@
       {{ team.name__city}}
       </h4>
     {% endfor %}
+    {% elif team_info_3 %}
+      {% for team in team_info_3 %}
+        <h1> 
+          <a href="{% url 'rating:history_team' team.name__title %}">
+            {{ team.current_name }} 
+          </a>
+        </h1> 
+        <h4>
+          {{ team.name__city}}
+        </h4>
+      {% endfor %}
     {% endif %}
     
       <h4>
