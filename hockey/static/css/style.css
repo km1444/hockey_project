@@ -186,14 +186,6 @@ th {
 	text-decoration: none;
 }
 
-/* .submenu ul li a:active{
-	background: red;
-} */
-
-/* .submenu ul li a:hover {
-	background: yellow;
-} */
-
 .data_grid {
 	display: flex;
     flex-wrap: wrap;
@@ -288,4 +280,15 @@ th.sorted[data-order="-1"]::after {
 
 th.sorted[data-order="1"]::after {
     content: "▲"
+}
+/* .nav-item ul li{
+	display: inline-flex;
+} */
+
+.season_grid {
+    display: grid;
+    grid-template-columns: minmax(35%,min-content) auto;
+    grid-gap: 3px 15px;
+    justify-content: left;
+    margin-bottom: 5px;
 }

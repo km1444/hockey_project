@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
+{% block title %}
+  {{ title }}
+{% endblock %}
 
+{% block content %}
 <div class="container col-sm-4 p-1 my-1">
   <h4 align="center"> {{ table_name }} </h4>
 </div>

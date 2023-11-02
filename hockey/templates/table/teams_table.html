@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 
+{% block title %}
+  Хоккейный сезон {{ season }}
+{% endblock %}
+
 {% block content %}
-
-
 <div class="container col-sm-4 p-1 mb-1">
   <h1 align="center"> {{ season }} </h1>
-  <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' previous_season %}" role="button"> Previous season </a>
-  <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' next_season %}" role="button"> Next season </a>
+  {% if season != '1946-47' %}
+    <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' previous_season %}" role="button"> Previous season </a>
+  {% endif %}
+  {% if season != '1990-91' %}
+    <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' next_season %}" role="button"> Next season </a>
+  {% endif %}
 </div>
 
 {% if playoff %}
@@ -258,7 +264,7 @@
         <td>{{ team.rank }}</td>
         <td class="first">
             <a href="{% url 'rating:team_players_in_season' team.name__title team.season__name %}">
-                {{ team.name }}
+                {{ team.current_name }}
             </a>
         </td>
         <td>{{ team.games }}</td>

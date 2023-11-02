@@ -36,7 +36,8 @@ def index(request):
     template = 'posts/index.html'
     context = {
         'page_obj': total_points_for_players,
-        'table_name': 'Career Leaders for Points'
+        'table_name': 'Career Leaders for Points',
+        'title': 'Лучшие бомбардиры советского хоккея'
     }
     return render(request, template, context)
 
@@ -78,12 +79,17 @@ def team_players_in_season(request, team, season):
         name__title=team,
         season__name=season
     ).values('current_name', 'name__title', 'name__city')
+    team_info_4 = TeamForTable4.objects.filter(
+        name__title=team,
+        season__name=season
+    ).values('current_name', 'name__title', 'name__city')
     template = 'posts/team_players_in_season.html'
     context = {
         'team': team,
         'team_info': team_info,
         'team_info_2': team_info_2,
         'team_info_3': team_info_3,
+        'team_info_4': team_info_4,
         'season': season,
         'previous_season': prev_next_season(season)[1],
         'next_season': prev_next_season(season)[0],
@@ -285,6 +291,7 @@ def goalie_list_team(request, team):
         'top_point': top_point(team),
         'top_s_goal': top_season_goal(team),
         'top_s_point': top_season_point(team),
+        'title': 'Вратари каманды'
     }
     return render(request, template, context)
 
