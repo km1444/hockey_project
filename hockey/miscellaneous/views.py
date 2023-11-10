@@ -7,10 +7,6 @@ from rating.models import Statistic
 def filter_start(request):
     form = FilterForm(request.POST or None)
     if form.is_valid():
-        # form.save()
-        # print(form.cleaned_data['name'])
-        # print(form.cleaned_data['name2'])
-        # print(form.cleaned_data['types'])
         return filter_view(
             request,
             season_start=form.cleaned_data['name'],
@@ -33,7 +29,7 @@ def filter_view(request, season_start, season_end, types_stat):
                 assist=Sum('assist'),
                 point=Sum('point'),
                 penalty=Sum('penalty')).order_by(
-                    f'-{types_stat}', '-point', '-goal', 'game')[:50]
+                    f'-{types_stat}', 'game', '-point', '-goal')[:50]
     template = 'miscellaneous/filter.html'
     form = FilterForm()
     form.fields['name'].initial = season_start
@@ -44,5 +40,6 @@ def filter_view(request, season_start, season_end, types_stat):
         'form': form,
         'page_obj': total_points_for_players,
         'table_name': table_name,
+        'types_stat': types_stat,
     }
     return render(request, template, context)

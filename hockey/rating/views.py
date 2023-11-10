@@ -515,12 +515,17 @@ def history_team(request, team):
     team_view_3 = TeamForTable3.objects.filter(
         name__title=team).select_related(
             'season', 'round_2').order_by('-season__name')
+    team_view_4 = TeamForTable4.objects.filter(
+        name__title=team).select_related(
+            'season', 'round_2').order_by('-season__name')
     team_view_general = sorted(
-        chain(team_view, team_view_2, team_view_3),
+        chain(team_view, team_view_2, team_view_3, team_view_4),
         key=lambda x: x.season.name, reverse=True)
     team = Team.objects.get(title=team)
     count_season = (
-        team_view.count() + team_view_2.count() + team_view_3.count()
+        (
+            team_view.count() + team_view_2.count()
+        ) + (team_view_3.count() + team_view_4.count())
     )
     context = {
         'team_view_general': team_view_general,

@@ -63,11 +63,37 @@
               {{ post.name__name }}
             </a>
           </td>
+          {% if types_stat == 'game' %}
+          <td class="table-warning">{{ post.game }}</td>
+          <td>{{ post.goal }}</td>
+          <td>{{ post.assist }}</td>
+          <td>{{ post.point }}</td>
+          <td>{{ post.penalty }}</td>
+          {% elif types_stat == 'goal' %}
+          <td>{{ post.game }}</td>
+          <td class="table-warning">{{ post.goal }}</td>
+          <td>{{ post.assist }}</td>
+          <td>{{ post.point }}</td>
+          <td>{{ post.penalty }}</td>
+          {% elif types_stat == 'assist' %}
+          <td>{{ post.game }}</td>
+          <td>{{ post.goal }}</td>
+          <td class="table-warning">{{ post.assist }}</td>
+          <td>{{ post.point }}</td>
+          <td>{{ post.penalty }}</td>
+          {% elif types_stat == 'point' %}
           <td>{{ post.game }}</td>
           <td>{{ post.goal }}</td>
           <td>{{ post.assist }}</td>
           <td class="table-warning">{{ post.point }}</td>
           <td>{{ post.penalty }}</td>
+          {% elif types_stat == 'penalty' %}
+          <td>{{ post.game }}</td>
+          <td>{{ post.goal }}</td>
+          <td>{{ post.assist }}</td>
+          <td>{{ post.point }}</td>
+          <td class="table-warning">{{ post.penalty }}</td>
+          {% endif %}
         </tr>
         {% endfor %}
       </tbody>
