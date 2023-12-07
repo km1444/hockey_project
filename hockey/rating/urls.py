@@ -91,4 +91,7 @@ urlpatterns = [
         views.delete_goalkeeper_statistic,
         name='delete_goalkeeper_statistic'
     ),
+    path(
+        'champions_leagues/', views.champions_leagues, name='champions_leagues'
+    )
 ]

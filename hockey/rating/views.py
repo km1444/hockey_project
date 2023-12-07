@@ -8,7 +8,7 @@ from itertools import chain
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q, Sum
+from django.db.models import Avg, Max, Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
 from django.views.generic.edit import DeleteView, UpdateView
@@ -198,7 +198,7 @@ class GoalkeeperStatisticListView(ListView):
             'game',
             'goal_against',
             'penalty'
-        ).order_by('-season')
+        ).order_by('season__name')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -218,19 +218,6 @@ class GoalkeeperStatisticListView(ListView):
 
 
 def best_of_season(request, season, stat_rule):
-    # if stat_rule == 'goal':
-    #     player_scores = Statistic.objects.filter(
-    #         season__name=season).order_by('-goal', 'game', '-point')[:20]
-    # if stat_rule == 'assist':
-    #     player_scores = Statistic.objects.filter(
-    #           season__name=season).order_by(
-    #               '-assist', 'game', '-point')[:20]
-    # if stat_rule == 'point':
-    #     player_scores = Statistic.objects.filter(
-    #         season__name=season).order_by('-point', '-goal', 'game')[:20]
-    # if stat_rule == 'penalty':
-    #     player_scores = Statistic.objects.filter(
-    #         season__name=season).order_by('-penalty', 'game', )[:20]
     player_scores = Statistic.objects.filter(
         season__name=season).values(
             'name__id', 'name__name', 'age', 'team__slug').annotate(
@@ -410,6 +397,17 @@ def create_table(request, season):
                     '-penalty',
                     'game')[:5]
     template = 'table/teams_table.html'
+    avr18 = Statistic.objects.filter(season__name=season).values(
+        'age'
+    ).annotate(avg_game=Avg('game'))
+    for i in avr18:
+        print(i['age'], i['avg_game'] / 36)
+    cou18 = Statistic.objects.filter(season__name=season, age='14').values(
+        'name__name',
+        'game'
+    )
+    for i in cou18:
+        print(i)
     context = {
         'previous_season': prev_next_season(season)[1],
         'next_season': prev_next_season(season)[0],
@@ -705,3 +703,29 @@ def delete_goalkeeper_statistic(request, team, season, id):
             request, 'The statistical record has been deleted successfully.'
         )
         return redirect('rating:team_players_in_season', team, season)
+
+
+def champions_leagues(request):
+    champions = TeamForTable.objects.values(
+        'rank', 'season__name', 'name__title', 'current_name').filter(
+            rank='1').order_by('-season__name')
+    champions2 = TeamForTable2Round.objects.values(
+        'rank', 'season__name', 'name__title', 'current_name').filter(
+            rank='1').order_by('-season__name')
+    most_goal_season = Statistic.objects.values(
+        'season__name',
+    ).annotate(Max('goal')).order_by('-season__name')
+    for i in most_goal_season:
+        print(i, type(i))
+    champions_general_pre = sorted(
+        chain(champions2, champions),
+        key=lambda x: x['season__name'], reverse=True)
+    champions_general = [champions_general_pre[0]]
+    for i in champions_general_pre[1:]:
+        if i['season__name'] != champions_general[-1]['season__name']:
+            champions_general.append(i)
+    context = {
+        'champions_general': champions_general
+    }
+    template = 'posts/champions_leagues.html'
+    return render(request, template, context)

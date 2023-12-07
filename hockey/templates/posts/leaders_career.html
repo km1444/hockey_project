@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
-    <!-- Подключены иконки, стили и заполенены мета теги -->
-    {% block title %} 
-    ТОП-10 клуба {{ team }} за карьеру
-    {% endblock %}
+
+{% block description %}
+  <meta name="description" content="Лидеры клуба {{ team }} по играм, голам, передачам, очкам за карьеру в клубе. Десятка вратарей клуба, проведших наибольшее количество игр"> 
+{% endblock %}
+
+{% block title %} 
+  Лучшие хоккеисты клуба {{ team }} за карьеру
+{% endblock %}
 
 {% block content %}
 

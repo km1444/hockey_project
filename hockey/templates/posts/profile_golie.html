@@ -1,5 +1,11 @@
 {% extends "base.html" %}
-{% comment %} {% block title %}Профайл игрока {{ player.name }} {% endblock title %} {% endcomment %}
+
+{% block description %}
+  <meta name="description" content="Советский хоккеист {{ name.name }} {{ name.year_of_birth }} года рождения">
+{% endblock %}
+
+{% block title %} {{ name.name }} {% endblock %}
+
 {% block content %}
 
   <div class="container col-sm-5 py-1">

@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
-    <!-- Подключены иконки, стили и заполенены мета теги -->
+
+{% block description %}
+  <meta name="description" content="Лучшие результаты выступления игроков за клуб в одном сезоне">
+{% endblock %}
+
 {% block title %} 
 ТОП-10 клуба {{ team }} за сезон
 {% endblock %}

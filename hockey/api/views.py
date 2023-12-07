@@ -17,7 +17,7 @@ class PlayerList(generics.ListAPIView):
         data = Statistic.objects.values(
             'name__name').annotate(
                 game=Sum('game'), point=Sum('point')).order_by(
-                    '-point', 'game')[:10]
+                    '-point', 'game')[:20]
         return data
 
 

@@ -120,20 +120,25 @@
         </div>
         <div class="dropdown">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="{% url 'rating:champions_leagues' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Seasons
             </a>
             
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <div class="season_grid">
                 {% for season in all_seasons %}
-                <li>
+                {% comment %} <li> {% endcomment %}
                   <a class="dropdown-item" href="{% url 'rating:create_table' season.name  %}">
-                    {{ season.name }}
+                    {{ season.name }} &nbsp;
                   </a> 
-                </li>
+                {% comment %} </li> {% endcomment %}
                 {% endfor %}
               </div>
+              <li>
+                <a class="dropdown-item" href="{% url 'rating:champions_leagues' %}">
+                  All seasons
+                </a> 
+              </li>
             </ul>
             
               {% comment %} <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
