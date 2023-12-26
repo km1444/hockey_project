@@ -58,11 +58,11 @@
               Teams
             </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="season_grid">
+                <div class="team_grid">
                   {% for team in all_team %}
                     {% comment %} <li> {% endcomment %}
                       <a class="dropdown-item" href="{% url 'rating:history_team' team.title %}">
-                        {{ team.title }}
+                        {{ team.title }} - {{ team.city }}
                       </a>
                     {% comment %} </li> {% endcomment %}
                   {% endfor %}
@@ -78,7 +78,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <p class="dropdown-item stat-menu">Goal :  
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="goal_career" %}">Career </a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:index' %}">Career </a>
                     &nbsp; | &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="goal_season" %}"> Season</a>
                   </p> 
@@ -92,7 +92,7 @@
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Points : 
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:index' %}">Career</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="point_career" %}">Career</a>
                     &nbsp; | &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="point_season" %}">Season</a>
                   </p>  
@@ -127,11 +127,11 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <div class="season_grid">
                 {% for season in all_seasons %}
-                {% comment %} <li> {% endcomment %}
+                <li>
                   <a class="dropdown-item" href="{% url 'rating:create_table' season.name  %}">
-                    {{ season.name }} &nbsp;
+                    {{ season.name }}
                   </a> 
-                {% comment %} </li> {% endcomment %}
+                </li>
                 {% endfor %}
               </div>
               <li>

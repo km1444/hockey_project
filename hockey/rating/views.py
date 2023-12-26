@@ -8,7 +8,7 @@ from itertools import chain
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Avg, Max, Q, Sum
+from django.db.models import Avg, Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
 from django.views.generic.edit import DeleteView, UpdateView
@@ -31,15 +31,27 @@ def index(request):
     total_points_for_players = Statistic.objects.values(
         'name__id', 'name__name').annotate(
             game=Sum('game'),
-            point=Sum('point')).order_by(
-                '-point', 'game')[:20]
+            goal=Sum('goal')).order_by(
+                '-goal', 'game')[:50]
     template = 'posts/index.html'
     context = {
         'page_obj': total_points_for_players,
-        'table_name': 'Career Leaders for Points',
+        'table_name': 'Career Leaders for Goals',
         'title': 'Лучшие бомбардиры советского хоккея'
     }
     return render(request, template, context)
+    # total_points_for_players = Statistic.objects.values(
+    #     'name__id', 'name__name').annotate(
+    #         game=Sum('game'),
+    #         point=Sum('point')).order_by(
+    #             '-point', 'game')[:20]
+    # template = 'posts/index.html'
+    # context = {
+    #     'page_obj': total_points_for_players,
+    #     'table_name': 'Career Leaders for Points',
+    #     'title': 'Лучшие бомбардиры советского хоккея'
+    # }
+    # return render(request, template, context)
 
 
 def team_players_in_season(request, team, season):
@@ -214,6 +226,11 @@ class GoalkeeperStatisticListView(ListView):
         context['penalty'] = sum(
             elem['penalty'] for elem in context['page_obj']
         )
+        context['group_teams'] = context['page_obj'].values(
+            'team__title').annotate(
+                game=Sum('game'),
+                goal_against=Sum('goal_against'),
+                penalty=Sum('penalty')).order_by('-game')
         return context
 
 
@@ -401,8 +418,8 @@ def create_table(request, season):
         'age'
     ).annotate(avg_game=Avg('game'))
     for i in avr18:
-        print(i['age'], i['avg_game'] / 36)
-    cou18 = Statistic.objects.filter(season__name=season, age='14').values(
+        print(i['age'], i['avg_game'])
+    cou18 = Statistic.objects.filter(season__name=season, age='16').values(
         'name__name',
         'game'
     )
@@ -712,11 +729,11 @@ def champions_leagues(request):
     champions2 = TeamForTable2Round.objects.values(
         'rank', 'season__name', 'name__title', 'current_name').filter(
             rank='1').order_by('-season__name')
-    most_goal_season = Statistic.objects.values(
-        'season__name',
-    ).annotate(Max('goal')).order_by('-season__name')
-    for i in most_goal_season:
-        print(i, type(i))
+    # most_goal_season = Statistic.objects.values(
+    #     'season__name',
+    # ).annotate(Max('goal')).order_by('-season__name')
+    # for i in most_goal_season:
+    #     print(i, type(i))
     champions_general_pre = sorted(
         chain(champions2, champions),
         key=lambda x: x['season__name'], reverse=True)

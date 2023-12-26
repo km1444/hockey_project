@@ -287,17 +287,16 @@ th.sorted[data-order="1"]::after {
 
 .season_grid {
     display: grid;
-    grid-template-columns: minmax(35%,min-content) auto;
+	grid-template-columns: repeat(3, auto);
     grid-gap: 3px 15px;
     justify-content: left;
     margin-bottom: 5px;
-	/* color: white;
-  	height: 300px;
-  	list-style: none;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-	grid-template-rows: repeat(auto-fit, minmax(30px, 1fr));
-	grid-auto-flow: column;
-	grid-gap: 5px 10px;
-	align-items: start; */
+}
+
+.team_grid {
+    display: grid;
+	grid-template-columns: repeat(2, auto);
+    grid-gap: 3px 15px;
+    justify-content: left;
+    margin-bottom: 5px;
 }
