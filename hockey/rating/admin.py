@@ -50,19 +50,19 @@ class TeamForTable4Admin(admin.ModelAdmin):
 
 
 class TeamForTable2RoundAdmin(admin.ModelAdmin):
-    list_display = ('name', 'points')
+    list_display = ('points', 'name', 'current_name', 'season')
     search_fields = ('name',)
     list_filter = ('name',)
 
 
 class TeamForTable2Round2Admin(admin.ModelAdmin):
-    list_display = ('name', 'points')
+    list_display = ('points', 'name', 'current_name', 'season')
     search_fields = ('name',)
     list_filter = ('name',)
 
 
 class TeamForTable2Round3Admin(admin.ModelAdmin):
-    list_display = ('name', 'points')
+    list_display = ('points', 'name', 'current_name', 'season')
     search_fields = ('name',)
     list_filter = ('name',)
 

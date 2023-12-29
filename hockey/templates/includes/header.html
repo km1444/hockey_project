@@ -59,10 +59,10 @@
             </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="team_grid">
-                  {% for team in all_team %}
+                  {% for name, city in all_team.items %}
                     {% comment %} <li> {% endcomment %}
-                      <a class="dropdown-item" href="{% url 'rating:history_team' team.title %}">
-                        {{ team.title }} - {{ team.city }}
+                      <a class="dropdown-item" href="{% url 'rating:history_team' name %}">
+                        {{ name }} - {{ city }}
                       </a>
                     {% comment %} </li> {% endcomment %}
                   {% endfor %}
