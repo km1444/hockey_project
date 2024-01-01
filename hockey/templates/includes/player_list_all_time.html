@@ -1,5 +1,5 @@
 <tr>
-  <td>.</td>
+  <td>{{ start_index | add:forloop.counter }}.</td>
   <td class="first">
     <a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' post.name__id %}">
       {{ post.name__name }}

@@ -34,13 +34,15 @@ def index(request):
         'name__id', 'name__name').annotate(
             game=Sum('game'),
             goal=Sum('goal')).order_by(
-                '-goal', 'game')[:50]
+                '-goal', 'game').filter(goal__gte=100)
     paginator = Paginator(total_points_for_players, 25)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    start_index = page_obj.start_index() - 1
     template = 'posts/index.html'
     context = {
         'page_obj': page_obj,
+        'start_index': start_index,
         'table_name': 'Career Leaders for Goals',
         'title': 'Лучшие бомбардиры советского хоккея'
     }
@@ -380,9 +382,14 @@ def statistic(request, stat_rule):
         ).order_by(
             f'-{rule[0]}',
             'game'
-        )[:20]
+        )[:100]
+        paginator = Paginator(total_for_players, 25)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        start_index = page_obj.start_index() - 1
         context = {
-            'page_obj': total_for_players,
+            'page_obj': page_obj,
+            'start_index': start_index,
             'table_name': 'Career Leaders for' + ' ' + f'{rule[0].title()}''s'
         }
     elif rule[1] == 'season':
@@ -399,9 +406,14 @@ def statistic(request, stat_rule):
         ).order_by(
             f'-{rule[0]}',
             'game'
-        )[:20]
+        )[:100]
+        paginator = Paginator(total_for_players, 25)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        start_index = page_obj.start_index() - 1
         context = {
-            'page_obj': total_for_players,
+            'page_obj': page_obj,
+            'start_index': start_index,
             'table_name':
             'Single Season Leaders for' + ' ' + f'{rule[0].title()}''s'
         }
