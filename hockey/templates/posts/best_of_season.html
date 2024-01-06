@@ -9,8 +9,12 @@
     </a>
   </h3>
   <h3>Best of {{ stat_rule }}s </h3>
-  <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' previous_season 'point' %}" role="button"> Previous season </a>
-  <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' next_season 'point' %}" role="button"> Next season </a>
+    {% if season != '1946-47' %}
+      <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' previous_season 'point' %}" role="button"> Previous season </a>
+    {% endif %}
+    {% if season != '1990-91' %}
+      <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' next_season 'point' %}" role="button"> Next season </a>
+    {% endif %}
 </div>
 <div class="container col-sm-7 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm tcont countLines">

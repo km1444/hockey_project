@@ -60,11 +60,11 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="team_grid">
                   {% for name, city in all_team.items %}
-                    {% comment %} <li> {% endcomment %}
+                    <li>
                       <a class="dropdown-item" href="{% url 'rating:history_team' name %}">
                         {{ name }} - {{ city }}
                       </a>
-                    {% comment %} </li> {% endcomment %}
+                    </li>
                   {% endfor %}
                 </div>
               </ul>

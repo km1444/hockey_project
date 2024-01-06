@@ -31,8 +31,8 @@ class ViewTests(TestCase):
             team=cls.team,
             season=cls.season,
             position=cls.position,
-            game=1,
-            goal=0,
+            game=100,
+            goal=100,
             assist=0,
             point=0,
             penalty=0,
@@ -94,8 +94,10 @@ class ViewTests(TestCase):
         response = self.guest_client.get(
             reverse('rating:index')
         )
-        first_object = response.context['page_obj'][0]
-        self.assertEqual(first_object['name__name'], 'Mikhail')
+        first_object = (
+            response.context['page_obj'].object_list[0]['name__name']
+        )
+        self.assertEqual(first_object, 'Mikhail')
 
     def test_team_players_in_season_context(self):
         """Шаблон team_players_in_season сформирован
@@ -106,7 +108,7 @@ class ViewTests(TestCase):
                 kwargs={'team': 'ЦСКА', 'season': '1969-70'}
             ))
         page_obj = response.context['page_obj'][0]
-        self.assertEqual(page_obj.name.name, 'Mikhail')
+        self.assertEqual(page_obj['name__name'], 'Mikhail')
         self.assertEqual(response.context['previous_season'], '1968-69')
         self.assertEqual(response.context['next_season'], '1970-71')
 
@@ -146,7 +148,7 @@ class ViewTests(TestCase):
 
     def test_top_goal(self):
         val = 'ЦСКА'
-        expect = {'name__id': 1, 'name__name': 'Mikhail', 'goal': 0}
+        expect = {'name__id': 1, 'name__name': 'Mikhail', 'goal': 100}
         assert top_goal(val) == expect, (
             f'Функция {top_goal.__name__} неверные значения'
         )

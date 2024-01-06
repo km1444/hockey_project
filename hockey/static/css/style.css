@@ -295,8 +295,32 @@ th.sorted[data-order="1"]::after {
 
 .team_grid {
     display: grid;
-	grid-template-columns: repeat(2, auto);
-    grid-gap: 3px 15px;
+	grid-template-columns: repeat(5, auto);
+    grid-gap: 3px 5px;
     justify-content: left;
     margin-bottom: 5px;
 }
+
+@media only screen and (max-width: 1400px) {
+	.team_grid {
+		grid-template-columns: repeat(4, auto);
+	}
+  }
+
+@media only screen and (max-width: 1200px) {
+	.team_grid {
+		grid-template-columns: repeat(3, auto);
+	}
+  }
+
+@media only screen and (max-width: 900px) {
+	.team_grid {
+		grid-template-columns: repeat(2, auto);
+	}
+  }
+
+@media only screen and (max-width: 550px) {
+	.team_grid {
+		grid-template-columns: repeat(1, auto);
+	}
+  }

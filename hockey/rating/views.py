@@ -10,7 +10,7 @@ from itertools import chain
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import Avg, Q, Sum
+from django.db.models import Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
 from django.views.generic.edit import DeleteView, UpdateView
@@ -491,17 +491,19 @@ def create_table(request, season):
                     '-penalty',
                     'game')[:5]
     template = 'table/teams_table.html'
-    avr18 = Statistic.objects.filter(season__name=season).values(
-        'age'
-    ).annotate(avg_game=Avg('game'))
-    for i in avr18:
-        print(i['age'], i['avg_game'])
-    cou18 = Statistic.objects.filter(season__name=season, age='16').values(
-        'name__name',
-        'game'
-    )
-    for i in cou18:
-        print(i)
+    # avr18 = Statistic.objects.filter(
+    # season__name__range=('1961-62', '1990-91')).values(
+    #     'season__name',
+    #     'age'
+    # ).annotate(avg_game=Avg('game'))
+    # for i in avr18:
+    #     print(i['season__name'], i['age'], round(i['avg_game'], 0))
+    # cou18 = Statistic.objects.filter(season__name=season, age='15').values(
+    #     'name__name',
+    #     'game'
+    # )
+    # for i in cou18:
+    #     print(i)
     context = {
         'previous_season': prev_next_season(season)[1],
         'next_season': prev_next_season(season)[0],
