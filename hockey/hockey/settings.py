@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'sorl.thumbnail',
     'miscellaneous.apps.MiscellaneousConfig',
+    'goalkeeper_app.apps.GoalkeeperAppConfig',
 ]
 
 MIDDLEWARE = [

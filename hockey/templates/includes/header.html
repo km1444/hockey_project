@@ -77,36 +77,41 @@
             </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <p class="dropdown-item stat-menu">Goal :  
+                  <p class="dropdown-item stat-menu">Goal : &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:index' %}">Career </a>
                     &nbsp; | &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="goal_season" %}"> Season</a>
                   </p> 
                 </li>
                 <li>
-                  <p class="dropdown-item stat-menu">Assist : 
+                  <p class="dropdown-item stat-menu">Assist : &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="assist_career" %}">Career</a>
                     &nbsp; | &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="assist_season" %}">Season</a>
                   </p>   
                 </li>
                 <li>
-                  <p class="dropdown-item stat-menu">Points : 
+                  <p class="dropdown-item stat-menu">Points : &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="point_career" %}">Career</a>
                     &nbsp; | &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="point_season" %}">Season</a>
                   </p>  
                 </li>
                 <li>
-                  <p class="dropdown-item stat-menu">Games : 
+                  <p class="dropdown-item stat-menu">Games : &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="game_career" %}">Career</a>
                   </p>  
                 </li>
                 <li>
-                  <p class="dropdown-item stat-menu">Penalty : 
+                  <p class="dropdown-item stat-menu">Penalty : &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="penalty_career" %}">Career</a>
                     &nbsp; | &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="penalty_season" %}">Season</a>
+                  </p> 
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Games(Goalie) : &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'goalkeeper_app:goalkeeper_stat' %}">Career</a>
                   </p> 
                 </li>
                 <li>

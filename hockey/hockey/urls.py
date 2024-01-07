@@ -6,6 +6,7 @@ from django.urls import include, path
 urlpatterns = [
     path('', include('rating.urls', namespace='rating')),
     path('', include('miscellaneous.urls', namespace='miscellaneous')),
+    path('', include('goalkeeper_app.urls', namespace='goalkeeper_app')),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('auth/', include('users.urls')),

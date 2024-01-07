@@ -293,6 +293,8 @@ class GoalkeeperStatisticListView(ListView):
         context['penalty'] = sum(
             elem['penalty'] for elem in context['page_obj']
         )
+        context['amount_teams'] = context['page_obj'].values(
+            'team__title').distinct().count()
         context['group_teams'] = context['page_obj'].values(
             'team__title').annotate(
                 game=Sum('game'),
