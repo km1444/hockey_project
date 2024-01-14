@@ -65,8 +65,6 @@ class ViewTests(TestCase):
                 'rating:statistic',
                 kwargs={'stat_rule': 'goal_career'}
             ): 'posts/index.html',
-            # reverse('rating:statistic'): 'posts/index.html',
-            # reverse('rating:statistic'): 'posts/index.html',
             reverse(
                 'rating:best_of_season',
                 kwargs={'season': '1969-70', 'stat_rule': 'goal'}
@@ -138,13 +136,6 @@ class ViewTests(TestCase):
         assert prev_next_season(val) == expect, (
             f'Функция {prev_next_season.__name__} неверные значения'
         )
-
-    # def test_secondary_prev_next_season(self):
-    #     val = '1969-70'
-    #     expect = ('1970-71', '1968-69')
-    #     assert prev_next_season(val) == expect, (
-    #         f'Функция {prev_next_season.__name__} неверные значения'
-    #     )
 
     def test_top_goal(self):
         val = 'ЦСКА'

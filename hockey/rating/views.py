@@ -43,81 +43,12 @@ def index(request):
     context = {
         'page_obj': page_obj,
         'start_index': start_index,
-        'table_name': 'Career Leaders for Goals',
+        # 'table_name': 'Career Leaders for Goals',
+        'table_name': 'Most Goals Career',
         'title': 'Лучшие бомбардиры советского хоккея'
     }
     return render(request, template, context)
-    # total_points_for_players = Statistic.objects.values(
-    #     'name__id', 'name__name').annotate(
-    #         game=Sum('game'),
-    #         point=Sum('point')).order_by(
-    #             '-point', 'game')[:20]
-    # template = 'posts/index.html'
-    # context = {
-    #     'page_obj': total_points_for_players,
-    #     'table_name': 'Career Leaders for Points',
-    #     'title': 'Лучшие бомбардиры советского хоккея'
-    # }
-    # return render(request, template, context)
 
-
-# def team_players_in_season(request, team, season):
-#     # team = get_object_or_404(Team, title=team)
-#     # season = get_object_or_404(Season, name=season)
-#     team_statistic = Statistic.objects.filter(
-#         team__title=team, season__name=season
-#     ).values(
-#         'id',
-#         'name',
-#         'name__name',
-#         'age',
-#         'game',
-#         'goal',
-#         'assist',
-#         'point',
-#         'penalty'
-#     ).order_by('-point', '-goal', 'game')
-#     goalkeepers = GoalkeeperStatistic.objects.filter(
-#         team__title=team, season__name=season
-#     ).values(
-#         'id',
-#         'name',
-#         'name__name',
-#         'age',
-#         'game',
-#         'goal_against',
-#         'penalty'
-#     ).order_by('-game')
-#     team_info = TeamForTable.objects.filter(
-#         name__title=team,
-#         season__name=season
-#     ).values('current_name', 'name__title', 'name__city')
-#     team_info_2 = TeamForTable2.objects.filter(
-#         name__title=team,
-#         season__name=season
-#     ).values('current_name', 'name__title', 'name__city')
-#     team_info_3 = TeamForTable3.objects.filter(
-#         name__title=team,
-#         season__name=season
-#     ).values('current_name', 'name__title', 'name__city')
-#     team_info_4 = TeamForTable4.objects.filter(
-#         name__title=team,
-#         season__name=season
-#     ).values('current_name', 'name__title', 'name__city')
-#     template = 'posts/team_players_in_season.html'
-#     context = {
-#         'team': team,
-#         'team_info': team_info,
-#         'team_info_2': team_info_2,
-#         'team_info_3': team_info_3,
-#         'team_info_4': team_info_4,
-#         'season': season,
-#         'previous_season': prev_next_season(season)[1],
-#         'next_season': prev_next_season(season)[0],
-#         'page_obj': team_statistic,
-#         'goalkeepers': goalkeepers,
-#     }
-#     return render(request, template, context)
 
 def team_players_in_season(request, team, season):
     team = get_object_or_404(Team, title=team)
@@ -392,7 +323,9 @@ def statistic(request, stat_rule):
         context = {
             'page_obj': page_obj,
             'start_index': start_index,
-            'table_name': 'Career Leaders for' + ' ' + f'{rule[0].title()}''s'
+            'table_name':
+            # 'Career Leaders for' + ' ' + f'{rule[0].title()}''s'
+            'Most ' + f'{rule[0].title()}''s' + ' Career',
         }
     elif rule[1] == 'season':
         total_for_players = Statistic.objects.values(
@@ -417,7 +350,8 @@ def statistic(request, stat_rule):
             'page_obj': page_obj,
             'start_index': start_index,
             'table_name':
-            'Single Season Leaders for' + ' ' + f'{rule[0].title()}''s'
+            # 'Single Season Leaders for' + ' ' + f'{rule[0].title()}''s'
+            'Most ' + f'{rule[0].title()}''s' + ' Season'
         }
     template = 'posts/index.html'
     return render(request, template, context)

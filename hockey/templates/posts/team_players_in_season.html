@@ -52,18 +52,22 @@
       {% endfor %}
     {% endif %}
     
-      <h4>
-        Cезон:
-        <a class="text-decoration-none text-reset" href="{% url 'rating:create_table' season %}">
-          {{ season }}
-        </a>
-      </h4>
+    <h4>
+      Cезон:
+      <a class="text-decoration-none text-reset" href="{% url 'rating:create_table' season %}">
+        {{ season }}
+      </a>
+    </h4>
+    {% if season != '1946-47' %}
       <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team previous_season %}" role="button">
         Previous season
       </a>
+    {% endif %}
+    {% if season != '1990-91' %}
       <a class="btn btn-outline-secondary" href="{% url 'rating:team_players_in_season' team next_season %}" role="button">
         Next season
       </a>
+    {% endif %}
   </div>
   
   <div class="container col-sm-5 py-2 table-responsive">

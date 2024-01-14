@@ -17,7 +17,7 @@
         <th>#</th>
         <th>Player</th>
         <th>GP</th>
-          {% if table_name == 'Career Leaders for Points' or table_name == 'Single Season Leaders for Points' %}
+          {% comment %} {% if table_name == 'Career Leaders for Points' or table_name == 'Single Season Leaders for Points' %}
             <th>PTS</th>
             {% elif table_name == 'Career Leaders for Goals' or table_name == 'Single Season Leaders for Goals' %}
             <th>G</th>
@@ -25,9 +25,21 @@
             <th>A</th>
             {% elif table_name == 'Career Leaders for Penaltys' or table_name == 'Single Season Leaders for Penaltys' %}
             <th>PIM</th>
+          {% endif %} {% endcomment %}
+          {% if table_name == 'Most Points Career' or table_name == 'Most Points Season' %}
+            <th>PTS</th>
+            {% elif table_name == 'Most Goals Career' or table_name == 'Most Goals Season' %}
+            <th>G</th>
+            {% elif table_name == 'Most Assists Career' or table_name == 'Most Assists Season' %}
+            <th>A</th>
+            {% elif table_name == 'Most Penaltys Career' or table_name == 'Most Penaltys Season' %}
+            <th>PIM</th>
           {% endif %}
 
-          {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' or table_name == 'Single Season Leaders for Assists' or table_name == 'Single Season Leaders for Penaltys' %}
+          {% comment %} {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' or table_name == 'Single Season Leaders for Assists' or table_name == 'Single Season Leaders for Penaltys' %}
+            <td>Season</td>
+          {% endif %} {% endcomment %}
+          {% if table_name == 'Most Points Season' or table_name == 'Most Goals Season' or table_name == 'Most Assists Season' or table_name == 'Most Penaltys Season' %}
             <td>Season</td>
           {% endif %}
       </tr>
