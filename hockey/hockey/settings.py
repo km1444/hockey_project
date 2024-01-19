@@ -152,3 +152,9 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'rating:index'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}

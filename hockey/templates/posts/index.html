@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block description %}
+  <meta name="description" content="{{ title }}">
+{% endblock %}
+
 {% block title %}
   {{ title }}
 {% endblock %}

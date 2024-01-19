@@ -1,8 +1,9 @@
 {% load static %}
 {% load thumbnail %}
+
 <div style="display:flex; padding-left: 10px; padding-bottom: 10px">
 	<div class="media-item logo">
-    {% thumbnail team.emblem "150x150" crop="center" upscale=True as im %}
+    {% thumbnail team.emblem "150" upscale=True as im %}
       <img class="card-img-bottom mt-2" src="{{ im.url }}">
     {% endthumbnail %}
 	</div>

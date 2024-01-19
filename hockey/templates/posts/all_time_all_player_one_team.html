@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block description %}
+  <meta name="description" content="Игроки {{ team }} {{ team.city }} игравшие в высшем эшелоне советского хоккея">
+{% endblock %}
+
 {% block title %}
 Игроки команды {{ team }} игравшие в высшей лиге    
 {% endblock %}
