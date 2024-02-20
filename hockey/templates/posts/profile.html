@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block description %}
   <meta name="description" content="Советский хоккеист {{ player.name }} {{ player.year_of_birth }} года рождения">
@@ -13,6 +14,9 @@
     <h1>{{ player.name }}</h1>
     <h4>Position : {{ position }}</h4>
     <h4>Born : {{ player.year_of_birth }}</h4>
+    <a href="{{ player.wikip }}">
+      <img src="{% static 'img/wiki.png' %}" >
+    </a>
   </div>
     <div class="container col-sm-5 p-1 my-1">
       <table class="table table-bordered table-hover table-sm">

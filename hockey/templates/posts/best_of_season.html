@@ -8,7 +8,7 @@
       {{ season }}
     </a>
   </h3>
-  <h3>Best of {{ stat_rule }}s </h3>
+  <h3> Best of {{ stat_rule }}s </h3>
     {% if season != '1946-47' %}
       <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' previous_season 'point' %}" role="button"> Previous season </a>
     {% endif %}
