@@ -19,7 +19,7 @@
 
   {% if table_name == 'Most Points Career' or table_name == 'Most Points Season' %}
     <td>{{ post.point }}</td>
-  {% elif table_name == 'Most Goals Career' or table_name == 'Most Goals Season' %}
+  {% elif table_name == 'Most Goals Career' or table_name == 'Most Goals Single Season' or table_name == 'Yearly Leaders for Goals' %}
     <td>{{ post.goal }}</td>
   {% elif table_name == 'Most Assists Career' or table_name == 'Most Assists Season' %}
     <td>{{ post.assist }}</td>
@@ -31,7 +31,7 @@
     <td>{{ post.season__name }}</td>
   {% endif %} {% endcomment %}
 
-  {% if table_name == 'Most Points Season' or table_name == 'Most Goals Season' or table_name == 'Most Assists Season' or table_name == 'Most Penaltys Season' %}
+  {% if table_name == 'Most Points Season' or table_name == 'Most Goals Single Season' or table_name == 'Most Assists Season' or table_name == 'Most Penaltys Season' or table_name == 'Yearly Leaders for Goals' %}
     <td>{{ post.season__name }}</td>
   {% endif %}
 </tr>

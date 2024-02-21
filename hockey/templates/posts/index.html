@@ -32,7 +32,7 @@
           {% endif %} {% endcomment %}
           {% if table_name == 'Most Points Career' or table_name == 'Most Points Season' %}
             <th>PTS</th>
-            {% elif table_name == 'Most Goals Career' or table_name == 'Most Goals Season' %}
+            {% elif table_name == 'Most Goals Career' or table_name == 'Most Goals Single Season' or table_name == 'Yearly Leaders for Goals' %}
             <th>G</th>
             {% elif table_name == 'Most Assists Career' or table_name == 'Most Assists Season' %}
             <th>A</th>
@@ -43,7 +43,7 @@
           {% comment %} {% if table_name == 'Single Season Leaders for Points' or table_name == 'Single Season Leaders for Goals' or table_name == 'Single Season Leaders for Assists' or table_name == 'Single Season Leaders for Penaltys' %}
             <td>Season</td>
           {% endif %} {% endcomment %}
-          {% if table_name == 'Most Points Season' or table_name == 'Most Goals Season' or table_name == 'Most Assists Season' or table_name == 'Most Penaltys Season' %}
+          {% if table_name == 'Most Points Season' or table_name == 'Most Goals Single Season' or table_name == 'Most Assists Season' or table_name == 'Most Penaltys Season' or table_name == 'Yearly Leaders for Goals' %}
             <td>Season</td>
           {% endif %}
       </tr>

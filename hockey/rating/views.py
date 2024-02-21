@@ -4,13 +4,16 @@
 # from django.http import HttpResponseRedirect
 # from django.views.generic.edit import CreateView
 # from django.http import Http404
+import operator
+
+from functools import reduce
 from itertools import chain
 
 # from core.views import page_not_found
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import Q, Sum
+from django.db.models import Max, Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
 from django.views.generic.edit import DeleteView, UpdateView
@@ -351,7 +354,35 @@ def statistic(request, stat_rule):
             'start_index': start_index,
             'table_name':
             # 'Single Season Leaders for' + ' ' + f'{rule[0].title()}''s'
-            'Most ' + f'{rule[0].title()}''s' + ' Season'
+            'Most ' + f'{rule[0].title()}''s' + ' Single Season'
+        }
+    elif rule[1] == 'yearly':
+        best_goals = Statistic.objects.values(
+            'season__name'
+        ).annotate(
+            goal=Max('goal'))
+        # print(total_for_players)
+        q_object = reduce(operator.or_, (Q(**x) for x in best_goals))
+        queryset = Statistic.objects.values(
+            'name__id',
+            'name__name',
+            'season__name',
+            'goal',
+            'game'
+        ).filter(q_object).order_by('season__name')
+        # for i in queryset:
+        #     print(i.name.id)
+        paginator = Paginator(queryset, 25)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        start_index = page_obj.start_index() - 1
+        context = {
+            'page_obj': page_obj,
+            'start_index': start_index,
+            'table_name':
+            # 'Single Season Leaders for' + ' ' + f'{rule[0].title()}''s'
+            # 'Most ' + f'{rule[0].title()}''s' + ' Yearly'
+            'Yearly Leaders for ' + f'{rule[0].title()}''s'
         }
     template = 'posts/index.html'
     return render(request, template, context)
