@@ -32,7 +32,7 @@
         <th>PTS</th>
         <th>PTS%</th>
         <th>Finish</th>
-        <th>Playoffs</th>
+        {% comment %} <th>Playoffs</th> {% endcomment %}
         <th>Coaches</th>
         </tr>
       </thead>
@@ -48,8 +48,13 @@
               <td><b>{{ team.points }}</b></td>
               <td>{{ team.points_percentage }}</td>
               <td>{{ team.rank }}</td>
-              <td>{{ team.playoff.result }}</td>
-              <td>{{ team.coach }}</td>
+              {% comment %} <td>{{ team.playoff.result }}</td> {% endcomment %}
+              {% comment %} <td><a href="{% url 'rating:player_detail' team.coach_1_id %}">{{ team.coach_1.name }} </a></td> {% endcomment %}
+              {% if team.coach_2 %}
+                <td title="{{ team.coach_1.name}}, {{team.coach_2.name }}"> 2 тренера </td>
+              {% else %}
+                <td> {{ team.coach_1.name }} </a></td>
+              {% endif %}
           </tr>
             {% if team.round_2 %}
               {% if team.round_2.table1 %}
@@ -63,8 +68,8 @@
                   <td><b>{{ team.round_2.table1.points }}</b></td>
                   <td>{{ team.round_2.table1.points_percentage }}</td>
                   <td>{{ team.round_2.table1.rank }}</td>
-                  <td>{{ team.playoff.table1.result}}</td>
-                  <td>{{ team.round_2.table1.coach }}</td>
+                  {% comment %} <td>{{ team.playoff.table1.result}}</td> {% endcomment %}
+                  {% comment %} <td>{{ team.round_2.table1.coach.name }}</td> {% endcomment %}
                 </tr>
               {% elif team.round_2.table2 %}
               <tr>
@@ -77,8 +82,8 @@
               <td><b>{{ team.round_2.table2.points }}</b></td>
               <td>{{ team.round_2.table2.points_percentage }}</td>
               <td>{{ team.round_2.table2.rank }}</td>
-              <td>{{ team.playoff.table2.result}}</td>
-              <td>{{ team.round_2.table2.coach }}</td>
+              {% comment %} <td>{{ team.playoff.table2.result}}</td> {% endcomment %}
+              {% comment %} <td>{{ team.round_2.table2.coach.name }}</td> {% endcomment %}
               </tr>
               {% elif team.round_2.table3 %}
               <tr>
@@ -91,10 +96,19 @@
                 <td><b>{{ team.round_2.table3.points }}</b></td>
                 <td>{{ team.round_2.table3.points_percentage }}</td>
                 <td>{{ team.round_2.table3.rank }}</td>
-                <td>{{ team.playoff.table3.result}}</td>
-                <td>{{ team.round_2.table3.coach }}</td>
+                {% comment %} <td>{{ team.playoff.table3.result}}</td> {% endcomment %}
+                {% comment %} <td>{{ team.round_2.table3.coach.name }}</td> {% endcomment %}
               </tr>
               {% endif %}
+            {% endif %}
+            {% if team.playoff %}
+            <tr>
+              <td></td>
+              <td></td>
+              <td colspan="4">Playoff Appearances</td>
+              <td colspan="3">{{ team.playoff.result }}</td>
+              <td></td>
+            </tr>
             {% endif %}
           {% endfor %}
       </tbody>

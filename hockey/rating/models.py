@@ -459,7 +459,30 @@ class TeamForTable(models.Model):
     points_percentage = models.FloatField(default=0)
     goals_for = models.IntegerField()
     goals_against = models.IntegerField()
-    coach = models.CharField("Тренер", max_length=50, blank=True)
+    coach_1 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables_coach_1',
+    )
+    coach_2 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер_2',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables_coach_2'
+    )
+    coach_3 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер_3',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables_coach_3'
+    )
 
     @property
     def get_points_percentage(self):
@@ -521,7 +544,30 @@ class TeamForTable2(models.Model):
     points_percentage = models.FloatField(default=0)
     goals_for = models.IntegerField()
     goals_against = models.IntegerField()
-    coach = models.CharField("Тренер", max_length=50, blank=True)
+    coach_1 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables2_coach_1',
+    )
+    coach_2 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер_2',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables2_coach_2'
+    )
+    coach_3 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер_3',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables2_coach_3'
+    )
 
     @property
     def get_points_percentage(self):
@@ -583,7 +629,30 @@ class TeamForTable3(models.Model):
     points_percentage = models.FloatField(default=0)
     goals_for = models.IntegerField()
     goals_against = models.IntegerField()
-    coach = models.CharField("Тренер", max_length=50, blank=True)
+    coach_1 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables3_coach_1',
+    )
+    coach_2 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер_2',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables3_coach_2'
+    )
+    coach_3 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер_3',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables3_coach_3'
+    )
 
     @property
     def get_points_percentage(self):
@@ -645,7 +714,30 @@ class TeamForTable4(models.Model):
     points_percentage = models.FloatField(default=0)
     goals_for = models.IntegerField()
     goals_against = models.IntegerField()
-    coach = models.CharField("Тренер", max_length=50, blank=True)
+    coach_1 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables4_coach_1',
+    )
+    coach_2 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер_2',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables4_coach_2'
+    )
+    coach_3 = models.ForeignKey(
+        Player,
+        verbose_name='Тренер_3',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='team_for_tables4_coach_3'
+    )
 
     @property
     def get_points_percentage(self):

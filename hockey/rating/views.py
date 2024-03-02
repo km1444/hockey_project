@@ -13,7 +13,7 @@ from itertools import chain
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import Max, Q, Sum
+from django.db.models import Avg, Max, Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
 from django.views.generic.edit import DeleteView, UpdateView
@@ -458,13 +458,14 @@ def create_table(request, season):
                     '-penalty',
                     'game')[:5]
     template = 'table/teams_table.html'
-    # avr18 = Statistic.objects.filter(
-    # season__name__range=('1961-62', '1990-91')).values(
-    #     'season__name',
-    #     'age'
-    # ).annotate(avg_game=Avg('game'))
-    # for i in avr18:
-    #     print(i['season__name'], i['age'], round(i['avg_game'], 0))
+    avr18 = Statistic.objects.filter(
+        season__name__range=['1961-62', '1990-91']).values(
+            'season__name',
+            'age'
+    ).annotate(avg_game=Avg('game'))
+    print(type(avr18))
+    for i in avr18:
+        print(i['age'], round(i['avg_game'], 0))
     # cou18 = Statistic.objects.filter(season__name=season, age='15').values(
     #     'name__name',
     #     'game'
@@ -569,19 +570,25 @@ def history_team(request, team):
     """ функция формирования содержимого страницы с историей команды """
     team_view = TeamForTable.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2').order_by('-season__name')
+            'season',
+            'round_2',
+            'playoff',
+            'coach_1',
+            'coach_2').order_by('-season__name')
     team_view_2 = TeamForTable2.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2').order_by('-season__name')
+            'season', 'round_2', 'coach_1').order_by('-season__name')
     team_view_3 = TeamForTable3.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2').order_by('-season__name')
+            'season', 'round_2', 'coach_1').order_by('-season__name')
     team_view_4 = TeamForTable4.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2').order_by('-season__name')
+            'season', 'round_2', 'coach_1').order_by('-season__name')
     team_view_general = sorted(
         chain(team_view, team_view_2, team_view_3, team_view_4),
         key=lambda x: x.season.name, reverse=True)
+    # for i in team_view_general:
+    #     print(i.coach_1.name)
     team = get_object_or_404(Team, title=team)
     count_season = (
         (

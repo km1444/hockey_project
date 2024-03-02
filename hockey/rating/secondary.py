@@ -8,15 +8,16 @@ def top_goal(team):
         team__title=team).values(
             'name__id',
             'name__name').annotate(
-                goal=Sum('goal')).order_by('-goal')[:1]
-    return top[0]
+                goal=Sum('goal')).order_by('-goal').first()
+    print(top)
+    return top
 
 
 def top_point(team):
     top = Statistic.objects.filter(
-        team__title=team).values('name__id', 'name__name') \
-        .annotate(point=Sum('point')) \
-        .order_by('-point')[:1]
+        team__title=team).values(
+            'name__id', 'name__name').annotate(
+                point=Sum('point')).order_by('-point')[:1]
     return top[0]
 
 
