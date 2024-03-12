@@ -7,6 +7,7 @@ urlpatterns = [
     path('', include('rating.urls', namespace='rating')),
     path('', include('miscellaneous.urls', namespace='miscellaneous')),
     path('', include('goalkeeper_app.urls', namespace='goalkeeper_app')),
+    path('', include('coach_app.urls', namespace='coach')),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('auth/', include('users.urls')),

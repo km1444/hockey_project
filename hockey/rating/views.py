@@ -9,11 +9,13 @@ import operator
 from functools import reduce
 from itertools import chain
 
+from coach_app.models import CoachStatistic
+# from coach_app.models import CoachStatistic
 # from core.views import page_not_found
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import Avg, Max, Q, Sum
+from django.db.models import Max, Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
 from django.views.generic.edit import DeleteView, UpdateView
@@ -80,6 +82,13 @@ def team_players_in_season(request, team, season):
         'goal_against',
         'penalty'
     ).order_by('-game')
+    coaches = CoachStatistic.objects.filter(
+        team__title=team.title, season__name=season.name
+    ).values(
+        'id',
+        'name',
+        'name__name'
+    )
     team_info = TeamForTable.objects.filter(
         name__title=team.title,
         season__name=season.name
@@ -108,11 +117,13 @@ def team_players_in_season(request, team, season):
         'next_season': prev_next_season(season.name)[0],
         'page_obj': team_statistic,
         'goalkeepers': goalkeepers,
+        'coaches': coaches,
     }
     return render(request, template, context)
 
 
 def player_detail(request, id):
+    context = {}
     player = get_object_or_404(Player, id=id)
     player_seasons = player.statistics.values(
         'name',
@@ -126,6 +137,27 @@ def player_detail(request, id):
         'point',
         'penalty',
         'position__name'
+    ).order_by('season__name')
+    goalkeeper_seasons = player.goalkeeperstatistic.values(
+        'name',
+        'name__name',
+        'age',
+        'team__title',
+        'season__name',
+        'game',
+        'goal_against',
+        'penalty'
+    ).order_by('season__name')
+    coach_stat = player.coachstatistic.values(
+        'name',
+        'name__name',
+        'age',
+        'team__title',
+        'season__name',
+        'final_position',
+        'full_season',
+        'fired_season',
+        'came_season'
     ).order_by('season__name')
     if player_seasons:
         game = sum(i['game'] for i in player_seasons)
@@ -157,84 +189,46 @@ def player_detail(request, id):
             'group_teams': group_teams,
             'amount_teams': amount_teams,
         }
-    else:
-        player_seasons = player.goalkeeperstatistic.values(
-            'name',
-            'name__name',
-            'age',
-            'team__title',
-            'season__name',
-            'game',
-            'goal_against',
-            'penalty'
-        ).order_by('season__name')
-        game = sum(i['game'] for i in player_seasons)
-        goal_against = sum(i['goal_against'] for i in player_seasons)
-        penalty = sum(i['penalty'] for i in player_seasons)
-        amount_teams = player_seasons.values('team__title').distinct().count()
-        group_teams = player_seasons.values('team__title').annotate(
+        if coach_stat:
+            context['coach_obj'] = coach_stat
+            context['coach'] = True
+    elif goalkeeper_seasons:
+        game = sum(i['game'] for i in goalkeeper_seasons)
+        goal_against = sum(i['goal_against'] for i in goalkeeper_seasons)
+        penalty = sum(i['penalty'] for i in goalkeeper_seasons)
+        amount_teams = goalkeeper_seasons.values(
+            'team__title').distinct().count()
+        group_teams = goalkeeper_seasons.values('team__title').annotate(
             game=Sum('game'),
             goal_against=Sum('goal_against'),
             penalty=Sum('penalty')
         ).order_by('-game')
-        count = player_seasons.values('season').distinct().count()
+        count = goalkeeper_seasons.values('season').distinct().count()
         position = 'Вратарь'
         template = 'posts/profile_golie.html'
         context = {
             'name': player,
             'count': count,
-            'page_obj': player_seasons,
+            'page_obj': goalkeeper_seasons,
             'game': game,
             'goal_against': goal_against,
             'penalty': penalty,
             'position': position,
             'group_teams': group_teams,
             'amount_teams': amount_teams,
+            'goalkeeper': True
         }
+        if coach_stat:
+            context['coach_obj'] = coach_stat
+            context['coach'] = True
+    else:
+        context = {
+            'name': player,
+            'coach_obj': coach_stat,
+            'coach': True
+        }
+        template = 'posts/profile_golie.html'
     return render(request, template, context)
-
-
-class GoalkeeperStatisticListView(ListView):
-    model = GoalkeeperStatistic
-    template_name = 'posts/profile_golie.html'
-    context_object_name = 'page_obj'
-
-    def get_queryset(self):
-        return GoalkeeperStatistic.objects.filter(
-            name__id=self.kwargs['pk']
-        ).values(
-            'name',
-            'name__name',
-            'age',
-            'team__title',
-            'season__name',
-            'game',
-            'goal_against',
-            'penalty'
-        ).order_by('season__name')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['name'] = Player.objects.get(
-            id=self.kwargs['pk'])
-        context['position'] = 'Вратарь'
-        context['count'] = context[
-            'page_obj'].values('season').distinct().count()
-        context['game'] = sum(elem['game'] for elem in context['page_obj'])
-        context['goal_against'] = sum(
-            elem['goal_against'] for elem in context['page_obj']
-        )
-        context['penalty'] = sum(
-            elem['penalty'] for elem in context['page_obj']
-        )
-        context['amount_teams'] = context['page_obj'].values(
-            'team__title').distinct().count()
-        context['group_teams'] = context['page_obj'].values(
-            'team__title').annotate(
-                game=Sum('game'),
-                goal_against=Sum('goal_against'),
-                penalty=Sum('penalty')).order_by('-game')
-        return context
 
 
 def best_of_season(request, season, stat_rule):
@@ -458,14 +452,14 @@ def create_table(request, season):
                     '-penalty',
                     'game')[:5]
     template = 'table/teams_table.html'
-    avr18 = Statistic.objects.filter(
-        season__name__range=['1961-62', '1990-91']).values(
-            'season__name',
-            'age'
-    ).annotate(avg_game=Avg('game'))
-    print(type(avr18))
-    for i in avr18:
-        print(i['age'], round(i['avg_game'], 0))
+    # avr18 = Statistic.objects.filter(
+    #     season__name__range=['1961-62', '1990-91']).values(
+    #         'season__name',
+    #         'age'
+    # ).annotate(avg_game=Avg('game'))
+    # print(type(avr18))
+    # for i in avr18:
+    #     print(i['age'], round(i['avg_game'], 0))
     # cou18 = Statistic.objects.filter(season__name=season, age='15').values(
     #     'name__name',
     #     'game'
@@ -572,23 +566,23 @@ def history_team(request, team):
         name__title=team).select_related(
             'season',
             'round_2',
-            'playoff',
-            'coach_1',
-            'coach_2').order_by('-season__name')
+            'playoff').order_by('-season__name')
     team_view_2 = TeamForTable2.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2', 'coach_1').order_by('-season__name')
+            'season', 'round_2').order_by('-season__name')
     team_view_3 = TeamForTable3.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2', 'coach_1').order_by('-season__name')
+            'season', 'round_2').order_by('-season__name')
     team_view_4 = TeamForTable4.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2', 'coach_1').order_by('-season__name')
+            'season', 'round_2').order_by('-season__name')
+    coach_list = CoachStatistic.objects.filter(
+        team__title=team).order_by('-season__name')
     team_view_general = sorted(
         chain(team_view, team_view_2, team_view_3, team_view_4),
         key=lambda x: x.season.name, reverse=True)
-    # for i in team_view_general:
-    #     print(i.coach_1.name)
+    for i in team_view_general:
+        print(i.__dict__)
     team = get_object_or_404(Team, title=team)
     count_season = (
         (
@@ -602,7 +596,8 @@ def history_team(request, team):
         'top_goal': top_goal(team),
         'top_point': top_point(team),
         'top_s_goal': top_season_goal(team),
-        'top_s_point': top_season_point(team)
+        'top_s_point': top_season_point(team),
+        'coach_list': coach_list
     }
     template = 'posts/history_team.html'
     return render(request, template, context)

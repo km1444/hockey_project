@@ -1,8 +1,7 @@
 from django.urls import path
 from django.views.generic.base import TemplateView
 from rating.views import (
-    GoalkeeperStatisticListView, SearchResultsView, SkaterStatisticDeleteView,
-    SkaterStatisticUpdateView,
+    SearchResultsView, SkaterStatisticDeleteView, SkaterStatisticUpdateView,
 )
 
 from . import views
@@ -46,11 +45,11 @@ urlpatterns = [
     path('table/<str:season>/', views.create_table, name='create_table'),
     path('history/<str:team>/', views.history_team, name='history_team'),
     path('search/', SearchResultsView.as_view(), name='search_result'),
-    path(
-        'goalkeeper/<int:pk>/',
-        GoalkeeperStatisticListView.as_view(),
-        name='goalkeeper_detail'
-    ),
+    # path(
+    #     'goalkeeper/<int:pk>/',
+    #     GoalkeeperStatisticListView.as_view(),
+    #     name='goalkeeper_detail'
+    # ),
     path(
         'create_statistic/<str:team>/<str:season>',
         views.add_statistic,

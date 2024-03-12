@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block description %}
   <meta name="description" content="Советский хоккеист {{ name.name }} {{ name.year_of_birth }} года рождения">
@@ -7,13 +8,19 @@
 {% block title %} {{ name.name }} {{ name.year_of_birth }} {% endblock %}
 
 {% block content %}
-
+ 
   <div class="container col-sm-5 py-1">
     <h1>{{ name.name }}</h1>
-    <h4>Position : {{ position }}</h4>
+    {% if goalkeeper %}
+      <h4>Position : {{ position }}</h4>
+    {% endif %}
     <h4>Born : {{ name.year_of_birth }}</h4>
+    <a href="{{ player.wikip }}">
+      <img src="{% static 'img/wiki.png' %}" >
+    </a>
   </div>
   
+  {% if goalkeeper %}
     <div class="container col-sm-5 p-1 my-1">
       <table class="table table-bordered table-hover table-sm">
         <thead>
@@ -74,5 +81,44 @@
         </tfoot>
       </table>
     </div>
+  {% endif %}
+
+  {% if coach %}
+  <div class="container col-sm-5 p-1 my-1">
+    <h4>Coaching Record</h4>
+    <table class="table table-bordered table-hover table-sm">
+      <thead>
+        <tr>
+          <th>Season</th>
+          <th>Age</th>
+          <th>Tm</th>
+          <th>Pos</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for coach_rec in coach_obj %}
+          <tr>
+            <td>
+              <a href="{% url 'rating:create_table' coach_rec.season__name %}">
+                {{ coach_rec.season__name }}</td>
+              </a>
+            </td>
+            <td>{{ coach_rec.age }}</td>
+            <td>{{ coach_rec.team__title }}</td>
+            <td>{{ coach_rec.final_position }}</td>
+            {% if coach_rec.full_season %}
+              <td></td>
+            {% elif coach_rec.fired_season %}
+              <td>Пришел по ходу сезона</td>
+            {% elif coach_rec.came_season %}
+              <td>Ушел по ходу сезона</td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
   
 {% endblock content %}
