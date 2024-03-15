@@ -9,7 +9,6 @@ def top_goal(team):
             'name__id',
             'name__name').annotate(
                 goal=Sum('goal')).order_by('-goal').first()
-    print(top)
     return top
 
 

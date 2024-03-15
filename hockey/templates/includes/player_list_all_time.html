@@ -17,13 +17,13 @@
       <td>{{ post.penalty }}</td>
   {% endif %} {% endcomment %}
 
-  {% if table_name == 'Most Points Career' or table_name == 'Most Points Season' %}
+  {% if table_name == 'Most Points Career' or table_name == 'Most Points Single Season' %}
     <td>{{ post.point }}</td>
   {% elif table_name == 'Most Goals Career' or table_name == 'Most Goals Single Season' or table_name == 'Yearly Leaders for Goals' %}
     <td>{{ post.goal }}</td>
-  {% elif table_name == 'Most Assists Career' or table_name == 'Most Assists Season' %}
+  {% elif table_name == 'Most Assists Career' or table_name == 'Most Assists Single Season' %}
     <td>{{ post.assist }}</td>
-  {% elif table_name == 'Most Penaltys Career' or table_name == 'Most Penaltys Season' %}
+  {% elif table_name == 'Most Penaltys Career' or table_name == 'Most Penaltys Single Season' %}
     <td>{{ post.penalty }}</td>
   {% endif %}
 
@@ -31,7 +31,7 @@
     <td>{{ post.season__name }}</td>
   {% endif %} {% endcomment %}
 
-  {% if table_name == 'Most Points Season' or table_name == 'Most Goals Single Season' or table_name == 'Most Assists Season' or table_name == 'Most Penaltys Season' or table_name == 'Yearly Leaders for Goals' %}
+  {% if table_name == 'Most Points Single Season' or table_name == 'Most Goals Single Season' or table_name == 'Most Assists Single Season' or table_name == 'Most Penaltys Single Season' or table_name == 'Yearly Leaders for Goals' %}
     <td>{{ post.season__name }}</td>
   {% endif %}
 </tr>

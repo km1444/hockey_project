@@ -235,7 +235,6 @@ def best_of_season(request, season, stat_rule):
     player_scores = Statistic.objects.filter(
         season__name=season).values(
             'name__id', 'name__name', 'age', 'team__slug').annotate(
-                # team=Sum('team__slug'),
                 game=Sum('game'),
                 goal=Sum('goal'),
                 assist=Sum('assist'),
@@ -579,10 +578,8 @@ def history_team(request, team):
     coach_list = CoachStatistic.objects.filter(
         team__title=team).order_by('-season__name')
     team_view_general = sorted(
-        chain(team_view, team_view_2, team_view_3, team_view_4),
+        chain(team_view, team_view_2, team_view_3, team_view_4, coach_list),
         key=lambda x: x.season.name, reverse=True)
-    for i in team_view_general:
-        print(i.__dict__)
     team = get_object_or_404(Team, title=team)
     count_season = (
         (
