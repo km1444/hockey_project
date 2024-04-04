@@ -12,7 +12,7 @@ class AddCoachForm(forms.ModelForm):
         queryset=Season.objects.all(),
         label='Сезон'
     )
-    name = forms.ModelChoiceField(
+    coach_name = forms.ModelChoiceField(
         queryset=Player.objects.all(),
         label='Тренер'
     )
@@ -20,7 +20,7 @@ class AddCoachForm(forms.ModelForm):
     class Meta:
         model = CoachStatistic
         fields = (
-            'name', 'team', 'season', 'final_position',
+            'coach_name', 'team', 'season', 'final_position',
             'full_season', 'fired_season', 'came_season'
         )
         widgets = {
@@ -32,4 +32,4 @@ class AddCoachForm(forms.ModelForm):
             title=team)
         self.fields['season'].initial = Season.objects.get(
             name=season)
-        self.fields['name'].initial = Player.objects.last()
+        self.fields['coach_name'].initial = Player.objects.last()

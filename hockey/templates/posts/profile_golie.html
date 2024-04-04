@@ -11,17 +11,18 @@
  
   <div class="container col-sm-5 py-1">
     <h1>{{ name.name }}</h1>
-    {% if goalkeeper %}
-      <h4>Position : {{ position }}</h4>
-    {% endif %}
+      {% if goalkeeper %}
+        <h4>Position : {{ position }}</h4>
+      {% endif %}
     <h4>Born : {{ name.year_of_birth }}</h4>
-    <a href="{{ player.wikip }}">
+    <a href="{{ name.wikip }}">
       <img src="{% static 'img/wiki.png' %}" >
     </a>
   </div>
   
   {% if goalkeeper %}
     <div class="container col-sm-5 p-1 my-1">
+      <h4>Player Statistic</h4>
       <table class="table table-bordered table-hover table-sm">
         <thead>
           <tr>
@@ -85,7 +86,7 @@
 
   {% if coach %}
   <div class="container col-sm-5 p-1 my-1">
-    <h4>Coaching Record</h4>
+    <h4>Coach Statistic</h4>
     <table class="table table-bordered table-hover table-sm">
       <thead>
         <tr>

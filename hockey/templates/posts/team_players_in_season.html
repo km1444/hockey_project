@@ -170,8 +170,8 @@
     <b> Coach: </b>
     {% for coach in coaches %}
       
-      <a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' coach.name %}">
-        {{ coach.name__name }}
+      <a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' coach.coach_name %}">
+        {{ coach.coach_name__name }}
       </a>
         {% comment %} {% if request.user.is_authenticated %}
           <p>

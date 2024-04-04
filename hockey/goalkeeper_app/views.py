@@ -66,9 +66,9 @@ class GoalkeeperStatisticListView(ListView):
                 penalty=Sum('penalty')).order_by('-game')
         context['goalkeeper'] = True
         context['coach_obj'] = CoachStatistic.objects.filter(
-            name__id=self.kwargs['pk']).values(
-                'name',
-                'name__name',
+            coach_name__id=self.kwargs['pk']).values(
+                'coach_name',
+                'coach_name__name',
                 'age',
                 'team__title',
                 'season__name',

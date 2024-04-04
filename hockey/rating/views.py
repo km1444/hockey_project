@@ -1,17 +1,9 @@
-# from aggregates import StringAgg
-# from django.core.paginator import Paginator
-# from django.db import models
-# from django.http import HttpResponseRedirect
-# from django.views.generic.edit import CreateView
-# from django.http import Http404
 import operator
 
 from functools import reduce
 from itertools import chain
 
 from coach_app.models import CoachStatistic
-# from coach_app.models import CoachStatistic
-# from core.views import page_not_found
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -86,8 +78,8 @@ def team_players_in_season(request, team, season):
         team__title=team.title, season__name=season.name
     ).values(
         'id',
-        'name',
-        'name__name'
+        'coach_name',
+        'coach_name__name'
     )
     team_info = TeamForTable.objects.filter(
         name__title=team.title,
@@ -149,8 +141,8 @@ def player_detail(request, id):
         'penalty'
     ).order_by('season__name')
     coach_stat = player.coachstatistic.values(
-        'name',
-        'name__name',
+        'coach_name',
+        'coach_name__name',
         'age',
         'team__title',
         'season__name',
@@ -565,21 +557,29 @@ def history_team(request, team):
         name__title=team).select_related(
             'season',
             'round_2',
-            'playoff').order_by('-season__name')
+            'playoff',
+            'coach_1',
+            'coach_2',
+            'coach_3').order_by('-season__name')
     team_view_2 = TeamForTable2.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2').order_by('-season__name')
+            'season', 'round_2', 'coach_1',
+            'coach_2',
+            'coach_3').order_by('-season__name')
     team_view_3 = TeamForTable3.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2').order_by('-season__name')
+            'season', 'round_2', 'coach_1',
+            'coach_2',
+            'coach_3').order_by('-season__name')
     team_view_4 = TeamForTable4.objects.filter(
         name__title=team).select_related(
-            'season', 'round_2').order_by('-season__name')
-    coach_list = CoachStatistic.objects.filter(
-        team__title=team).order_by('-season__name')
+            'season', 'round_2', 'coach_1',
+            'coach_2',
+            'coach_3').order_by('-season__name')
     team_view_general = sorted(
-        chain(team_view, team_view_2, team_view_3, team_view_4, coach_list),
-        key=lambda x: x.season.name, reverse=True)
+        chain(team_view, team_view_2, team_view_3, team_view_4),
+        key=lambda x: x.season.name, reverse=True
+    )
     team = get_object_or_404(Team, title=team)
     count_season = (
         (
@@ -594,7 +594,6 @@ def history_team(request, team):
         'top_point': top_point(team),
         'top_s_goal': top_season_goal(team),
         'top_s_point': top_season_point(team),
-        'coach_list': coach_list
     }
     template = 'posts/history_team.html'
     return render(request, template, context)

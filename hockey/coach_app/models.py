@@ -3,11 +3,13 @@ from rating.models import Player, Season, Team
 
 
 class CoachStatistic(models.Model):
-    name = models.ForeignKey(
+    coach_name = models.ForeignKey(
         Player,
-        verbose_name="Игрок",
+        verbose_name="Тренер",
         on_delete=models.CASCADE,
-        related_name='coachstatistic'
+        related_name='coachstatistic',
+        blank=True,
+        null=True,
     )
     age = models.SmallIntegerField('Возраст', default=14)
     team = models.ForeignKey(
@@ -32,7 +34,7 @@ class CoachStatistic(models.Model):
 
     @property
     def get_age(self):
-        year_of_birth_player = self.name.year_of_birth
+        year_of_birth_player = self.coach_name.year_of_birth
         season = int(self.season.name[:4])
         return season - year_of_birth_player
 
@@ -40,13 +42,16 @@ class CoachStatistic(models.Model):
         self.age = self.get_age
         super(CoachStatistic, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return f'{self.coach_name}, {self.season}'
+
     class Meta:
         verbose_name = 'Статистика тренера'
         verbose_name_plural = 'Статистика тренеров'
-        constraints = [
-            models.UniqueConstraint(
-                name='unique_coach_statistic',
-                fields=['name', 'team', 'season']
-            )
-        ]
+        # constraints = [
+        #     models.UniqueConstraint(
+        #         name='unique_coach_statistic',
+        #         fields=['coach_name', 'team', 'season']
+        #     )
+        # ]
         ordering = ('-season',)
