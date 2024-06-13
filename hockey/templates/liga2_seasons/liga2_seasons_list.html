@@ -1,0 +1,30 @@
+{% extends 'liga_2_base.html' %}
+{% load static %}
+
+{% block description %}
+  <meta name="description" content="{{ title }}">
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container col-sm-4 p-1 my-1">
+  <h4 align="center"> {{ table_name }} </h4>
+</div>
+
+<div class="container col-sm-8 p-1 my-1">
+  <ul class='SeasonListLiga2'>
+  {% for season in all_seasons %}
+      <li>
+        <a href="{% url 'liga2_seasons:liga2_season' season.name %}">
+          {{ season.name }}
+        </a> 
+      </li>
+  {% endfor %}
+  <ul>
+</div>
+
+{% endblock %}
+  

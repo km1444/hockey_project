@@ -1,0 +1,198 @@
+{% load static %}
+<div class="container col-sm py-0 px-0">
+  <nav class="navbar navbar-light justify-content-between" id="top-subnav">
+    <ul>
+      {% if request.user.is_authenticated %}
+      <li> 
+        <a href="{% url 'users:logout' %}">Выйти</a>
+      </li>
+      <li>
+        <a>Пользователь: {{ user.username }}</a>
+      <li>
+      {% else %}
+      <li class="nav-item">
+        <a href="{% url 'users:login' %}">Войти</a>
+      </li>
+      {% comment %} <li>
+        <a href="{% url 'users:signup' %}">Регистрация</a>
+      </li> {% endcomment %}
+      {% endif %}
+    </ul>
+  </nav>
+
+  <nav class="navbar navbar-light justify-content-between" id="mid-subnav">
+    <a class="navbar-brand" href="{% url 'rating:index' %}">
+      <i class="fa-solid fa-hockey-sticks"></i>
+      <span style="color:red">45</span>seasons
+    </a>
+          
+    <form class="d-flex" role="search" action="{% url 'rating:search_result' %}" methog="get">
+      <input name='q' class="form-control me-2"
+        type="search"
+        placeholder="Person or year of birth"
+        aria-label="Search"/>
+      <button class="btn btn-outline-success me-2" type="submit">Search</button>
+    </form>
+  </nav>
+  
+  <nav class="navbar navbar-expand-sm navbar-light bg-light" id="bot-subnav">
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 pt-2 mb-lg-0 top-menu">
+        {% comment %} <li class="nav-item">
+          {% with request.resolver_match.view_name as view_name %}
+            <a class="nav-link" {% if view_name  == 'about:author' %} active {% endif %} href="">Об авторе</a>
+          {% endwith %}
+        </li> {% endcomment %}
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Teams Liga2
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="team_grid">
+                  {% for team in all_team_liga2 %}
+                    <li>
+                      <a class="dropdown-item" href="{% url 'liga2_teams:history_team' team.team_name__title %}">
+                        {{ team.team_name__title }} - {{ team.team_name__city }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </div>
+              </ul>
+          </li>
+        </div>
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Leaders
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <p class="dropdown-item stat-menu">Goal : &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:index' %}">Career </a>
+                    &nbsp; | &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="goal_season" %}"> Single Season</a>
+                    &nbsp; | &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="goal_yearly" %}"> Yearly</a>
+                  </p> 
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Assist : &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="assist_career" %}">Career</a>
+                    &nbsp; | &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="assist_season" %}">Season</a>
+                  </p>   
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Points : &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="point_career" %}">Career</a>
+                    &nbsp; | &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="point_season" %}">Season</a>
+                  </p>  
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Games : &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="game_career" %}">Career</a>
+                  </p>  
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Penalty : &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="penalty_career" %}">Career</a>
+                    &nbsp; | &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="penalty_season" %}">Season</a>
+                  </p> 
+                </li>
+                <li>
+                  <p class="dropdown-item stat-menu">Games(Goalie) : &nbsp;
+                    <a class="text-decoration-none text-reset" href ="{% url 'goalkeeper_app:goalkeeper_stat' %}">Career</a>
+                  </p> 
+                </li>
+                <li>
+                  <hr class="dropdown-divider"/>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+          </li>
+        </div>
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Seasons Liga2
+            </a>
+            
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <div class="season_grid">
+                {% for season in all_seasons %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'liga2_seasons:liga2_season' season.name  %}">
+                    {{ season.name }}
+                  </a> 
+                </li>
+                {% endfor %}
+              </div>
+              <li>
+                <a class="dropdown-item" href="{% url 'rating:champions_leagues' %}">
+                  All seasons
+                </a> 
+              </li>
+            </ul>
+            
+              {% comment %} <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for season in all_seasons %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season.name  %}">
+                    {{ season.name }}
+                  </a> 
+                </li>
+                {% endfor %}
+              </ul> {% endcomment %}
+          </li>
+        </div>
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Other
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="{% url 'miscellaneous:filter_start' %}">
+                    Filter
+                  </a>
+                </li>
+              </ul> 
+          </li>
+        </div>
+        <div class="dropdown">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Liga 2
+            </a>
+              {% comment %} <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="{% url 'liga2_seasons:liga2_seasons_list' %}">
+                    Seasons
+                  </a>
+                </li>
+              </ul>  {% endcomment %}
+          </li>
+        </div>
+      </ul>
+    </div>
+    <div>
+      <a href="https://t.me/KonovalovMikhail">telegram</a>
+    </div>
+  </nav>
+</div>
+
+

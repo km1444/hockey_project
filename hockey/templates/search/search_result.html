@@ -5,7 +5,8 @@
 <ul>
     {% for player in object_list %}
         <li>
-            <a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' player.id %}"> {{ player.name }}</a>, {{ player.year_of_birth}}
+            <a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' player.id %}"> 
+                {{ player.name }}</a>, {{ player.year_of_birth}}
         </li>
     {% endfor %}
 </ul>

@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'miscellaneous.apps.MiscellaneousConfig',
     'goalkeeper_app.apps.GoalkeeperAppConfig',
     'coach_app.apps.CoachAppConfig',
+    'liga2_seasons_app.apps.Liga2SeasonsAppConfig',
+    'liga2_teams_app.apps.Liga2TeamsAppConfig'
 ]
 
 MIDDLEWARE = [
@@ -65,6 +67,7 @@ TEMPLATES = [
                 'core.context_processors.year.year',
                 'core.context_processors.all_seasons.all_seasons',
                 'core.context_processors.all_team.all_team',
+                'core.context_processors.all_team_liga2.all_team',
             ],
         },
     },

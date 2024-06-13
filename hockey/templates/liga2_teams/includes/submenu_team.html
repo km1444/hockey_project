@@ -1,0 +1,11 @@
+<div class="submenu">
+    <ul>
+      {% comment %} {% with request.resolver_match.view_name as view_name %}
+      <li style="{% if view_name  == 'rating:history_team' %}background-color: #0b6186{% endif %}"><a href="{% url 'rating:history_team' team %}"> {{ team }} history </a></li>
+      <li style="{% if view_name  == 'rating:season_leaders' %}background-color: #0b6186{% endif %}"><a href="{% url 'rating:season_leaders' team %}">Season Leaders</a></li>
+      <li style="{% if view_name  == 'rating:leaders_career' %}background-color: #0b6186{% endif %}"><a href="{% url 'rating:leaders_career' team %}">Career Leaders</a></li>
+      <li style="{% if view_name  == 'rating:all_time_all_player_one_team' %}background-color: #0b6186{% endif %}"><a href="{% url 'rating:all_time_all_player_one_team' team %}">Skaters</a></li>
+      <li style="{% if view_name  == 'rating:goalie_list_team' %}background-color: #0b6186{% endif %}"><a href="{% url 'rating:goalie_list_team' team %}">Goalies</a></li>
+      {% endwith %} {% endcomment %}
+    </ul>
+  </div>

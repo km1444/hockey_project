@@ -1,0 +1,383 @@
+{% extends 'liga_2_base.html' %}
+{% load static %}
+
+{% block description %}
+  <meta name="description" content="{{ title }}">
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container col-sm-4 p-1 my-1">
+  <h4 align="center"> {{ table_name }} </h4>
+</div>
+
+<div class="container col-sm-5 p-1 mb-1">
+  <h1> {{ season }} </h1>
+  {% if season != '1946-47' %}
+    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:liga2_season' previous_season %}" role="button"> Previous season </a>
+  {% endif %}
+  {% if season != '1990-91' %}
+    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:liga2_season' next_season %}" role="button"> Next season </a>
+  {% endif %}
+</div>
+
+<!-- Переходный турнир -->
+{% if teams_transition %}
+<div class="container col-sm-5 py-2 table-responsive">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <h6>{{ description_table.transition_tournament }}</h6>
+      </tr>
+      <tr>
+        <th>Rank</th>
+        <th>Teams</th>
+        <th>Games</th>
+        <th>Wins</th>
+        <th>Ties</th>
+        <th>Los</th>
+        <th>Points</th>
+        {% if request.user.is_authenticated %}
+          <th>
+            Edit
+          </th>
+        {% endif %}
+      </tr>
+    </thead>
+  <tbody>
+    {% for team in teams_transition %}
+    <tr>
+      <td>{{ team.rank_pict }}</td>
+      <td class="first">{{ team.current_name }}</td>
+      <td>{{ team.games }}</td>
+      <td>{{ team.wins }}</td>
+      <td>{{ team.ties }}</td>
+      <td>{{ team.losses }}</td>
+      <td>{{ team.points }}</td>
+      {% if request.user.is_authenticated %}
+      <td>
+        <p>
+          <a href="{% url 'liga2_seasons:edit_team_in_transition_tournament' season team.pk %}">
+            Edit
+          </a>
+          <a href="">
+            Delete
+          </a>
+        </p>
+      </td>
+    {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+  <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
+  {% if request.user.is_authenticated %}
+    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:add_team_trans_tournament' season %}" role="button">
+      Add Team
+    </a> 
+  {% endif %}    
+</div>
+{% endif %} 
+
+{% if teams_transition_without_points %}
+<div class="container col-sm-5 py-2 table-responsive">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <h6>{{ description_table.transition_tournament }}</h6>
+      </tr>
+      <tr>
+        <th>Rank</th>
+        <th>Teams</th>
+        <th>Games</th>
+        <th>Wins</th>
+        <th>Ties</th>
+        <th>Los</th>
+        <th>Points</th>
+        {% comment %} {% if request.user.is_authenticated %}
+          <th>
+            Edit
+          </th>
+        {% endif %} {% endcomment %}
+      </tr>
+    </thead>
+  <tbody>
+    {% for team in teams_transition_without_points %}
+    <tr>
+      <td>{{ team.rank }}</td>
+      <td class="first">{{ team.current_name }}</td>
+      <td>{{ team.games }}</td>
+      <td>{{ team.wins }}</td>
+      <td>{{ team.ties }}</td>
+      <td>{{ team.losses }}</td>
+      <td>{{ team.points }}</td>
+      {% comment %} {% if request.user.is_authenticated %}
+      <td>
+        <p>
+          <a href="{% url 'liga2_seasons:edit_team_in_transition_tournament' season team.pk %}">
+            Edit
+          </a>
+          <a href="">
+            Delete
+          </a>
+        </p>
+      </td>
+    {% endif %} {% endcomment %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+  <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
+  {% comment %} {% if request.user.is_authenticated %}
+    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:add_team_trans_tournament' season %}" role="button">
+      Add Team
+    </a> 
+  {% endif %}     {% endcomment %}
+</div>
+{% endif %}
+
+<!-- Дополнительный турнир -->
+{% if additional_tournament %}
+<div class="container col-sm-5 py-2 table-responsive">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <h6>{{ description_table.description_2tb }}</h6>
+      </tr>
+      <tr>
+        <th>Rank</th>
+        <th>Teams</th>
+        <th>Games</th>
+        <th>Wins</th>
+        <th>Ties</th>
+        <th>Los</th>
+        <th>Points</th>
+        {% if request.user.is_authenticated %}
+          <th>
+            Edit
+          </th>
+        {% endif %}
+      </tr>
+    </thead>
+  <tbody>
+    {% for team in additional_tournament %}
+    <tr>
+      <td>{{ team.rank }}</td>
+      <td class="first">{{ team.current_name }}</td>
+      <td>{{ team.games }}</td>
+      <td>{{ team.wins }}</td>
+      <td>{{ team.ties }}</td>
+      <td>{{ team.losses }}</td>
+      <td>{{ team.points }}</td>
+      {% if request.user.is_authenticated %}
+      <td>
+        <p>
+          <a href="{% url 'liga2_seasons:edit_team_in_additional_tournament' season team.pk %}">
+            Edit
+          </a>
+          <a href="">
+            Delete
+          </a>
+        </p>
+      </td>
+    {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+  <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
+  {% if request.user.is_authenticated %}
+    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:add_team_addit_tournament' season %}" role="button">
+      Add Team
+    </a> 
+  {% endif %}    
+</div>
+{% endif %} 
+
+<!-- Второй дополнительный турнир -->
+{% if additional_tournament_second %}
+<div class="container col-sm-5 py-2 table-responsive">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <h6>{{ description_table.description_3tb }}</h6>
+      </tr>
+      <tr>
+        <th>Rank</th>
+        <th>Teams</th>
+        <th>Games</th>
+        <th>Wins</th>
+        <th>Ties</th>
+        <th>Los</th>
+        <th>Points</th>
+        {% comment %} {% if request.user.is_authenticated %}
+          <th>
+            Edit
+          </th>
+        {% endif %} {% endcomment %}
+      </tr>
+    </thead>
+  <tbody>
+    {% for team in additional_tournament_second %}
+    <tr>
+      <td>{{ team.rank }}</td>
+      <td class="first">{{ team.current_name }}</td>
+      <td>{{ team.games }}</td>
+      <td>{{ team.wins }}</td>
+      <td>{{ team.ties }}</td>
+      <td>{{ team.losses }}</td>
+      <td>{{ team.points }}</td>
+      {% comment %} {% if request.user.is_authenticated %}
+      <td>
+        <p>
+          <a href="">
+            Edit
+          </a>
+          <a href="">
+            Delete
+          </a>
+        </p>
+      </td>
+    {% endif %} {% endcomment %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+  <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
+  {% comment %} {% if request.user.is_authenticated %}
+    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:add_team_addit_tournament' season %}" role="button">
+      Add Team
+    </a> 
+  {% endif %}     {% endcomment %}
+</div>
+{% endif %} 
+
+<!-- Доп турнир без учета ранее набранных очков -->
+{% if additional_tournament_without_points %}
+<div class="container col-sm-5 py-2 table-responsive">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <h6>{{ description_table.description_2tb }}</h6>
+      </tr>
+      <tr>
+        <th>Rank</th>
+        <th>Teams</th>
+        <th>Games</th>
+        <th>Wins</th>
+        <th>Ties</th>
+        <th>Los</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+  <tbody>
+    {% for team in additional_tournament_without_points %}
+    <tr>
+      <td>{{ team.rank }}</td>
+      <td class="first">{{ team.current_name }}</td>
+      <td>{{ team.games }}</td>
+      <td>{{ team.wins }}</td>
+      <td>{{ team.ties }}</td>
+      <td>{{ team.losses }}</td>
+      <td>{{ team.points }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+</div>
+{% endif %} 
+
+<!-- Основной турнир или Западная зона -->
+<div class="container col-sm-5 py-2 table-responsive">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <h6>{{ description_table.description_1tb }}</h6>
+      </tr>
+      <tr>
+        <th>Rank</th>
+        <th>Teams</th>
+        <th>Games</th>
+        <th>Wins</th>
+        <th>Ties</th>
+        <th>Los</th>
+        <th>Points</th>
+        {% if request.user.is_authenticated %}
+          <th>
+            Edit
+          </th>
+        {% endif %}
+      </tr>
+    </thead>
+  <tbody>
+    {% for team in teams %}
+    <tr>
+      <td>{{ team.rank }}</td>
+      <td class="first">{{ team.current_name }}</td>
+      <td>{{ team.games }}</td>
+      <td>{{ team.wins }}</td>
+      <td>{{ team.ties }}</td>
+      <td>{{ team.losses }}</td>
+      <td>{{ team.points }}</td>
+      {% if request.user.is_authenticated %}
+      <td>
+        <p>
+          <a href="{% url 'liga2_seasons:edit_team_in_basic_tournament' season team.pk %}">
+            Edit
+          </a>
+          <a href="">
+            Delete
+          </a>
+        </p>
+      </td>
+    {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+  <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
+  {% if request.user.is_authenticated %}
+    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:add_team' season %}" role="button">
+      Add Team
+    </a> 
+  {% endif %}    
+</div>
+
+<!-- Восточная зона -->
+{% if teams_east %}
+<div class="container col-sm-5 py-2 table-responsive">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <h6>{{ description_table.description_4tb }}</h6>
+      </tr>
+      <tr>
+        <th>Rank</th>
+        <th>Teams</th>
+        <th>Games</th>
+        <th>Wins</th>
+        <th>Ties</th>
+        <th>Los</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+  <tbody>
+    {% for team in teams_east %}
+    <tr>
+      <td>{{ team.rank }}</td>
+      <td class="first">{{ team.current_name }}</td>
+      <td>{{ team.games }}</td>
+      <td>{{ team.wins }}</td>
+      <td>{{ team.ties }}</td>
+      <td>{{ team.losses }}</td>
+      <td>{{ team.points }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  </table>
+</div>
+{% endif %} 
+{% endblock %}

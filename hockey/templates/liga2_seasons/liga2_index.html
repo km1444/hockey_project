@@ -1,0 +1,49 @@
+{% extends 'liga_2_base.html' %}
+{% load static %}
+
+{% block description %}
+  <meta name="description" content="{{ title }}">
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container col-sm-4 p-1 my-1">
+  <h4 align="center"> {{ table_name }} </h4>
+</div>
+
+<div class="container col-sm-4 p-1 my-1">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>GP</th>
+          {% if table_name == 'Most Points Career' or table_name == 'Most Points Single Season' %}
+            <th>PTS</th>
+            {% elif table_name == 'Most Goals Career' or table_name == 'Most Goals Single Season' or table_name == 'Yearly Leaders for Goals' %}
+            <th>G</th>
+            {% elif table_name == 'Most Assists Career' or table_name == 'Most Assists Single Season' %}
+            <th>A</th>
+            {% elif table_name == 'Most Penaltys Career' or table_name == 'Most Penaltys Single Season' %}
+            <th>PIM</th>
+          {% endif %}
+
+          {% if table_name == 'Most Points Single Season' or table_name == 'Most Goals Single Season' or table_name == 'Most Assists Single Season' or table_name == 'Most Penaltys Single Season' or table_name == 'Yearly Leaders for Goals' %}
+            <th>Season</th>
+          {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% comment %} {% for post in page_obj %}
+        {% include 'includes/player_list_all_time.html' %}
+      {% endfor %} {% endcomment %}
+    </tbody>
+  </table>
+  {% include 'posts/includes/paginator.html' %}
+</div>
+
+{% endblock %}
+  

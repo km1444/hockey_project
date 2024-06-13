@@ -325,3 +325,8 @@ th.sorted[data-order="1"]::after {
 		grid-template-columns: repeat(1, auto);
 	}
   }
+
+.SeasonListLiga2 li {
+	display:inline-block;
+	margin: 1px;
+}

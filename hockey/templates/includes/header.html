@@ -21,18 +21,18 @@
   </nav>
 
   <nav class="navbar navbar-light justify-content-between" id="mid-subnav">
-          <a class="navbar-brand" href="{% url 'rating:index' %}">
-            <i class="fa-solid fa-hockey-sticks"></i>
-            <span style="color:red">45</span>seasons
-          </a>
+    <a class="navbar-brand" href="{% url 'rating:index' %}">
+      <i class="fa-solid fa-hockey-sticks"></i>
+      <span style="color:red">45</span>seasons
+    </a>
           
-            <form class="d-flex" role="search" action="{% url 'rating:search_result' %}" methog="get">
-              <input name='q' class="form-control me-2"
-                type="search"
-                placeholder="Person or year of birth"
-                aria-label="Search"/>
-              <button class="btn btn-outline-success me-2" type="submit">Search</button>
-            </form>
+    <form class="d-flex" role="search" action="{% url 'rating:search_result' %}" methog="get">
+      <input name='q' class="form-control me-2"
+        type="search"
+        placeholder="Person or year of birth"
+        aria-label="Search"/>
+      <button class="btn btn-outline-success me-2" type="submit">Search</button>
+    </form>
   </nav>
   
   <nav class="navbar navbar-expand-sm navbar-light bg-light" id="bot-subnav">
@@ -171,6 +171,20 @@
                   </a>
                 </li>
               </ul> 
+          </li>
+        </div>
+        <div class="dropdown">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'liga2_seasons:liga2_index' %}" id="navbarDropdown">
+              Liga 2
+            </a>
+              {% comment %} <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="{% url 'liga2_seasons:liga2_index' %}">
+                    Seasons
+                  </a>
+                </li>
+              </ul> {% endcomment %}
           </li>
         </div>
       </ul>
