@@ -1,0 +1,53 @@
+{% extends 'liga_2_base.html' %}
+{% load static %}
+
+{% block description %}
+  <meta name="description" content="Вратари голкиперы {{ team }} {{ team.city }} в высшем эшелоне советского хоккея">
+{% endblock %}
+
+{% block title %}
+{{ title }} {{ team }}
+{% endblock %}
+
+{% block content %}
+
+{% include 'liga2_teams/includes/liga2_header_team.html' %}
+
+{% include 'liga2_teams/includes/liga2_submenu_team.html' %}
+
+<div class="container col-sm-5 p-1 my-1">
+  <h4 align="center"> Goalkeepers League 1</h4>
+</div>
+
+<div class="container col-sm-4 p-1 my-1">
+    <table class="table table-striped table-bordered table-hover table-sm tcont countLines table_sort">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th data-type="string">Player</th>
+          <th data-type="number">Games</th>
+          <th data-type="number">Goals</th>
+          <th data-type="number">Penalty</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in page_obj %}
+        <tr>
+            <td>.</td>
+            <td class="first">
+              <a class="text-decoration-none text-reset"
+                 href="{% url 'goalkeeper_app:goalkeeper_detail' post.name__id %}"> {{ post.name__name }}</a>
+            </td>
+            <td>{{ post.games }}</td>
+            <td>{{ post.goals }}</td>
+            <td>{{ post.penalty }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  <script src="/static/css/main.js">
+  </script>
+
+</div>
+{% endblock %}

@@ -55,7 +55,7 @@
         <div class="dropdown">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Teams Liga2
+              Teams League 1
             </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="team_grid">
@@ -73,47 +73,47 @@
         <div class="dropdown">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Leaders
+              Leaders League 1
             </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <p class="dropdown-item stat-menu">Goal : &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:index' %}">Career </a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:liga2_most_goals_career' %}">Career </a>
                     &nbsp; | &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="goal_season" %}"> Single Season</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="goal_season" %}"> Single Season</a>
                     &nbsp; | &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="goal_yearly" %}"> Yearly</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="goal_yearly" %}"> Yearly</a>
                   </p> 
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Assist : &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="assist_career" %}">Career</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="assist_career" %}">Career</a>
                     &nbsp; | &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="assist_season" %}">Season</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="assist_season" %}">Season</a>
                   </p>   
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Points : &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="point_career" %}">Career</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="point_career" %}">Career</a>
                     &nbsp; | &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="point_season" %}">Season</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="point_season" %}">Season</a>
                   </p>  
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Games : &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="game_career" %}">Career</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="game_career" %}">Career</a>
                   </p>  
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Penalty : &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="penalty_career" %}">Career</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="penalty_career" %}">Career</a>
                     &nbsp; | &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'rating:statistic' stat_rule="penalty_season" %}">Season</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="penalty_season" %}">Season</a>
                   </p> 
                 </li>
                 <li>
                   <p class="dropdown-item stat-menu">Games(Goalie) : &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'goalkeeper_app:goalkeeper_stat' %}">Career</a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'goalkeeper_liga2:goalkeepers_in_the_first_league' %}">Career</a>
                   </p> 
                 </li>
                 <li>
@@ -128,7 +128,7 @@
         <div class="dropdown">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Seasons Liga2
+              Seasons League 1
             </a>
             
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -175,8 +175,8 @@
         </div>
         <div class="dropdown">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Liga 2
+            <a class="nav-link" href="{% url 'liga2_players:liga2_most_goals_career' %}" id="navbarDropdown">
+              League 1
             </a>
               {% comment %} <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>

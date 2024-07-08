@@ -1,0 +1,11 @@
+<div class="submenu">
+    <ul>
+      {% with request.resolver_match.view_name as view_name %}
+      <li style="{% if view_name  == 'liga2_teams:history_team' %}background-color: #0b6186{% endif %}"><a href="{% url 'liga2_teams:history_team' team %}"> {{ team }} history </a></li>
+      <li style="{% if view_name  == 'liga2_teams:season_leaders' %}background-color: #0b6186{% endif %}"><a href="{% url 'liga2_teams:season_leaders' team %}">Season Leaders</a></li>
+      <li style="{% if view_name  == 'liga2_teams:career_leaders' %}background-color: #0b6186{% endif %}"><a href="{% url 'liga2_teams:career_leaders' team %}">Career Leaders</a></li>
+      <li style="{% if view_name  == 'liga2_teams:all_players_on_team' %}background-color: #0b6186{% endif %}"><a href="{% url 'liga2_teams:all_players_on_team' team %}">Skaters</a></li>
+      <li style="{% if view_name  == 'liga2_teams:first_league_team_goalkeepers' %}background-color: #0b6186{% endif %}"><a href="{% url 'liga2_teams:first_league_team_goalkeepers' team %}">Goalies</a></li>
+      {% endwith %}
+    </ul>
+  </div>

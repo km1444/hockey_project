@@ -1,0 +1,69 @@
+  <div class="container col-sm-5 p-1 my-1">
+    <h4>Player Statistic League 1</h4>
+    <table class="table table-bordered table-hover table-sm">
+      <thead>
+        <tr>
+          <th>Season</th>
+          <th>Age</th>
+          <th>Tm</th>
+          <th>GP</th>
+          <th>G</th>
+          <th>A</th>
+          <th>PTS</th>
+          <th>PIM</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in seasons_of_player %}
+        <tr>
+          <td>
+              <a href="{% url 'liga2_seasons:liga2_season' post.season__name %}">
+                  {{ post.season__name }}
+              </a>
+          </td>
+          <td>{{ post.age }}</td>
+          <td>
+              <a href="{% url 'liga2_players:players_team_season' post.team__title post.season__name %}"> 
+                  {{ post.team__title }}
+              </a>
+          </td>
+          <td>{{ post.game }}</td>
+          <td>{{ post.goal }}</td>
+          <td>{{ post.assist }}</td>
+          <td class="table-warning">{{ post.point }}</td>
+          <td>{{ post.penalty }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>{{ count }} s</th>
+          <th></th>
+          <th></th>
+          <th>{{ game }}</th>
+          <th>{{ goal }}</th>
+          <th>{{ assist }}</th>
+          <th>{{ point }}</th>
+          <th>{{ penalty }}</th>
+        </tr>
+        {% if amount_teams != 1 %}
+          {% for elem in group_teams %}
+          <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <a href="{% url 'rating:all_time_all_player_one_team' elem.team__title %}"> 
+                    {{ elem.team__title }}
+                </a>
+            </td>
+            <td>{{ elem.game }}</td>
+            <td>{{ elem.goal }}</td>
+            <td>{{ elem.assist }}</td>
+            <td>{{ elem.point }}</td>
+            <td>{{ elem.penalty }}</td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </tfoot>
+    </table>
+  </div>

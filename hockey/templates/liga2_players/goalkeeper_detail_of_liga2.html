@@ -1,0 +1,61 @@
+<div class="container col-sm-5 p-1 my-1">
+    <h4>Player Statistic First League</h4>
+    <table class="table table-bordered table-hover table-sm">
+      <thead>
+        <tr>
+          <th>Season</th>
+          <th>Age</th>
+          <th>Team</th>
+          <th>Game</th>
+          <th>Goal</th>
+          <th>Penalty</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in page_obj %}
+        <tr>
+          <td>
+              <a href="{% url 'liga2_seasons:liga2_season' post.season__name %}">
+                  {{ post.season__name }}
+              </a>
+          </td>
+          <td>{{ post.age }}</td>
+          <td>
+              <a href="{% url 'liga2_players:players_team_season' post.team__title post.season__name %}"> 
+                  {{ post.team__title }}
+              </a>
+          </td>
+          <td>{{ post.game }}</td>
+          <td>{{ post.goal_against }}</td>
+          <td>{{ post.penalty }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+      <tr>
+        <th>{{ count }} s</th>
+        <th></th>
+        <th></th>
+        <th>{{ game }}</th>
+        <th>{{ goal_against }}</th>
+        <th>{{ penalty }}</th>
+      </tr>
+      {% if amount_teams != 1 %}
+        {% for elem in group_teams %}
+        <tr>
+          <td></td>
+          <td></td>
+          <td>
+              <a href="{% url 'rating:all_time_all_player_one_team' elem.team__title %}"> 
+                  {{ elem.team__title }}
+              </a>
+          </td>
+          <td>{{ elem.game }}</td>
+          <td>{{ elem.goal_against }}</td>
+          <td>{{ elem.penalty }}</td>
+        </tr>
+        {% endfor %}
+      {% endif %}
+      </tfoot>
+    </table>
+  </div>

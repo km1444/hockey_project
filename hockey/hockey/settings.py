@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     'goalkeeper_app.apps.GoalkeeperAppConfig',
     'coach_app.apps.CoachAppConfig',
     'liga2_seasons_app.apps.Liga2SeasonsAppConfig',
-    'liga2_teams_app.apps.Liga2TeamsAppConfig'
+    'liga2_teams_app.apps.Liga2TeamsAppConfig',
+    'liga2_players_app.apps.Liga2PlayersAppConfig',
+    'goalkeeper_liga2_app.apps.GoalkeeperLiga2AppConfig'
 ]
 
 MIDDLEWARE = [

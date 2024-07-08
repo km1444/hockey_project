@@ -1,0 +1,57 @@
+{% extends 'liga_2_base.html' %}
+{% load static %}
+
+{% block description %}
+  <meta name="description" content="Игроки {{ team }} {{ team.city }} игравшие в высшем эшелоне советского хоккея">
+{% endblock %}
+
+{% block title %}
+Игроки команды {{ team }} игравшие в высшей лиге    
+{% endblock %}
+
+{% block content %}
+
+{% include 'liga2_teams/includes/liga2_header_team.html' %}
+
+{% include 'liga2_teams/includes/liga2_submenu_team.html' %}
+
+<div class="container col-sm-5 p-1 my-1">
+  <h4 align="center"> Career Leaders for Points League 1</h4>
+</div>
+
+<div class="container col-sm-4 p-1 my-1 table-responsive">
+    <table class="table table-striped table-bordered table-hover table-sm tcont countLines table_sort">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th data-type="string">Player</th>
+          <th data-type="number">GP</th>
+          <th data-type="number">G</th>
+          <th data-type="number">A</th>
+          <th data-type="number">PTS</th>
+          <th data-type="number">PIM</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in page_obj %}
+        <tr>
+          <td>.</td>
+          <td class="first">
+            <a class="text-decoration-none text-reset"
+               href="{% url 'rating:player_detail' post.name__id %}"> {{ post.name__name }}</a>
+          </td>
+          <td>{{ post.games }}</td>
+          <td>{{ post.goals }}</td>
+          <td>{{ post.assists }}</td>
+          <td class="table-warning">{{ post.points }}</td>
+          <td>{{ post.penalty }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  <script src="/static/css/main.js">
+  </script>
+
+</div>
+{% endblock %}

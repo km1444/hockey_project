@@ -1,28 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
+{% load user_filters %}
 
 {% block description %}
-  <meta name="description" content="Советский хоккеист {{ name.name }} {{ name.year_of_birth }} года рождения">
+  <meta name="description" content="Советский хоккеист {{ player.name }} {{ player.year_of_birth }} года рождения">
 {% endblock %}
 
-{% block title %} {{ name.name }} {{ name.year_of_birth }} {% endblock %}
+{% block title %} {{ player.name }} {{ player.year_of_birth }} {% endblock %}
 
 {% block content %}
  
   <div class="container col-sm-5 py-1">
-    <h1>{{ name.name }}</h1>
+    <h1>{{ player.name }}</h1>
       {% if goalkeeper %}
         <h4>Position : {{ position }}</h4>
       {% endif %}
-    <h4>Born : {{ name.year_of_birth }}</h4>
-    <a href="{{ name.wikip }}">
+    <h4>Born : {{ player.year_of_birth }}</h4>
+    <a href="{{ player.wikip }}">
       <img src="{% static 'img/wiki.png' %}" >
     </a>
   </div>
   
   {% if goalkeeper %}
     <div class="container col-sm-5 p-1 my-1">
-      <h4>Player Statistic</h4>
+      <h4>Player Statistic Major League</h4>
       <table class="table table-bordered table-hover table-sm">
         <thead>
           <tr>
@@ -69,7 +70,7 @@
             <td></td>
             <td></td>
             <td>
-                <a href="{% url 'rating:all_time_all_player_one_team' elem.team__title %}"> 
+                <a href="{% url 'rating:goalie_list_team' elem.team__title %}"> 
                     {{ elem.team__title }}
                 </a>
             </td>
@@ -84,42 +85,12 @@
     </div>
   {% endif %}
 
-  {% if coach %}
-  <div class="container col-sm-5 p-1 my-1">
-    <h4>Coach Statistic</h4>
-    <table class="table table-bordered table-hover table-sm">
-      <thead>
-        <tr>
-          <th>Season</th>
-          <th>Age</th>
-          <th>Tm</th>
-          <th>Pos</th>
-          <th>Comment</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for coach_rec in coach_obj %}
-          <tr>
-            <td>
-              <a href="{% url 'rating:create_table' coach_rec.season__name %}">
-                {{ coach_rec.season__name }}</td>
-              </a>
-            </td>
-            <td>{{ coach_rec.age }}</td>
-            <td>{{ coach_rec.team__title }}</td>
-            <td>{{ coach_rec.final_position }}</td>
-            {% if coach_rec.full_season %}
-              <td></td>
-            {% elif coach_rec.fired_season %}
-              <td>Пришел по ходу сезона</td>
-            {% elif coach_rec.came_season %}
-              <td>Ушел по ходу сезона</td>
-            {% endif %}
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+  {% if exist_statistic_goalkeeper_of_league1 %}
+  {% show_goalkeeper_detail_of_liga2 player.id %}
+  {% endif %}
+
+  {% if exist_coach_stat %}
+  {% show_coach_stat_of_player player.id %}
   {% endif %}
   
 {% endblock content %}

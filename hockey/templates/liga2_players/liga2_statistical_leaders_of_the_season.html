@@ -1,0 +1,50 @@
+{% extends 'liga_2_base.html' %}
+
+{% block content %}
+<div class="container col-sm-6 py-2">
+  <h3>
+    Cезон: 
+    <a href="{% url 'liga2_seasons:liga2_season' season %}">
+      {{ season }}
+    </a>
+  </h3>
+  <h3> {{ title_table }} </h3>
+    {% if season != '1946-47' %}
+      <a class="btn btn-outline-secondary" href="{% url link previous_season %}" role="button"> Previous season </a>
+    {% endif %}
+    {% if season != '1990-91' %}
+      <a class="btn btn-outline-secondary" href="{% url link next_season %}" role="button"> Next season </a>
+    {% endif %}
+</div>
+<div class="container col-sm-6 p-1 my-1 table-responsive">
+  <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>Age</th>
+        <th>Tm</th>
+        <th>GP</th>
+        <th>{{ column_heading }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for post in players_list %}
+      <tr>
+        <td>.</td>
+        <td class="first"><a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' post.name__id %}"> {{ post.name__name }}</a></td>
+        <td>{{ post.age }}</td>
+        <td>
+            {{ post.team__slug }}
+        </td>
+        <td>{{ post.game }}</td>
+        <td class="table-warning">{{ post.value }}</td>
+    </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+
+  {% include 'posts/includes/paginator.html' %}
+</div>
+  
+{% endblock %}  

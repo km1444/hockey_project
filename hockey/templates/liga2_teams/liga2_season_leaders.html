@@ -1,0 +1,103 @@
+{% extends 'liga_2_base.html' %}
+{% load static %}
+
+{% block description %}
+  <meta name="description" content="Лучшие результаты выступления игроков за хоккейный клуб {{ team }} в одном сезоне">
+{% endblock %}
+
+{% block title %} 
+ТОП-10 игроков клуба {{ team }} за сезон в Первой лиге СССР
+{% endblock %}
+
+{% block content %}
+
+
+{% include 'liga2_teams/includes/liga2_header_team.html' %}
+
+{% include 'liga2_teams/includes/liga2_submenu_team.html' %}
+
+<div class="container col-5 p-1 my-1">
+  <h2 align="center">Season Leaders League 1</h2>
+</div>
+  <div class="container-lg">
+  <div class="row">
+    <div class="col">
+    <table class="table table-striped table-bordered table-hover table-sm tcont countLines" style="box-shadow: 0 0 0 0">
+      <thead>
+        <h5>
+          Goals
+        </h5>
+      </thead>
+      <tbody>
+        {% for elem in top_10_goal %}
+        <tr class="first_place">			
+          <td class="rank">.</td>
+          <td class="first"><a href="{% url 'rating:player_detail' elem.name__id %}">{{ elem.name__name }}</a></td>
+          <td>{{ elem.season__name }}</td>
+          <td class="value"> {{ elem.goal }} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <div class="col">
+    <table class="table table-striped table-bordered table-hover table-sm tcont countLines" style="box-shadow: 0 0 0 0">
+      <thead>
+        <h5>
+          Assists
+        </h5>
+      </thead>
+      <tbody>
+        {% for elem in top_10_assist %}
+        <tr class="first_place">			
+          <td class="rank">.</td>
+          <td class="first"><a href="{% url 'rating:player_detail' elem.name__id %}">{{ elem.name__name }}</a></td>
+          <td>{{ elem.season__name }}</td>
+          <td class="value"> {{ elem.assist }} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <div class="col">
+    <table class="table table-striped table-bordered table-hover table-sm tcont countLines" style="box-shadow: 0 0 0 0">
+      <thead>
+        <h5>
+          Points
+        </h5>
+      </thead>
+      <tbody>
+        {% for elem in top_10_point %}
+        <tr class="first_place">			
+          <td class="rank">.</td>
+          <td class="first"><a href="{% url 'rating:player_detail' elem.name__id %}">{{ elem.name__name }}</a></td>
+          <td>{{ elem.season__name }}</td>
+          <td class="value"> {{ elem.point }} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <div class="col">
+    <table class="table table-striped table-bordered table-hover table-sm tcont countLines" style="box-shadow: 0 0 0 0">
+      <thead>
+        <h5>
+          Penalty
+        </h5>
+      </thead>
+      <tbody>
+        {% for elem in top_10_penalty %}
+        <tr class="first_place">			
+          <td class="rank">.</td>
+          <td class="first"><a href="{% url 'rating:player_detail' elem.name__id %}">{{ elem.name__name }}</a></td>
+          <td>{{ elem.season__name }}</td>
+          <td class="value"> {{ elem.penalty }} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

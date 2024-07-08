@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load user_filters %}
 
 {% block description %}
   <meta name="description" content="Советский хоккеист {{ player.name }} {{ player.year_of_birth }} года рождения">
@@ -19,8 +20,9 @@
     </a>
   </div>
 
+  {% if exist_statistic_of_major_league %}
   <div class="container col-sm-5 p-1 my-1">
-    <h4>Player Statistic</h4>
+    <h4>Player Statistic Major League</h4>
     <table class="table table-bordered table-hover table-sm">
       <thead>
         <tr>
@@ -88,39 +90,14 @@
       </tfoot>
     </table>
   </div>
+  {% endif %}
 
-  {% if coach %}
-  <div class="container col-sm-5 p-1 my-1">
-    <h4>Coach Statistic</h4>
-    <table class="table table-bordered table-hover table-sm">
-      <thead>
-        <tr>
-          <th>Season</th>
-          <th>Age</th>
-          <th>Tm</th>
-          <th>Pos</th>
-          <th>Comment</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for coach_rec in coach_obj %}
-          <tr>
-            <td>{{ coach_rec.season__name }}</td>
-            <td>{{ coach_rec.age }}</td>
-            <td>{{ coach_rec.team__title }}</td>
-            <td>{{ coach_rec.final_position }}</td>
-            {% if coach_rec.full_season %}
-              <td></td>
-            {% elif coach_rec.fired_season %}
-              <td>Ушел по ходу сезона</td>
-            {% elif coach_rec.came_season %}
-              <td>Пришел по ходу сезона</td>
-            {% endif %}
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+  {% if exist_statistic_of_league1 %}
+  {% show_player_detail_of_liga2 player.id %}
+  {% endif %}
+  
+  {% if exist_coach_stat %}
+  {% show_coach_stat_of_player player.id %}
   {% endif %}
   
 {% endblock content %}

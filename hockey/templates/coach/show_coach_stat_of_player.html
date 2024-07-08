@@ -1,0 +1,31 @@
+<div class="container col-sm-5 p-1 my-1">
+    <h4>Coach Statistic</h4>
+    <table class="table table-bordered table-hover table-sm">
+      <thead>
+        <tr>
+          <th>Season</th>
+          <th>Age</th>
+          <th>Tm</th>
+          <th>Pos</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for coach_rec in coach_obj %}
+          <tr>
+            <td>{{ coach_rec.season__name }}</td>
+            <td>{{ coach_rec.age }}</td>
+            <td>{{ coach_rec.team__title }}</td>
+            <td>{{ coach_rec.final_position }}</td>
+            {% if coach_rec.full_season %}
+              <td></td>
+            {% elif coach_rec.fired_season %}
+              <td>Ушел по ходу сезона</td>
+            {% elif coach_rec.came_season %}
+              <td>Пришел по ходу сезона</td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>

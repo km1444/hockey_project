@@ -1,5 +1,6 @@
 {% extends 'liga_2_base.html' %}
 {% load static %}
+{% load 5best_players_of_season %}
 
 {% block description %}
   <meta name="description" content="{{ title }}">
@@ -15,7 +16,7 @@
 </div>
 
 <div class="container col-sm-5 p-1 mb-1">
-  <h1> {{ season }} </h1>
+  <h1> {{ season }} League 1</h1>
   {% if season != '1946-47' %}
     <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:liga2_season' previous_season %}" role="button"> Previous season </a>
   {% endif %}
@@ -316,7 +317,11 @@
     {% for team in teams %}
     <tr>
       <td>{{ team.rank }}</td>
-      <td class="first">{{ team.current_name }}</td>
+      <td class="first">
+        <a href="{% url 'liga2_players:players_team_season' team.team_name.title season %}">
+          {{ team.current_name }}
+        </a>
+      </td>
       <td>{{ team.games }}</td>
       <td>{{ team.wins }}</td>
       <td>{{ team.ties }}</td>
@@ -380,4 +385,13 @@
   </table>
 </div>
 {% endif %} 
+
+<div class="container-lg">
+  <h2>
+    League Leaders
+  </h2>
+</div>
+
+{% top_5_players season %}
+
 {% endblock %}

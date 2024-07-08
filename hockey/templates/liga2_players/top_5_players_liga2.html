@@ -1,0 +1,80 @@
+<div class="container-lg">
+    <div class="row">
+      <div class="col">
+      <table class="table table-striped table-bordered table-hover table-sm tcont countLines" style="box-shadow: 0 0 0 0">
+        <thead>
+          <h5>
+            Goals
+          </h5>
+        </thead>
+        <tbody>
+          {% for elem in top_5_goal %}
+          <tr class="first_place">			
+            <td class="rank">.</td>
+            <td class="first"><a href="{% url 'rating:player_detail' elem.name__id %}">{{ elem.name__name }}</a> • <span class="desc"> {{elem.team__slug }}</span></td>
+            <td class="value"> {{ elem.goal }} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{% url 'liga2_players:leaders_goals_season' season %}" class="btn btn-secondary">View all players in this category</a>
+      </div>
+      <div class="col">
+      <table class="table table-striped table-bordered table-hover table-sm tcont countLines" style="box-shadow: 0 0 0 0">
+        <thead>
+          <h5>
+            Assist
+          </h5>
+        </thead>
+        <tbody>
+          {% for elem in top_5_assist %}
+          <tr class="first_place">			
+            <td class="rank">.</td>
+            <td class="first"><a href="{% url 'rating:player_detail' elem.name__id %}">{{ elem.name__name }}</a> • <span class="desc"> {{elem.team__slug }}</span></td>
+            <td class="value"> {{ elem.assist }} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{% url 'liga2_players:leaders_assists_season' season %}" class="btn btn-secondary">View all players in this category</a>
+      </div>
+      <div class="col">
+      <table class="table table-striped table-bordered table-hover table-sm tcont countLines" style="box-shadow: 0 0 0 0">
+        <thead>
+          <h5>
+            Points
+          </h5>
+        </thead>
+        <tbody>
+          {% for elem in top_5_point %}
+          <tr class="first_place">			
+            <td class="rank">.</td>
+            <td class="first"><a href="{% url 'rating:player_detail' elem.name__id %}">{{ elem.name__name }}</a> • <span class="desc"> {{elem.team__slug }}</span></td>
+            <td class="value"> {{ elem.point }} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{% url 'liga2_players:leaders_points_season' season %}" class="btn btn-secondary">View all players in this category</a>
+      </div>
+      <div class="col">
+      <table class="table table-striped table-bordered table-hover table-sm tcont countLines" style="box-shadow: 0 0 0 0">
+        <thead>
+          <h5>
+            Penalty
+          </h5>
+        </thead>
+        <tbody>
+          {% for elem in top_5_penalty %}
+          <tr class="first_place">			
+            <td class="rank">.</td>
+            <td class="first"><a href="{% url 'rating:player_detail' elem.name__id %}">{{ elem.name__name }}</a> • <span class="desc"> {{elem.team__slug }}</span></td>
+            <td class="value"> {{ elem.penalty }} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{% url 'liga2_players:leaders_penaltys_season' season %}" class="btn btn-secondary">View all players in this category</a>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,47 @@
+{% load static %}
+{% load thumbnail %}
+
+<div style="display:flex; padding-left: 10px; padding-bottom: 10px">
+	<div class="media-item logo">
+    {% thumbnail team.emblem "150" upscale=True as im %}
+      <img class="card-img-bottom mt-2" src="{{ im.url }}">
+    {% endthumbnail %}
+	</div>
+  <div style="font: 14px; color: #000; padding-left: 10px">
+    <h1>
+      <span>
+        <a class="text-decoration-none text-reset" href="">
+          {{ team.title }}
+        </a>
+      </span>
+    </h1>
+    <h3>
+      <span>
+        {{ team.city }}
+      </span>
+    </h3>
+    <p>
+      <strong>All-time Goals Leader</strong>: 
+        <a href="">{{ header_team_career.top_goal.name__name }}</a>,
+          {{ header_team_career.top_goal.goal }} 
+    </p>
+    <p>
+      <strong>All-time Points Leader</strong>:
+        <a href="">
+          {{ header_team_career.top_point.name__name }}
+        </a>, {{ header_team_career.top_point.point }}
+    </p>
+    <p>
+      <strong>Most Goals, Season</strong>:
+        <a href="">
+          {{ header_team_season.top_s_goal.name__name }}
+        </a>, 
+        {{ header_team_season.top_s_goal.goal }} 
+    </p>
+    <p><strong>Most Points, Season</strong>:
+      <a href="">
+        {{ header_team_season.top_s_point.name__name }}
+      </a>, {{ header_team_season.top_s_point.point }} 
+    </p>
+  </div>
+</div>

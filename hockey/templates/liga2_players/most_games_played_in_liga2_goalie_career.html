@@ -1,0 +1,40 @@
+{% extends 'liga_2_base.html' %}
+{% load static %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container col-sm-4 p-1 my-1">
+  <h4 align="center"> {{ table_name }} </h4>
+</div>
+
+<div class="container col-sm-4 p-1 my-1">
+  <table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>GP</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in page_obj %}
+      <tr>
+        <td>{{ start_index | add:forloop.counter }}.</td>
+        <td class="first">
+          <a class="text-decoration-none text-reset" href="{% url 'goalkeeper_app:goalkeeper_detail' post.name__id %}">
+            {{ post.name__name }}
+          </a>
+        </td>
+        <td>{{ post.game }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% include 'posts/includes/paginator.html' %}
+</div>
+
+{% endblock %}
+  
