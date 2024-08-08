@@ -1,0 +1,20 @@
+{% extends 'liga_2_base.html' %} 
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 p-1">
+    <h2>
+        Delete Staistic Record
+    </h2>
+
+    <form method="POST">
+    {% csrf_token %}
+        <p>Are you sure that you want to delete the statistic record "{{statistic.name.name}}"?</p>
+        <div>
+            <button type="submit">Yes, Delete</button>
+            <a href="{% url 'liga2_players:players_team_season' team season %}">Cancel</a>
+        </div>
+    </form>
+</div>
+</div>
+{% endblock content %}

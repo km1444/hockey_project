@@ -25,10 +25,19 @@ class AddGoalkeeperStatisticLiga2Form(forms.ModelForm):
             'game', 'goal_against', 'penalty'
         )
 
-    def __init__(self, team, season, *args):
-        super(AddGoalkeeperStatisticLiga2Form, self).__init__(*args)
-        self.fields['team'].initial = Team.objects.get(
-            title=team)
-        self.fields['season'].initial = Season.objects.get(
-            name=season)
-        self.fields['name'].initial = Player.objects.last()
+    # def __init__(self, team, season, *args):
+    #     super(AddGoalkeeperStatisticLiga2Form, self).__init__(*args)
+    #     self.fields['team'].initial = Team.objects.get(
+    #         title=team)
+    #     self.fields['season'].initial = Season.objects.get(
+    #         name=season)
+    #     self.fields['name'].initial = Player.objects.last()
+
+
+class EditGoalkeeperStatLiga2Form(forms.ModelForm):
+    class Meta:
+        model = GoalkeeperStatisticLiga2
+        fields = (
+            'name', 'position',
+            'game', 'goal_against', 'penalty'
+        )

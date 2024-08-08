@@ -78,7 +78,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <p class="dropdown-item stat-menu">Goal : &nbsp;
-                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:liga2_most_goals_career' %}">Career </a>
+                    <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="goal_career" %}">Career </a>
                     &nbsp; | &nbsp;
                     <a class="text-decoration-none text-reset" href ="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="goal_season" %}"> Single Season</a>
                     &nbsp; | &nbsp;
@@ -175,7 +175,7 @@
         </div>
         <div class="dropdown">
           <li class="nav-item dropdown">
-            <a class="nav-link" href="{% url 'liga2_players:liga2_most_goals_career' %}" id="navbarDropdown">
+            <a class="nav-link" href="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="goal_career" %}" id="navbarDropdown">
               League 1
             </a>
               {% comment %} <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

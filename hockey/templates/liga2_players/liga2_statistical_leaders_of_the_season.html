@@ -1,7 +1,7 @@
 {% extends 'liga_2_base.html' %}
 
 {% block content %}
-<div class="container col-sm-6 py-2">
+<div class="container col-sm-5 py-2">
   <h3>
     Cезон: 
     <a href="{% url 'liga2_seasons:liga2_season' season %}">
@@ -16,7 +16,7 @@
       <a class="btn btn-outline-secondary" href="{% url link next_season %}" role="button"> Next season </a>
     {% endif %}
 </div>
-<div class="container col-sm-6 p-1 my-1 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
       <thead>
       <tr>
@@ -25,7 +25,10 @@
         <th>Age</th>
         <th>Tm</th>
         <th>GP</th>
-        <th>{{ column_heading }}</th>
+        <th><a href="{% url 'liga2_players:leaders_goals_season' season %}"> G </a></th>
+        <th><a href="{% url 'liga2_players:leaders_assists_season' season %}"> A </a></th>
+        <th><a href="{% url 'liga2_players:leaders_points_season' season %}"> PTS </a></th>
+        <th><a href="{% url 'liga2_players:leaders_penaltys_season' season %}"> PIM </a></th>
       </tr>
       </thead>
       <tbody>
@@ -35,10 +38,16 @@
         <td class="first"><a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' post.name__id %}"> {{ post.name__name }}</a></td>
         <td>{{ post.age }}</td>
         <td>
-            {{ post.team__slug }}
+          {{ post.team__slug }}
         </td>
         <td>{{ post.game }}</td>
-        <td class="table-warning">{{ post.value }}</td>
+        {% with request.resolver_match.view_name as view_name %}
+          <td class="{% if view_name  == 'liga2_players:leaders_goals_season' %}table-warning{% endif %}">{{ post.goal }}</td>
+          <td class="{% if view_name  == 'liga2_players:leaders_assists_season' %}table-warning{% endif %}">{{ post.assist }}</td>
+          <td class="{% if view_name  == 'liga2_players:leaders_points_season' %}table-warning{% endif %}">{{ post.point }}</td>
+          <td class="{% if view_name  == 'liga2_players:leaders_penaltys_season' %}table-warning{% endif %}">{{ post.penalty }}</td>
+        {% endwith %}
+        {% comment %} <td class="table-warning">{{ post.value }}</td> {% endcomment %}
     </tr>
       {% endfor %}
       </tbody>

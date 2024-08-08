@@ -27,13 +27,19 @@ class AddStatisticLiga2Form(forms.ModelForm):
         widgets = {
         }
 
-    def __init__(self, team, season, *args):
-        super(AddStatisticLiga2Form, self).__init__(*args)
-        self.fields['team'].initial = Team.objects.get(
-            title=team)
-        self.fields['season'].initial = Season.objects.get(
-            name=season)
-        self.fields['name'].initial = Player.objects.last()
+    # def __init__(self, team, season, *args):
+    #     super(AddStatisticLiga2Form, self).__init__(*args)
+    #     self.fields['team'].initial = Team.objects.get(
+    #         title=team)
+    #     self.fields['season'].initial = Season.objects.get(
+    #         name=season)
+    #     self.fields['name'].initial = Player.objects.last()
+
+    # def __init__(self, team, *args):
+    #     # print(args)
+    #     self.team = Team.objects.get(
+    #         title=team)
+    #     super(AddStatisticLiga2Form, self).__init__(*args)
 
 
 class EditStatisticLiga2Form(forms.ModelForm):

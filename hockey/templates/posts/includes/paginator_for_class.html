@@ -1,0 +1,21 @@
+<nav aria-label="Page navigation" class="my-5">
+    <ul class="pagination pagination-sm justify-content-center">
+        <li class="page-item">
+            <a class="page-link text-dark" href="?page=1">Первая</a>
+        </li>
+        {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+                <li class="page-item active">
+                    <span class="page-link text-white bg-dark">{{ i }}</span>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link text-dark" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        <li class="page-item">
+            <a class="page-link text-dark" href="?page={{ paginator.num_pages }}">Последняя</a>
+        </li>
+    </ul>
+</nav>
