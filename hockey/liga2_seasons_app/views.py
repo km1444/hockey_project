@@ -25,20 +25,20 @@ def liga2_index(request):
 def liga2_season(request, season):
     template = 'liga2_seasons/liga2_season.html'
     teams_transition = TransitionTournament.objects.filter(
-        season__name=season).order_by('rank_real')
+        season__name=season).select_related('team_name').order_by('rank_real')
     teams_transition_without_points = TransitionWithoutPoints.objects.filter(
-        season__name=season).order_by('rank')
+        season__name=season).select_related('team_name').order_by('rank')
     teams = TeamInTable1gr.objects.filter(
         season__name=season).select_related('team_name').order_by('rank')
     teams_east = TeamInTable2gr.objects.filter(
-        season__name=season).order_by('rank')
+        season__name=season).select_related('team_name').order_by('rank')
     additional_tournament = AdditionalTournament.objects.filter(
-        season__name=season).order_by('rank')
+        season__name=season).select_related('team_name').order_by('rank')
     additional_tournament_second = AdditionalTournamentSecond.objects.filter(
-        season__name=season).order_by('rank')
+        season__name=season).select_related('team_name').order_by('rank')
     additional_tournament_without_points = (
         AdditionalTournamentWithoutPoints.objects.filter(
-            season__name=season).order_by('rank'))
+            season__name=season).select_related('team_name').order_by('rank'))
     try:
         description_table = DescriptionTable.objects.get(season__name=season)
     except DescriptionTable.DoesNotExist:

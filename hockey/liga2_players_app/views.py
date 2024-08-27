@@ -109,7 +109,7 @@ class PlayersTeamSeason(PrevNextSeasonMixin, ListView):
                 'penalty').order_by('-point', '-goal', 'game')
 
     def get_context_data(self, **kwargs):
-        context = super(PlayersTeamSeason, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['team'] = get_object_or_404(Team, title=self.kwargs['team'])
         context['season'] = get_object_or_404(
             Season, name=self.kwargs['season'])

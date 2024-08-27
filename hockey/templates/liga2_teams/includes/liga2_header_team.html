@@ -11,7 +11,10 @@
     <h1>
       <span>
         <a class="text-decoration-none text-reset" href="">
-          {{ team.title }}
+          {{ team.title }} 
+              {% comment %} <a href="{% url 'rating:history_team' team.title }%">
+                Высшая лига
+              </a> {% endcomment %}
         </a>
       </span>
     </h1>

@@ -24,7 +24,8 @@ def history_team(request, team):
             'transition_tournament',
             'additional_tournament',
             'additional_tournament_second',
-            'transition_tournament_without_points').order_by('-season__name')
+            'transition_tournament_without_points',
+            'additional_tournament_without_points').order_by('-season__name')
     team_seasons = sorted(
         chain(team_seasons_1, team_seasons_2),
         key=lambda x: x.season.name, reverse=True
@@ -115,12 +116,12 @@ def career_leaders(request, team):
                 point=Sum('point'),
                 penalty=Sum('penalty')
     )
-    # goalkeeper_list = GoalkeeperStatistic.objects.filter(
-    #     team__title=team).values(
-    #         'name__id',
-    #         'name__name').annotate(
-    #             game=Sum('game')
-    # ).order_by('-game')[:10]
+    goalkeeper_list = GoalkeeperStatisticLiga2.objects.filter(
+        team__title=team).values(
+            'name__id',
+            'name__name').annotate(
+                game=Sum('game')
+    ).order_by('-game')[:10]
     top_10_game = query_list.order_by('-game')[:10]
     top_10_goal = query_list.order_by('-goal', 'game')[:10]
     top_10_assist = query_list.order_by('-assist', 'game')[:10]
@@ -131,7 +132,7 @@ def career_leaders(request, team):
         'top_10_goal': top_10_goal,
         'top_10_assist': top_10_assist,
         'top_10_point': top_10_point,
-        # 'goalkeeper_list': goalkeeper_list,
+        'goalkeeper_list': goalkeeper_list,
         'top_10_penalty': top_10_penalty,
         'team': team,
         # 'header_team_season': show_leaders_team_season(team),

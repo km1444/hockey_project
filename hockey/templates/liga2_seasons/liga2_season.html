@@ -167,7 +167,11 @@
     {% for team in additional_tournament %}
     <tr>
       <td>{{ team.rank }}</td>
-      <td class="first">{{ team.current_name }}</td>
+      <td class="first">
+        <a href="{% url 'liga2_players:players_team_season' team.team_name.title season %}">
+          {{ team.current_name }}
+        </a>
+      </td>
       <td>{{ team.games }}</td>
       <td>{{ team.wins }}</td>
       <td>{{ team.ties }}</td>
@@ -225,7 +229,11 @@
     {% for team in additional_tournament_second %}
     <tr>
       <td>{{ team.rank }}</td>
-      <td class="first">{{ team.current_name }}</td>
+      <td class="first">
+        <a href="{% url 'liga2_players:players_team_season' team.team_name.title season %}">
+          {{ team.current_name }}
+        </a>
+      </td>
       <td>{{ team.games }}</td>
       <td>{{ team.wins }}</td>
       <td>{{ team.ties }}</td>
@@ -278,7 +286,11 @@
     {% for team in additional_tournament_without_points %}
     <tr>
       <td>{{ team.rank }}</td>
-      <td class="first">{{ team.current_name }}</td>
+      <td class="first">
+        <a href="{% url 'liga2_players:players_team_season' team.team_name.title season %}">
+          {{ team.current_name }}
+        </a>
+      </td>
       <td>{{ team.games }}</td>
       <td>{{ team.wins }}</td>
       <td>{{ team.ties }}</td>
@@ -373,7 +385,11 @@
     {% for team in teams_east %}
     <tr>
       <td>{{ team.rank }}</td>
-      <td class="first">{{ team.current_name }}</td>
+      <td class="first">
+        <a href="{% url 'liga2_players:players_team_season' team.team_name.title season %}">
+          {{ team.current_name }}
+        </a>
+      </td>
       <td>{{ team.games }}</td>
       <td>{{ team.wins }}</td>
       <td>{{ team.ties }}</td>

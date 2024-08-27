@@ -119,6 +119,7 @@ def team_players_in_season(request, team, season):
 
 def player_detail(request, id):
     context = {}
+    position = ''
     player = get_object_or_404(Player, id=id)
     player_seasons = player.statistics.values(
         'name',
@@ -172,7 +173,7 @@ def player_detail(request, id):
             'position': position,
             'group_teams': group_teams,
             'amount_teams': amount_teams,
-            'exist_statistic_of_major_league': True
+            'exist_statistic_of_major_league': True,
         }
     elif goalkeeper_seasons or GoalkeeperStatisticLiga2.objects.filter(
             name=id).exists():
@@ -209,8 +210,10 @@ def player_detail(request, id):
         template = 'posts/profile.html'
     if StatisticPlayer.objects.filter(name=id).exists():
         context['exist_statistic_of_league1'] = True
-    # if GoalkeeperStatisticLiga2.objects.filter(name=id).exists():
-    #     context['exist_statistic_goalkeeper_of_league1'] = True
+        if not position:
+            context['position'] = (
+                StatisticPlayer.objects.filter(name=id).values(
+                    'position__name')[0]['position__name'])
     if CoachStatistic.objects.filter(coach_name=id).exists():
         context['exist_coach_stat'] = True
     return render(request, template, context)
@@ -283,6 +286,13 @@ def goalie_list_team(request, team):
 
 def statistic(request, stat_rule):
     rule = stat_rule.split('_')
+    dict_rule = {
+        'goal': 'забитым голам',
+        'assist': 'передачам',
+        'point': 'набранным очкам',
+        'penalty': 'штрафным минутам',
+        'game': 'сыгранным матчам'
+    }
     if rule[1] == 'career':
         total_for_players = Statistic.objects.values(
             'name__id',
@@ -305,8 +315,12 @@ def statistic(request, stat_rule):
             'page_obj': page_obj,
             'start_index': start_index,
             'table_name':
-            # 'Career Leaders for' + ' ' + f'{rule[0].title()}''s'
             'Most ' + f'{rule[0].title()}''s' + ' Career',
+            'title': (
+                'Лидеры по '
+                + f'{dict_rule[rule[0]]}'
+                + ' за карьеру в высшей лиге советского хоккея'
+            )
         }
     elif rule[1] == 'season':
         total_for_players = Statistic.objects.values(
@@ -331,16 +345,24 @@ def statistic(request, stat_rule):
             'page_obj': page_obj,
             'start_index': start_index,
             'table_name':
-            # 'Single Season Leaders for' + ' ' + f'{rule[0].title()}''s'
-            'Most ' + f'{rule[0].title()}''s' + ' Single Season'
+            'Most ' + f'{rule[0].title()}''s' + ' Single Season',
+            'title': (
+                'Лидеры по '
+                + f'{dict_rule[rule[0]]}'
+                + ' за сезон в высшей лиге советского хоккея'
+            )
         }
     elif rule[1] == 'yearly':
+        # value_rule = rule[0]
         best_goals = Statistic.objects.values(
             'season__name'
         ).annotate(
-            goal=Max('goal'))
-        # print(total_for_players)
+            goal=Max('goal')
+            # value_rule=Max(value_rule)
+        )
+        # print(best_goals)
         q_object = reduce(operator.or_, (Q(**x) for x in best_goals))
+        # print(q_object)
         queryset = Statistic.objects.values(
             'name__id',
             'name__name',
@@ -348,8 +370,6 @@ def statistic(request, stat_rule):
             'goal',
             'game'
         ).filter(q_object).order_by('season__name')
-        # for i in queryset:
-        #     print(i.name.id)
         paginator = Paginator(queryset, 25)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -358,8 +378,6 @@ def statistic(request, stat_rule):
             'page_obj': page_obj,
             'start_index': start_index,
             'table_name':
-            # 'Single Season Leaders for' + ' ' + f'{rule[0].title()}''s'
-            # 'Most ' + f'{rule[0].title()}''s' + ' Yearly'
             'Yearly Leaders for ' + f'{rule[0].title()}''s'
         }
     template = 'posts/index.html'

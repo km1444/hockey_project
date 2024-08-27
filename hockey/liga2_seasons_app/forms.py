@@ -50,10 +50,10 @@ class AddTeamForm(forms.ModelForm):
             'season', 'games',
             'wins', 'ties', 'losses', 'points',
             'transition_tournament',
+            'transition_tournament_without_points',
             'transition_serie',
             'additional_tournament',
             'additional_tournament_second',
-            'transition_tournament_without_points',
             'additional_tournament_without_points'
         )
         widgets = {
