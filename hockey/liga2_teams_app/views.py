@@ -14,6 +14,7 @@ def history_team(request, team):
     team_seasons_1 = TeamInTable1gr.objects.filter(
         team_name__title=team).select_related(
             'season',
+            'team_name',
             'transition_tournament',
             'additional_tournament',
             'additional_tournament_second',
@@ -21,6 +22,7 @@ def history_team(request, team):
     team_seasons_2 = TeamInTable2gr.objects.filter(
         team_name__title=team).select_related(
             'season',
+            'team_name',
             'transition_tournament',
             'additional_tournament',
             'additional_tournament_second',

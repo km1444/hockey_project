@@ -40,8 +40,12 @@
         {% for team in team_seasons %}
           {% if team.transition_tournament %}
             <tr>
-              <td>{{ team.season }}</td>
-              <td>{{ team.transition_tournament.current_name }}</td>
+              <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
+              <td>
+                <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
+                  {{ team.transition_tournament.current_name }}
+                </a>
+              </td>
               <td>{{ team.transition_tournament.games }}</td>
               <td>{{ team.transition_tournament.wins }}</td>
               <td>{{ team.transition_tournament.ties }}</td>
@@ -51,8 +55,12 @@
             </tr>
           {% elif team.additional_tournament %}
             <tr>
-              <td>{{ team.season }}</td>
-              <td>{{ team.additional_tournament.current_name }}</td>
+              <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
+              <td>
+                <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
+                  {{ team.additional_tournament.current_name }}
+                </a>
+              </td>
               <td>{{ team.additional_tournament.games }}</td>
               <td>{{ team.additional_tournament.wins }}</td>
               <td>{{ team.additional_tournament.ties }}</td>
@@ -62,8 +70,12 @@
             </tr>
           {% elif team.additional_tournament_second %}
             <tr>
-              <td>{{ team.season }}</td>
-              <td>{{ team.additional_tournament_second.current_name }}</td>
+              <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
+              <td>
+                <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
+                  {{ team.additional_tournament_second.current_name }}
+                </a>
+              </td>
               <td>{{ team.additional_tournament_second.games }}</td>
               <td>{{ team.additional_tournament_second.wins }}</td>
               <td>{{ team.additional_tournament_second.ties }}</td>
@@ -73,8 +85,12 @@
             </tr>
           {% else %}
             <tr>
-              <td>{{ team.season }}</td>
-              <td>{{ team.current_name }}</td>
+              <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
+              <td>
+                <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
+                  {{ team.current_name }}
+                </a>
+              </td>
               <td>{{ team.games }}</td>
               <td>{{ team.wins }}</td>
               <td>{{ team.ties }}</td>

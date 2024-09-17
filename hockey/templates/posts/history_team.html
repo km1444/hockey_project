@@ -40,9 +40,10 @@
       <tbody>
         {% for team in team_view_general %}
           <tr>
-              <td><a href="{% url 'rating:create_table' team.season.name %}">{{ team.season }}</a></td>
-              <td>{{ team.current_name }}</td>
-              <td>{{ team.games }}</td>
+            <td>{% ifchanged team.season %}<a href="{% url 'rating:create_table' team.season.name %}">{{ team.season }}</a>{% endifchanged %}</td>
+            <td>{{ team.current_name }}</td>
+            {% if team.games %}
+              <td>{{team.games }}</td>
               <td>{{ team.wins }}</td>
               <td>{{ team.ties }}</td>
               <td>{{ team.losses }}</td>
@@ -50,14 +51,19 @@
               <td>{{ team.points_percentage }}</td>
               <td>{{ team.rank }}</td>
               {% if not team.coach_1 %}
-              <td></td>
-            {% elif team.coach_2 %}
-              <td title="{{ team.coach_1.name}}, {{team.coach_2.name }}, {{ team.coach_3.name}}"> Тренеры </td>
+                <td></td>
+              {% elif team.coach_2 %}
+                <td title="{{ team.coach_1.name}}, {{team.coach_2.name }}, {{ team.coach_3.name}}"> Тренеры </td>
+              {% else %}
+                <td><a href="{% url 'rating:player_detail' team.coach_1_id %}">{{ team.coach_1.name }} </a></td>
+              {% endif %}
             {% else %}
-              <td><a href="{% url 'rating:player_detail' team.coach_1_id %}">{{ team.coach_1.name }} </a></td>
+              <td colspan="4">Playoff Appearances</td>
+              <td colspan="3">{{ team.result }}</td>
+              <td></td>
             {% endif %}
           </tr>
-          {% if team.round_2 %}
+          {% comment %} {% if team.round_2 %}
             {% if team.round_2.table1 %}
               <tr>
                 <td></td>
@@ -93,12 +99,10 @@
               <td><b>{{ team.round_2.table3.points }}</b></td>
               <td>{{ team.round_2.table3.points_percentage }}</td>
               <td>{{ team.round_2.table3.rank }}</td>
-              {% comment %} <td>{{ team.playoff.table3.result}}</td> {% endcomment %}
-              {% comment %} <td>{{ team.round_2.table3.coach.name }}</td> {% endcomment %}
             </tr>
             {% endif %}
-          {% endif %}
-          {% if team.playoff %}
+          {% endif %}  {% endcomment %}
+          {% comment %} {% if result_playoff %}
           <tr>
             <td></td>
             <td></td>
@@ -106,7 +110,7 @@
             <td colspan="3">{{ team.playoff.result }}</td>
             <td></td>
           </tr>
-          {% endif %}
+          {% endif %} {% endcomment %}
         {% endfor %}
       </tbody>
     </table>
