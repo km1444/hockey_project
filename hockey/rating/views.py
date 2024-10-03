@@ -7,7 +7,7 @@ from coach_app.models import CoachStatistic
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import Avg, Max, Q, Sum
+from django.db.models import Max, Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
 from django.views.generic.edit import DeleteView, UpdateView
@@ -47,10 +47,24 @@ def index(request):
         'table_name': 'Most Goals Career',
         'title': 'Лучшие бомбардиры советского хоккея'
     }
-    years = Statistic.objects.values('age', 'season__name').annotate(
-        game=Avg('game')).filter(season__name__range=('1980-81', '1981-82'))
-    for i in years:
-        print(i['age'], round(i['game'], 0))
+    # years = Statistic.objects.values(
+    #     'age'
+    # ).filter(
+    #     season__name__gte='1961-62',
+    #     age=16
+    # ).aggregate(
+    #     avg_game=Avg('game'))
+    # print(years)
+    # years2 = Statistic.objects.values(
+    #     'age',
+    #     'name__name',
+    #     'game',
+    #     'season__name'
+    # ).filter(
+    #     season__name__lte='1959-60',
+    #     age=16)
+    # for i in years2:
+    #     print(i)
     return render(request, template, context)
 
 

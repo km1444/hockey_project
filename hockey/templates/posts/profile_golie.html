@@ -39,11 +39,17 @@
           {% for post in page_obj %}
           <tr>
             <td>
+              {% ifchanged post.season__name %}
                 <a href="{% url 'rating:create_table' post.season__name %}">
                     {{ post.season__name }}
                 </a>
+              {% endifchanged %}
             </td>
-            <td>{{ post.age }}</td>
+            <td>
+              {% ifchanged post.age %}
+                {{ post.age }}
+              {% endifchanged %}
+            </td>
             <td>
                 <a href="{% url 'rating:team_players_in_season' post.team__title post.season__name %}"> 
                     {{ post.team__title }}

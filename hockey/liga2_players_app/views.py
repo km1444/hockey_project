@@ -180,7 +180,7 @@ class LeadersPointsSeason(PrevNextSeasonMixin, SeasonStatisticMixin, ListView):
 
     def get_queryset(self, *args, **kwargs):
         return self.get_mixin_queryset(self, *args, **kwargs).order_by(
-            '-point', 'game')[:23]
+            '-point', '-goal', 'game')[:23]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
