@@ -3,8 +3,8 @@ from rest_framework import serializers
 
 
 class PlayerSerializer(serializers.ModelSerializer):
-    game = serializers.IntegerField()
-    point = serializers.IntegerField()
+    # game = serializers.IntegerField()
+    # point = serializers.IntegerField()
     name__name = serializers.StringRelatedField(read_only=True)
 
     class Meta:
@@ -13,8 +13,8 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 
 class PlayerMostGoalsSerializer(serializers.ModelSerializer):
-    game = serializers.IntegerField()
-    goal = serializers.IntegerField()
+    # game = serializers.IntegerField()
+    # goal = serializers.IntegerField()
     name__name = serializers.StringRelatedField(read_only=True)
 
     class Meta:

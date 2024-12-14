@@ -7,6 +7,7 @@ from goalkeeper_liga2_app.models import GoalkeeperStatisticLiga2
 from liga2_players_app.models import StatisticPlayer
 from liga2_seasons_app.models import TeamInTable1gr, TeamInTable2gr
 from rating.models import Team
+from rating.secondary import all_team_major_l
 
 
 def history_team(request, team):
@@ -34,10 +35,14 @@ def history_team(request, team):
     )
     team = get_object_or_404(Team, title=team)
     count_season = team_seasons_1.count() + team_seasons_2.count()
+    present_in_major_l = False
+    if str(team) in list(all_team_major_l.keys()):
+        present_in_major_l = True
     context = {
         'team_seasons': team_seasons,
         'team': team,
         'count_season': count_season,
+        'present_in_major_l': present_in_major_l
         # 'header_team_season': show_leaders_team_season(team),
         # 'header_team_career': show_leaders_team_career(team)
     }

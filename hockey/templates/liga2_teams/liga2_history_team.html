@@ -16,7 +16,12 @@
 {% include 'liga2_teams/includes/liga2_submenu_team.html' %}
 
   <div class="container col-sm-6 p-1 my-1">
-    <h1 align="left"> {{ count_season }} Seasons in League 1</h1>
+    <h2 align="left">
+      {{ count_season }} Seasons in League 1 
+        {% if present_in_major_l %}
+          (<a href="{% url 'rating:history_team' team %}">Major league</a>)
+        {% endif %}
+    </h2>
   </div>
 
   <div class="container col-sm-6 p-1 my-1 table-responsive">

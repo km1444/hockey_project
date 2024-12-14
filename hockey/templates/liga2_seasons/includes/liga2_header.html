@@ -59,10 +59,10 @@
             </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="team_grid">
-                  {% for team in all_team_liga2 %}
+                  {% for name, city in all_team_liga2.items %}
                     <li>
-                      <a class="dropdown-item" href="{% url 'liga2_teams:history_team' team.team_name__title %}">
-                        {{ team.team_name__title }} - {{ team.team_name__city }}
+                      <a class="dropdown-item" href="{% url 'liga2_teams:history_team' name %}">
+                        {{ name }} - {{ city }}
                       </a>
                     </li>
                   {% endfor %}
@@ -135,8 +135,8 @@
               <div class="season_grid">
                 {% for season in all_seasons %}
                 <li>
-                  <a class="dropdown-item" href="{% url 'liga2_seasons:liga2_season' season.name  %}">
-                    {{ season.name }}
+                  <a class="dropdown-item" href="{% url 'liga2_seasons:liga2_season' season %}">
+                    {{ season }}
                   </a> 
                 </li>
                 {% endfor %}

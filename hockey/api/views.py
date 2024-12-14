@@ -2,23 +2,34 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 from rating.models import Player, Statistic, Team, TeamForTable
 from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .serializers import (
     PlayerMostGoalsSerializer, PlayerSerializer, StatisticSerializer,
     TeamForTableSerializer, TeamSerializer,
 )
 
+# class PlayerList(generics.ListAPIView):
+#     """Получение списка игроков с суммированием игр и очков, сортировка"""
+#     serializer_class = PlayerSerializer
 
-class PlayerList(generics.ListAPIView):
-    """Получение списка игроков с суммированием игр и очков, сортировка"""
-    serializer_class = PlayerSerializer
+#     def get_queryset(self):
+#         data = Statistic.objects.values(
+#             'name__name').annotate(
+#                 game=Sum('game'), point=Sum('point')).order_by(
+#                     '-point', 'game')[:20]
+#         return data
 
-    def get_queryset(self):
-        data = Statistic.objects.values(
-            'name__name').annotate(
-                game=Sum('game'), point=Sum('point')).order_by(
-                    '-point', 'game')[:20]
-        return data
+
+@api_view(['GET'])
+def player_list(request):
+    player_points = Statistic.objects.values(
+        'name__id', 'name__name').annotate(
+            game=Sum('game'), point=Sum('point')).order_by(
+                '-point', 'game')[:20]
+    serializer = PlayerSerializer(player_points, many=True)
+    return Response(serializer.data)
 
 
 class PlayerMostGoalsList(generics.ListAPIView):
@@ -38,7 +49,7 @@ class PlayerDetail(generics.ListAPIView):
 
     def get_queryset(self):
         player = get_object_or_404(Player, id=self.kwargs.get('id'))
-        return player.statistics.all().order_by('-season')
+        return player.statistics.all().order_by('season__name')
 
 
 class PlayerListTeamSeason(generics.ListAPIView):

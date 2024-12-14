@@ -135,8 +135,8 @@
               <div class="season_grid">
                 {% for season in all_seasons %}
                 <li>
-                  <a class="dropdown-item" href="{% url 'rating:create_table' season.name  %}">
-                    {{ season.name }}
+                  <a class="dropdown-item" href="{% url 'rating:create_table' season  %}">
+                    {{ season }}
                   </a> 
                 </li>
                 {% endfor %}

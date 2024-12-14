@@ -16,7 +16,11 @@
 {% include 'includes/submenu_team.html' %}
 
   <div class="container col-sm-6 p-1 my-1">
-    <h1 align="left"> {{ count_season }} Seasons</h1>
+    <h2 align="left"> {{ count_season }} Seasons in major league 
+      {% if present_in_league_one %}
+        (<a href="{% url 'liga2_teams:history_team' team %}">league 1</a>)
+      {% endif %}
+    </h2>
   </div>
 
   <div class="container col-sm-6 p-1 my-1 table-responsive">

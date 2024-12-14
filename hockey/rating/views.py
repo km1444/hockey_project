@@ -25,7 +25,8 @@ from .models import (
     TeamForTable2Round2, TeamForTable2Round3, TeamForTable3, TeamForTable4,
 )
 from .secondary import (
-    prev_next_season, top_goal, top_point, top_season_goal, top_season_point,
+    all_team_league_one, prev_next_season, top_goal, top_point,
+    top_season_goal, top_season_point,
 )
 
 
@@ -403,30 +404,23 @@ def statistic(request, stat_rule):
 
 
 def create_table(request, season):
-    teams = TeamForTable.objects.filter(season__name=season).values(
-        'id', 'rank', 'name__title', 'season__name', 'current_name',
-        'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
-    teams2 = TeamForTable2.objects.filter(season__name=season).values(
-        'id', 'rank', 'name__title', 'season__name', 'current_name',
-        'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
-    teams3 = TeamForTable3.objects.filter(season__name=season).values(
-        'id', 'rank', 'name__title', 'season__name', 'current_name',
-        'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
-    teams4 = TeamForTable4.objects.filter(season__name=season).values(
-        'id', 'rank', 'name__title', 'season__name', 'current_name',
-        'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
+    # teams = TeamForTable.objects.filter(season__name=season).values(
+    #     'id', 'rank', 'name__title', 'season__name', 'current_name',
+    #     'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
+    teams = TeamForTable.objects.filter(
+        season__name=season).select_related('name').order_by('rank')
+    teams2 = TeamForTable2.objects.filter(
+        season__name=season).select_related('name').order_by('rank')
+    teams3 = TeamForTable3.objects.filter(
+        season__name=season).select_related('name').order_by('rank')
+    teams4 = TeamForTable4.objects.filter(
+        season__name=season).select_related('name').order_by('rank')
     teams2round = TeamForTable2Round.objects.filter(
-        season__name=season).values(
-        'id', 'rank', 'name__title', 'season__name', 'current_name',
-        'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
+        season__name=season).select_related('name').order_by('rank')
     teams2round2 = TeamForTable2Round2.objects.filter(
-        season__name=season).values(
-        'id', 'rank', 'name__title', 'season__name', 'current_name',
-        'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
+        season__name=season).select_related('name').order_by('rank')
     teams2round3 = TeamForTable2Round3.objects.filter(
-        season__name=season).values(
-        'id', 'rank', 'name__title', 'season__name', 'current_name',
-        'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
+        season__name=season).select_related('name').order_by('rank')
     playoff = Playoff.objects.filter(season__name=season).values(
         'id', 'study', 'result_serie', 'team_1__title', 'team_2__title',
         'season__name', 'current_name_team_1', 'current_name_team_2'
@@ -609,6 +603,9 @@ def history_team(request, team):
             team_view.count() + team_view_2.count()
         ) + (team_view_3.count() + team_view_4.count())
     )
+    present_in_league_one = False
+    if str(team) in list(all_team_league_one.keys()):
+        present_in_league_one = True
     context = {
         'team_view_general': team_view_general,
         'team': team,
@@ -617,6 +614,7 @@ def history_team(request, team):
         'top_point': top_point(team),
         'top_s_goal': top_season_goal(team),
         'top_s_point': top_season_point(team),
+        'present_in_league_one': present_in_league_one,
     }
     template = 'posts/history_team.html'
     return render(request, template, context)
