@@ -1,3 +1,4 @@
+asgiref==3.8.1
 atomicwrites==1.4.0
 attrs==21.4.0
 certifi==2021.10.8
@@ -8,12 +9,14 @@ coverage==6.5.0
 cssbeautifier==1.14.7
 Django==3.2.23
 django-aggregates==0.1.3
+django-cors-headers==3.6.0
 django-debug-toolbar==3.2.4
+djangorestframework==3.12.4
 djhtml==2.0.0
 EditorConfig==0.12.3
 exceptiongroup==1.1.0
 Faker==12.0.1
-flake8==5.0.1
+flake8==7.1.1
 html-tag-names==0.1.2
 html-void-elements==0.1.0
 idna==3.3
@@ -24,12 +27,12 @@ mccabe==0.7.0
 mixer==7.1.2
 packaging==21.3
 pathspec==0.9.0
-Pillow==8.3.1
+pillow==11.1.0
 pluggy==0.13.1
 psycopg2-binary==2.9.6
 py==1.11.0
-pycodestyle==2.9.1
-pyflakes==2.5.0
+pycodestyle==2.12.0
+pyflakes==3.2.0
 pyparsing==3.0.7
 pytest==6.2.4
 pytest-cov==3.0.0
@@ -48,6 +51,6 @@ toml==0.10.2
 tomli==2.0.1
 tqdm==4.64.1
 typing_extensions==4.1.1
+tzdata==2024.2
 urllib3==1.26.9
 zipp==3.7.0
-djangorestframework==3.12.4

@@ -73,18 +73,34 @@ class PlayerStatisticsByCategory(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        dict_rule = {
+            'goal': 'голам',
+            'assist': 'передачам',
+            'point': 'очкам',
+            'penalty': 'штрафным минутам',
+            'game': 'матчам'
+        }
         rule = self.kwargs['stat_rule'].split('_')
         page_obj = context['paginator'].get_page(self.request.GET.get('page'))
         context['start_index'] = page_obj.start_index() - 1
         if rule[1] == 'career':
             context['table_name'] = (
                 'Most ' + f'{rule[0].title()}''s' + ' Career League 1')
+            context['table_description'] = (
+                'Лидеры по ' + f'{dict_rule[rule[0]]}'
+                + ' за карьеру в первой лиге')
         elif rule[1] == 'season':
             context['table_name'] = (
                 'Most ' + f'{rule[0].title()}''s' + ' Single Season League 1')
+            context['table_description'] = (
+                'Лидеры по ' + f'{dict_rule[rule[0]]}'
+                + ' за сезон в первой лиге')
         elif rule[1] == 'yearly':
             context['table_name'] = (
                 'Yearly Leaders for ' + f'{rule[0].title()}''s League 1')
+            context['table_description'] = (
+                'Лучшие голеадоры по сезонам'
+            )
         context['title'] = 'Лучшие бомбардиры советского хоккея в первой лиге'
         return context
 

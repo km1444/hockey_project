@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="container col-sm-4 p-1 mb-1">
-  <h1 align="center"> {{ season }} </h1>
+<div class="container col-sm-5 p-1 mb-1">
+  <h1> {{ season }} </h1>
   {% if season != '1946-47' %}
     <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' previous_season %}" role="button"> Previous season </a>
   {% endif %}
@@ -20,7 +20,7 @@
 </div>
 
 {% if playoff %}
-<div class="container col-sm-4 p-1 my-1">
+<div class="container col-sm-5 p-1 my-1">
   <h4>{{ description_table.description_playoff }}</h4>
   <table class="table table-striped table-bordered table-hover table-sm">
     <tbody>
@@ -46,7 +46,7 @@
 {% endif %}
 
 {% if teams2round %}
-<div class="container col-sm-4 p-1 my-1">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <h4>{{ description_table.description_1gr_2round }}</h4>
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
@@ -83,7 +83,7 @@
 {% endif %}
 
 {% if teams2round2 %}
-<div class="container col-sm-4 p-1 my-1">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <h4>{{ description_table.description_2gr_2round }}</h4>
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
@@ -120,7 +120,7 @@
 {% endif %}
 
 {% if teams2round3 %}
-<div class="container col-sm-4 p-1 my-1">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <h4>{{ description_table.description_3gr_2round }}</h4>
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
@@ -156,7 +156,7 @@
 </div>
 {% endif %}
 
-<div class="container col-sm-4 p-1 my-1">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <h4>{{ description_table.description_1gr_1round }}</h4>
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
@@ -179,7 +179,7 @@
 </div>
 
 {% if teams2 %}
-<div class="container col-sm-4 p-1 my-1">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <h4>{{ description_table.description_2gr_1round }}</h4>
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
@@ -216,7 +216,7 @@
 {% endif %}
 
 {% if teams3 %}
-<div class="container col-sm-4 p-1 my-1">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <h4>{{ description_table.description_3gr_1round }}</h4>
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
@@ -253,7 +253,7 @@
 {% endif %}
 
 {% if teams4 %}
-<div class="container col-sm-4 p-1 my-1">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <h4>{{ description_table.description_4gr_1round }}</h4>
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>

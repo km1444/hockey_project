@@ -119,5 +119,5 @@ class ListGoalkeepersLiga2(ListView):
         context['start_index'] = page_obj.start_index() - 1
         context['title'] = 'Лучшие вратари советского хоккея в первой лиге'
         context['table_name'] = (
-            'Most Games Played in First League(Goalie) Career 100+')
+            'Вратари с наибольшим количеством матчей за карьеру в первой лиге')
         return context

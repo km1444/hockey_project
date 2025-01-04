@@ -11,7 +11,7 @@
 
 {% block content %}
 <div class="container col-sm-4 p-1 my-1">
-  <h4 align="center"> {{ table_name }} </h4>
+  <h4 align="center"> {{ table_description }} </h4>
 </div>
 
 <div class="container col-sm-4 p-1 my-1">
@@ -21,17 +21,20 @@
         <th>#</th>
         <th>Player</th>
         <th>GP</th>
-          {% if table_name == 'Most Points Career' or table_name == 'Most Points Single Season' %}
+          {% if table_name in "'Most Points Career', 'Most Points Single Season', 'Yearly Leaders for Points'" %}
             <th>PTS</th>
-            {% elif table_name == 'Most Goals Career' or table_name == 'Most Goals Single Season' or table_name == 'Yearly Leaders for Goals' %}
+            {% elif table_name in "'Most Goals Career', 'Most Goals Single Season', 'Yearly Leaders for Goals'" %}
             <th>G</th>
-            {% elif table_name == 'Most Assists Career' or table_name == 'Most Assists Single Season' %}
+            {% elif table_name in "'Most Assists Career', 'Most Assists Single Season', 'Yearly Leaders for Assists'" %}
             <th>A</th>
-            {% elif table_name == 'Most Penaltys Career' or table_name == 'Most Penaltys Single Season' %}
+            {% elif table_name in "'Most Penaltys Career', 'Most Penaltys Single Season'" %}
             <th>PIM</th>
           {% endif %}
 
-          {% if table_name == 'Most Points Single Season' or table_name == 'Most Goals Single Season' or table_name == 'Most Assists Single Season' or table_name == 'Most Penaltys Single Season' or table_name == 'Yearly Leaders for Goals' %}
+          {% comment %} {% if table_name == 'Most Points Single Season' or table_name == 'Most Goals Single Season' or table_name == 'Most Assists Single Season' or table_name == 'Most Penaltys Single Season' or table_name == 'Yearly Leaders for Goals' %}
+            <th>Season</th>
+          {% endif %} {% endcomment %}
+          {% if table_name in "'Most Points Single Season', 'Most Goals Single Season', 'Most Assists Single Season', 'Most Penaltys Single Season', 'Yearly Leaders for Goals', 'Yearly Leaders for Assists', 'Yearly Leaders for Points'" %}
             <th>Season</th>
           {% endif %}
       </tr>

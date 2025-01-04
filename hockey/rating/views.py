@@ -4,8 +4,8 @@ from functools import reduce
 from itertools import chain
 
 from coach_app.models import CoachStatistic
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib import messages  # type: ignore
+from django.contrib.auth.decorators import login_required  # type: ignore
 from django.core.paginator import Paginator
 from django.db.models import Max, Q, Sum
 from django.shortcuts import get_object_or_404, redirect, render, reverse
@@ -46,26 +46,10 @@ def index(request):
         'start_index': start_index,
         # 'table_name': 'Career Leaders for Goals',
         'table_name': 'Most Goals Career',
-        'title': 'Лучшие бомбардиры советского хоккея'
+        'table_description':
+        'Лидеры по голам за карьеру в высшей лиге советского хоккея',
+        'title': 'Лидеры по голам за карьеру в высшей лиге советского хоккея'
     }
-    # years = Statistic.objects.values(
-    #     'age'
-    # ).filter(
-    #     season__name__gte='1961-62',
-    #     age=16
-    # ).aggregate(
-    #     avg_game=Avg('game'))
-    # print(years)
-    # years2 = Statistic.objects.values(
-    #     'age',
-    #     'name__name',
-    #     'game',
-    #     'season__name'
-    # ).filter(
-    #     season__name__lte='1959-60',
-    #     age=16)
-    # for i in years2:
-    #     print(i)
     return render(request, template, context)
 
 
@@ -306,11 +290,11 @@ def goalie_list_team(request, team):
 def statistic(request, stat_rule):
     rule = stat_rule.split('_')
     dict_rule = {
-        'goal': 'забитым голам',
+        'goal': 'голам',
         'assist': 'передачам',
-        'point': 'набранным очкам',
+        'point': 'очкам',
         'penalty': 'штрафным минутам',
-        'game': 'сыгранным матчам'
+        'game': 'матчам'
     }
     if rule[1] == 'career':
         total_for_players = Statistic.objects.values(
@@ -335,6 +319,11 @@ def statistic(request, stat_rule):
             'start_index': start_index,
             'table_name':
             'Most ' + f'{rule[0].title()}''s' + ' Career',
+            'table_description': (
+                'Лидеры по '
+                + f'{dict_rule[rule[0]]}'
+                + ' за карьеру в высшей лиге советского хоккея'
+            ),
             'title': (
                 'Лидеры по '
                 + f'{dict_rule[rule[0]]}'
@@ -365,6 +354,11 @@ def statistic(request, stat_rule):
             'start_index': start_index,
             'table_name':
             'Most ' + f'{rule[0].title()}''s' + ' Single Season',
+            'table_description': (
+                'Лидеры по '
+                + f'{dict_rule[rule[0]]}'
+                + ' за сезон в высшей лиге советского хоккея'
+            ),
             'title': (
                 'Лидеры по '
                 + f'{dict_rule[rule[0]]}'
@@ -372,21 +366,36 @@ def statistic(request, stat_rule):
             )
         }
     elif rule[1] == 'yearly':
-        # value_rule = rule[0]
-        best_goals = Statistic.objects.values(
-            'season__name'
-        ).annotate(
-            goal=Max('goal')
-            # value_rule=Max(value_rule)
-        )
-        # print(best_goals)
-        q_object = reduce(operator.or_, (Q(**x) for x in best_goals))
-        # print(q_object)
+        yearly_dict = {
+            'goal': 'Приз "Лучший снайпер"',
+            'assist': 'Лучший ассистент',
+            'point': 'Приз "Самому результативному игроку"',
+            'penalty': 'Самый грубый игрок сезона'
+        }
+
+        def yearly_func(val):
+            if val == 'goal':
+                return Statistic.objects.values(
+                    'season__name').annotate(
+                        goal=Max(val))
+            if val == 'assist':
+                return Statistic.objects.values(
+                    'season__name').annotate(
+                        assist=Max(val)).filter(
+                            season__name__gte='1970-71')
+            if val == 'point':
+                return Statistic.objects.values(
+                    'season__name').annotate(
+                        point=Max(val))
+        q_object = reduce(operator.or_, (Q(**x) for x in yearly_func(rule[0])))
         queryset = Statistic.objects.values(
             'name__id',
             'name__name',
             'season__name',
             'goal',
+            'assist',
+            'point',
+            'penalty',
             'game'
         ).filter(q_object).order_by('season__name')
         paginator = Paginator(queryset, 25)
@@ -397,7 +406,8 @@ def statistic(request, stat_rule):
             'page_obj': page_obj,
             'start_index': start_index,
             'table_name':
-            'Yearly Leaders for ' + f'{rule[0].title()}''s'
+            'Yearly Leaders for ' + f'{rule[0].title()}''s',
+            'table_description': yearly_dict[rule[0]]
         }
     template = 'posts/index.html'
     return render(request, template, context)

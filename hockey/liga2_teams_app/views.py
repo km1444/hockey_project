@@ -42,9 +42,9 @@ def history_team(request, team):
         'team_seasons': team_seasons,
         'team': team,
         'count_season': count_season,
-        'present_in_major_l': present_in_major_l
-        # 'header_team_season': show_leaders_team_season(team),
-        # 'header_team_career': show_leaders_team_career(team)
+        'present_in_major_l': present_in_major_l,
+        'header_team_season': show_leaders_team_season(team),
+        'header_team_career': show_leaders_team_career(team)
     }
     template = 'liga2_teams/liga2_history_team.html'
     return render(request, template, context)
@@ -60,11 +60,15 @@ def show_leaders_team_season(team):
             'assist',
             'point',
             'penalty')
-    header_team_players_season = {
-        'top_s_goal': query_list.order_by('-goal')[:1][0],
-        'top_s_point': query_list.order_by('-point')[:1][0],
+    # header_team_players_season = {
+    #     'top_s_goal': query_list.order_by('-goal').first(),
+    #     'top_s_point': query_list.order_by('-point').first(),
+    # }
+    # return header_team_players_season
+    return {
+        'top_s_goal': query_list.order_by('-goal').first(),
+        'top_s_point': query_list.order_by('-point').first(),
     }
-    return header_team_players_season
 
 
 def show_leaders_team_career(team):
@@ -74,11 +78,15 @@ def show_leaders_team_career(team):
             'name__name').annotate(
                 goal=Sum('goal'),
                 point=Sum('point'))
-    header_team_players_career = {
-        'top_goal': query_list.order_by('-goal')[:1][0],
-        'top_point': query_list.order_by('-point')[:1][0],
+    # header_team_players_career = {
+    #     'top_goal': query_list.order_by('-goal').first(),
+    #     'top_point': query_list.order_by('-point').first(),
+    # }
+    # return header_team_players_career
+    return {
+        'top_goal': query_list.order_by('-goal').first(),
+        'top_point': query_list.order_by('-point').first(),
     }
-    return header_team_players_career
 
 
 def season_leaders(request, team):
@@ -102,8 +110,8 @@ def season_leaders(request, team):
         'top_10_point': top_10_point,
         'top_10_penalty': top_10_penalty,
         'team': team,
-        # 'header_team_season': show_leaders_team_season(team),
-        # 'header_team_career': show_leaders_team_career(team)
+        'header_team_season': show_leaders_team_season(team),
+        'header_team_career': show_leaders_team_career(team)
     }
     template = 'liga2_teams/liga2_season_leaders.html'
     return render(request, template, context)
@@ -142,8 +150,8 @@ def career_leaders(request, team):
         'goalkeeper_list': goalkeeper_list,
         'top_10_penalty': top_10_penalty,
         'team': team,
-        # 'header_team_season': show_leaders_team_season(team),
-        # 'header_team_career': show_leaders_team_career(team)
+        'header_team_season': show_leaders_team_season(team),
+        'header_team_career': show_leaders_team_career(team)
     }
     template = 'liga2_teams/liga2_career_leaders.html'
     return render(request, template, context)
@@ -164,8 +172,8 @@ def all_players_on_team(request, team):
     context = {
         'page_obj': total_points_for_players,
         'team': team,
-        # 'header_team_season': show_leaders_team_season(team),
-        # 'header_team_career': show_leaders_team_career(team)
+        'header_team_season': show_leaders_team_season(team),
+        'header_team_career': show_leaders_team_career(team)
     }
     return render(request, template, context)
 
@@ -182,8 +190,8 @@ def first_league_team_goalkeepers(request, team):
     context = {
         'page_obj': goalkeeper_list,
         'team': team,
-        # 'header_team_season': show_leaders_team_season(team),
-        # 'header_team_career': show_leaders_team_career(team)
+        'header_team_season': show_leaders_team_season(team),
+        'header_team_career': show_leaders_team_career(team),
         'title': 'Вратари каманды первой лиги'
     }
     return render(request, template, context)

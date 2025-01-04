@@ -19,7 +19,8 @@ def goalkeeper_stat_alltime(request):
     context = {
         'page_obj': page_obj,
         'start_index': start_index,
-        'table_name': 'Most Games Played (Goalie) Career 100+',
+        'table_name':
+        'Вратари сыгравшие 100+ матчей в высшей лиге советского хоккея',
         'title': 'Вратари советского хоккея'
     }
     return render(request, template, context)
