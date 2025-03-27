@@ -613,6 +613,12 @@ def history_team(request, team):
             team_view.count() + team_view_2.count()
         ) + (team_view_3.count() + team_view_4.count())
     )
+    if count_season == 1:
+        end_word = ''
+    elif count_season in [2, 3, 4]:
+        end_word = 'а'
+    else:
+        end_word = 'ов'
     present_in_league_one = False
     if str(team) in list(all_team_league_one.keys()):
         present_in_league_one = True
@@ -620,6 +626,7 @@ def history_team(request, team):
         'team_view_general': team_view_general,
         'team': team,
         'count_season': count_season,
+        'end_word': end_word,
         'top_goal': top_goal(team),
         'top_point': top_point(team),
         'top_s_goal': top_season_goal(team),

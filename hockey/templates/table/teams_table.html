@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="container col-sm-5 p-1 mb-1">
-  <h1> {{ season }} </h1>
+  <h1> {{ season }} Высшая лига</h1>
   {% if season != '1946-47' %}
     <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' previous_season %}" role="button"> Previous season </a>
   {% endif %}

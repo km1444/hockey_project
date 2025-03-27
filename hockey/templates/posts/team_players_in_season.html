@@ -75,17 +75,17 @@
     <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
       <thead>
         <tr>
-          <h4>Scoring Regular Season</h4>
+          <h4>Статистика полевых игроков</h4>
         </tr>
       <tr>
         <th>#</th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>GP</th>
-        <th>G</th>
-        <th>A</th>
-        <th>PTS</th>
-        <th>PIM</th>
+        <th data-type="string">Name</th>
+        <th data-type="number">Age</th>
+        <th data-type="number">GP</th>
+        <th data-type="number">G</th>
+        <th data-type="number">A</th>
+        <th data-type="number">PTS</th>
+        <th data-type="number">PIM</th>
         {% if request.user.is_authenticated %}
             <th>
               Edit
@@ -111,7 +111,7 @@
     <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
       <thead>
         <tr>
-          <h4>Goalies Regular Season</h4>
+          <h4>Статистика вратарей</h4>
         </tr>
         <tr>
           <th>#</th>
@@ -167,7 +167,7 @@
   </div>
   
   <div class="container col-sm-5 py-2">
-    <b> Coach: </b>
+    <b> Тренер: </b>
     {% for coach in coaches %}
       
       <a class="text-decoration-none text-reset" href="{% url 'rating:player_detail' coach.coach_name %}">
@@ -192,5 +192,7 @@
       </a>
     {% endif %}      
   </div>
+
+  <script src="/static/css/main.js"></script>
 
 {% endblock %}

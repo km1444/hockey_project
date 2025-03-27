@@ -35,6 +35,8 @@ class PrevNextSeasonMixin:
 
 
 class ContextFormMixin:
+    ''' миксин для подмешивания в контекст team and season,
+    удобно для передачи в ссылки'''
     def get_mixin_context(self, context, **kwargs):
         context['team'] = self.kwargs['team']
         context['season'] = self.kwargs['season']

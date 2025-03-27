@@ -35,6 +35,12 @@ def history_team(request, team):
     )
     team = get_object_or_404(Team, title=team)
     count_season = team_seasons_1.count() + team_seasons_2.count()
+    if count_season == 1:
+        end_word = ''
+    elif count_season in [2, 3, 4]:
+        end_word = 'а'
+    else:
+        end_word = 'ов'
     present_in_major_l = False
     if str(team) in list(all_team_major_l.keys()):
         present_in_major_l = True
@@ -42,6 +48,7 @@ def history_team(request, team):
         'team_seasons': team_seasons,
         'team': team,
         'count_season': count_season,
+        'end_word': end_word,
         'present_in_major_l': present_in_major_l,
         'header_team_season': show_leaders_team_season(team),
         'header_team_career': show_leaders_team_career(team)
