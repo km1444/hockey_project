@@ -1,9 +1,10 @@
+# from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 from django.views.generic.base import TemplateView
 from rating.views import (
     SearchResultsView, SkaterStatisticDeleteView, SkaterStatisticUpdateView,
 )
-
+# from .sitemap import PlayerSitemap
 from . import views
 
 app_name = 'rating'
@@ -101,4 +102,11 @@ urlpatterns = [
             content_type='text/plain'
         ),
     ),
+    path(
+        'sitemap.xml/',
+        TemplateView.as_view(
+            template_name='posts/sitemap.xml',
+            content_type='application/xml'
+        ),
+    )
 ]

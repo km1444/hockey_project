@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load thumbnail %}
 {% load user_filters %}
 
 {% block description %}
@@ -11,94 +12,100 @@
 {% endblock title %}
 
 {% block content %}
-  <div class="container col-sm-5 py-1">
-    <h1>{{ player.name }}</h1>
-    <h4>Position : {{ position }}</h4>
-    <h4>Born : {{ player.year_of_birth }}</h4>
-    <a href="{{ player.wikip }}">
-      <img src="{% static 'img/wiki.png' %}" >
-    </a>
+  <div class="container col-sm-5 py-1" style="display:flex">
+    <div>
+      {% thumbnail player.photo "100x150" upscale=True padding=True padding_color="#D3D3D3" as im %}
+        <img src="{{ im.url }}">
+      {% endthumbnail %}
+    </div>
+    <div>
+      <h2>{{ player.name }}</h2>
+      <h5>Position : {{ position }}</h5>
+      <h5>Born : {{ player.year_of_birth }}</h5>
+      <a href="{{ player.wikip }}">
+        <img src="{% static 'img/wiki.png' %}" >
+      </a>
+    </div>
   </div>
-
   {% if exist_statistic_of_major_league %}
-  <div class="container col-sm-5 p-1 my-1">
-    <h4>Статистика игрока в Высшей лиге</h4>
-    <table class="table table-bordered table-hover table-sm">
-      <thead>
-        <tr>
-          <th>Season</th>
-          <th>Age</th>
-          <th>Tm</th>
-          <th>GP</th>
-          <th>G</th>
-          <th>A</th>
-          <th>PTS</th>
-          <th>PIM</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for post in page_obj %}
-        <tr>
-          <td>
-            {% ifchanged post.season__name %}
-              <a href="{% url 'rating:create_table' post.season__name %}">
-                {{ post.season__name }}
-              </a>
-            {% endifchanged %}
-              {% comment %} <a href="{% url 'rating:create_table' post.season__name %}">
-                  {{ post.season__name }}
-              </a> {% endcomment %}
-          </td>
-          <td>
-            {% ifchanged post.age %}
-              {{ post.age }}
-            {% endifchanged %}
-          </td>
-          <td>
-              <a href="{% url 'rating:team_players_in_season' post.team__title post.season__name %}"> 
-                  {{ post.team__title }}
-              </a>
-          </td>
-          <td>{{ post.game }}</td>
-          <td>{{ post.goal }}</td>
-          <td>{{ post.assist }}</td>
-          <td class="table-warning">{{ post.point }}</td>
-          <td>{{ post.penalty }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-      <tfoot>
-        <tr>
-          <th>{{ count }} s</th>
-          <th></th>
-          <th></th>
-          <th>{{ game }}</th>
-          <th>{{ goal }}</th>
-          <th>{{ assist }}</th>
-          <th>{{ point }}</th>
-          <th>{{ penalty }}</th>
-        </tr>
-        {% if amount_teams != 1 %}
-          {% for elem in group_teams %}
+    <div class="container col-sm-5 p-1 my-1">
+      <h4>Статистика игрока в Высшей лиге</h4>
+      <table class="table table-bordered table-hover table-sm">
+        <thead>
           <tr>
-            <td></td>
-            <td></td>
+            <th>Season</th>
+            <th>Age</th>
+            <th>Tm</th>
+            <th>GP</th>
+            <th>G</th>
+            <th>A</th>
+            <th>PTS</th>
+            <th>PIM</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in page_obj %}
+          <tr>
             <td>
-                <a href="{% url 'rating:all_time_all_player_one_team' elem.team__title %}"> 
-                    {{ elem.team__title }}
+              {% ifchanged post.season__name %}
+                <a href="{% url 'rating:create_table' post.season__name %}">
+                  {{ post.season__name }}
+                </a>
+              {% endifchanged %}
+                {% comment %} <a href="{% url 'rating:create_table' post.season__name %}">
+                    {{ post.season__name }}
+                </a> {% endcomment %}
+            </td>
+            <td>
+              {% ifchanged post.age %}
+                {{ post.age }}
+              {% endifchanged %}
+            </td>
+            <td>
+                <a href="{% url 'rating:team_players_in_season' post.team__title post.season__name %}"> 
+                    {{ post.team__title }}
                 </a>
             </td>
-            <td>{{ elem.game }}</td>
-            <td>{{ elem.goal }}</td>
-            <td>{{ elem.assist }}</td>
-            <td>{{ elem.point }}</td>
-            <td>{{ elem.penalty }}</td>
+            <td>{{ post.game }}</td>
+            <td>{{ post.goal }}</td>
+            <td>{{ post.assist }}</td>
+            <td class="table-warning">{{ post.point }}</td>
+            <td>{{ post.penalty }}</td>
           </tr>
           {% endfor %}
-        {% endif %}
-      </tfoot>
-    </table>
-  </div>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>{{ count }} s</th>
+            <th></th>
+            <th></th>
+            <th>{{ game }}</th>
+            <th>{{ goal }}</th>
+            <th>{{ assist }}</th>
+            <th>{{ point }}</th>
+            <th>{{ penalty }}</th>
+          </tr>
+          {% if amount_teams != 1 %}
+            {% for elem in group_teams %}
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                  <a href="{% url 'rating:all_time_all_player_one_team' elem.team__title %}"> 
+                      {{ elem.team__title }}
+                  </a>
+              </td>
+              <td>{{ elem.game }}</td>
+              <td>{{ elem.goal }}</td>
+              <td>{{ elem.assist }}</td>
+              <td>{{ elem.point }}</td>
+              <td>{{ elem.penalty }}</td>
+            </tr>
+            {% endfor %}
+          {% endif %}
+        </tfoot>
+      </table>
+    </div>
   {% endif %}
 
   {% if exist_statistic_of_league1 %}
@@ -106,7 +113,6 @@
   {% endif %}
   
   {% if exist_coach_stat %}
-  {% show_coach_stat_of_player player.id %}
+    {% show_coach_stat_of_player player.id %}
   {% endif %}
-  
 {% endblock content %}

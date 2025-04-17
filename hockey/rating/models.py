@@ -27,6 +27,11 @@ class Player(models.Model):
     name = models.TextField("Игрок")
     year_of_birth = models.SmallIntegerField("Год рождения")
     wikip = models.URLField("Ссылка на википедию", blank=True, max_length=250)
+    photo = models.ImageField(
+        'Фото',
+        upload_to='photo/',
+        blank=True
+    )
 
     def natural_key(self):
         return (self.name)

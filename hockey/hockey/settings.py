@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'rest_framework',
     'corsheaders',
     'rating.apps.RatingConfig',
@@ -38,8 +40,10 @@ INSTALLED_APPS = [
     'liga2_seasons_app.apps.Liga2SeasonsAppConfig',
     'liga2_teams_app.apps.Liga2TeamsAppConfig',
     'liga2_players_app.apps.Liga2PlayersAppConfig',
-    'goalkeeper_liga2_app.apps.GoalkeeperLiga2AppConfig'
+    'goalkeeper_liga2_app.apps.GoalkeeperLiga2AppConfig',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -164,3 +168,5 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
+
+THUMBNAIL_DEBUG = True

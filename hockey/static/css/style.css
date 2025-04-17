@@ -14,8 +14,21 @@ body {
 h1 {
 	margin-bottom: 0px;
 }
+h2 {
+	margin-bottom: 0px;
+	margin-left: 0.3rem;
+}
 h4 {
 	margin-bottom: 0px;
+}
+h5 {
+	font-weight: bold;
+    font-size: 1.2em;
+    padding: 3px;
+	margin: 0 0 0 0.3rem;
+    /*background: grey;
+    border-bottom: 1px solid #c9cbcd;
+    margin: 0 -1px;*/
 }
 #wrap {
 	background: #fff;
@@ -233,15 +246,6 @@ caption {
 p {
 	margin-top: 0;
     margin-bottom: 0;
-}
-
-h5 {
-	font-weight: bold;
-    font-size: 1.2em;
-    padding: 3px;
-    background: grey;
-    border-bottom: 1px solid #c9cbcd;
-    margin: 0 -1px;
 }
 
 .col {
