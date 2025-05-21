@@ -180,6 +180,13 @@ class TeamInTable1gr(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
+    additional_tournament_without_points_second = models.ForeignKey(
+        'AdditionalTournamentWithoutPointsSecond',
+        verbose_name=(
+            "Участие во втором доп т-ре без учета ранее набранных очков"),
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
 
     @property
     def get_points(self):
@@ -277,6 +284,13 @@ class TeamInTable2gr(models.Model):
     additional_tournament_without_points = models.ForeignKey(
         'AdditionalTournamentWithoutPoints',
         verbose_name="Участие в доп т-ре без учета ранее набранных очков",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL)
+    additional_tournament_without_points_second = models.ForeignKey(
+        'AdditionalTournamentWithoutPointsSecond',
+        verbose_name=(
+            "Участие во втором доп т-ре без учета ранее набранных очков"),
         blank=True,
         null=True,
         on_delete=models.SET_NULL)
@@ -418,6 +432,50 @@ class AdditionalTournamentWithoutPoints(models.Model):
         verbose_name = ("Команда доп т-ра без учета набранных ранее очков")
         verbose_name_plural = (
             "Команды доп т-ра без учета набранных ранее очков")
+
+    def __str__(self):
+        return f'{self.team_name}, {self.season}'
+
+
+class AdditionalTournamentWithoutPointsSecond(models.Model):
+    rank = models.IntegerField('Место')
+    team_name = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        related_name='additional_tournament_without_points_second',
+        verbose_name="Команда"
+    )
+    current_name = models.CharField(
+        ("Текущее название"),
+        max_length=50
+    )
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        related_name='additional_tournament_without_points_second'
+    )
+    games = models.IntegerField()
+    wins = models.IntegerField()
+    ties = models.IntegerField()
+    losses = models.IntegerField()
+    points = models.IntegerField(default=0)
+
+    @property
+    def get_points(self):
+        score = self.wins * 2 + self.ties
+        return score
+
+    def save(self, *args, **kwargs):
+        self.points = self.get_points
+        super(AdditionalTournamentWithoutPointsSecond, self).save(
+            *args, **kwargs)
+
+    class Meta:
+        verbose_name = (
+            "Команда второго доп т-ра без учета набранных ранее очков")
+        verbose_name_plural = (
+            "Команды второго доп т-ра без учета набранных ранее очков")
 
     def __str__(self):
         return f'{self.team_name}, {self.season}'

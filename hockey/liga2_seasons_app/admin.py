@@ -2,8 +2,9 @@ from django.contrib import admin
 
 from .models import (
     AdditionalTournament, AdditionalTournamentSecond,
-    AdditionalTournamentWithoutPoints, DescriptionTable, TeamInTable1gr,
-    TeamInTable2gr, TransitionTournament, TransitionWithoutPoints,
+    AdditionalTournamentWithoutPoints, AdditionalTournamentWithoutPointsSecond,
+    DescriptionTable, TeamInTable1gr, TeamInTable2gr, TransitionTournament,
+    TransitionWithoutPoints,
 )
 
 
@@ -49,6 +50,12 @@ class AdditionalTournamentWithoutPointsAdmin(admin.ModelAdmin):
     list_filter = ('team_name',)
 
 
+class AdditionalTournamentWithoutPointsSecondAdmin(admin.ModelAdmin):
+    list_display = ('points', 'team_name', 'current_name', 'season')
+    search_fields = ('team_name__title',)
+    list_filter = ('team_name',)
+
+
 class DescriptionTableAdmin(admin.ModelAdmin):
     list_display = ('season',)
     list_filter = ('season',)
@@ -66,5 +73,9 @@ admin.site.register(
 admin.site.register(
     AdditionalTournamentWithoutPoints,
     AdditionalTournamentWithoutPointsAdmin
+)
+admin.site.register(
+    AdditionalTournamentWithoutPointsSecond,
+    AdditionalTournamentWithoutPointsSecondAdmin
 )
 admin.site.register(DescriptionTable, DescriptionTableAdmin)

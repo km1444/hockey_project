@@ -30,6 +30,15 @@ h5 {
     border-bottom: 1px solid #c9cbcd;
     margin: 0 -1px;*/
 }
+.col h5 {
+	font-weight: bold;
+    font-size: 1.2em;
+    padding: 3px;
+	margin: 0 0 0 0.3rem;
+    background: grey;
+	border-bottom: 1px solid #c9cbcd;
+    margin: 0 -1px;
+}
 #wrap {
 	background: #fff;
 	box-shadow: 0 0 27px #404445;

@@ -57,7 +57,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Teams
             </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <div class="team_grid">
                   {% for name, city in all_team.items %}
                     <li>
@@ -179,7 +179,7 @@
         </div>
         <div class="dropdown">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="goal_career" %}" id="navbarDropdown">
+            <a class="nav-link dropdown-toggle" href="{% url 'liga2_players:player_statistics_in_the_league1' stat_rule="goal_career" %}" id="navbarDropdown">
               League 1
             </a>
               {% comment %} <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -194,7 +194,7 @@
       </ul>
     </div>
     <div>
-      <a href="https://t.me/KonovalovMikhail">telegram</a>
+      <a href="https://t.me/hockey_ussr_bot/my_app">telegram</a>
     </div>
   </nav>
 </div>

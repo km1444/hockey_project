@@ -19,6 +19,8 @@ def history_team(request, team):
             'transition_tournament',
             'additional_tournament',
             'additional_tournament_second',
+            'additional_tournament_without_points',
+            'additional_tournament_without_points_second',
             'transition_tournament_without_points').order_by('-season__name')
     team_seasons_2 = TeamInTable2gr.objects.filter(
         team_name__title=team).select_related(
@@ -27,8 +29,9 @@ def history_team(request, team):
             'transition_tournament',
             'additional_tournament',
             'additional_tournament_second',
-            'transition_tournament_without_points',
-            'additional_tournament_without_points').order_by('-season__name')
+            'additional_tournament_without_points',
+            'additional_tournament_without_points_second',
+            'transition_tournament_without_points').order_by('-season__name')
     team_seasons = sorted(
         chain(team_seasons_1, team_seasons_2),
         key=lambda x: x.season.name, reverse=True

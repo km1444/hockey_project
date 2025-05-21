@@ -10,8 +10,9 @@ from .forms import (
 )
 from .models import (
     AdditionalTournament, AdditionalTournamentSecond,
-    AdditionalTournamentWithoutPoints, DescriptionTable, TeamInTable1gr,
-    TeamInTable2gr, TransitionTournament, TransitionWithoutPoints,
+    AdditionalTournamentWithoutPoints, AdditionalTournamentWithoutPointsSecond,
+    DescriptionTable, TeamInTable1gr, TeamInTable2gr, TransitionTournament,
+    TransitionWithoutPoints,
 )
 
 
@@ -39,6 +40,9 @@ def liga2_season(request, season):
     additional_tournament_without_points = (
         AdditionalTournamentWithoutPoints.objects.filter(
             season__name=season).select_related('team_name').order_by('rank'))
+    additional_tournament_without_points_second = (
+        AdditionalTournamentWithoutPointsSecond.objects.filter(
+            season__name=season).select_related('team_name').order_by('rank'))
     try:
         description_table = DescriptionTable.objects.get(season__name=season)
     except DescriptionTable.DoesNotExist:
@@ -55,6 +59,8 @@ def liga2_season(request, season):
         'additional_tournament_second': additional_tournament_second,
         'additional_tournament_without_points':
         additional_tournament_without_points,
+        'additional_tournament_without_points_second':
+        additional_tournament_without_points_second,
         'description_table': description_table,
 
     }

@@ -58,74 +58,85 @@
               <td><b>{{ team.transition_tournament.points }}</b></td>
               <td>{{ team.transition_tournament.rank_pict }}</td>
             </tr>
-          {% elif team.additional_tournament %}
-            <tr>
-              <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
-              <td>
-                <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
-                  {{ team.additional_tournament.current_name }}
-                </a>
-              </td>
-              <td>{{ team.additional_tournament.games }}</td>
-              <td>{{ team.additional_tournament.wins }}</td>
-              <td>{{ team.additional_tournament.ties }}</td>
-              <td>{{ team.additional_tournament.losses }}</td>
-              <td><b>{{ team.additional_tournament.points }}</b></td>
-              <td>{{ team.additional_tournament.rank }}</td>
-            </tr>
-          {% elif team.additional_tournament_second %}
-            <tr>
-              <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
-              <td>
-                <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
-                  {{ team.additional_tournament_second.current_name }}
-                </a>
-              </td>
-              <td>{{ team.additional_tournament_second.games }}</td>
-              <td>{{ team.additional_tournament_second.wins }}</td>
-              <td>{{ team.additional_tournament_second.ties }}</td>
-              <td>{{ team.additional_tournament_second.losses }}</td>
-              <td><b>{{ team.additional_tournament_second.points }}</b></td>
-              <td>{{ team.additional_tournament_second.rank }}</td>
-            </tr>
-          {% else %}
-            <tr>
-              <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
-              <td>
-                <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
-                  {{ team.current_name }}
-                </a>
-              </td>
-              <td>{{ team.games }}</td>
-              <td>{{ team.wins }}</td>
-              <td>{{ team.ties }}</td>
-              <td>{{ team.losses }}</td>
-              <td><b>{{ team.points }}</b></td>
-              <td>{{ team.rank }}</td>
-            </tr>
-            {% if team.transition_tournament_without_points %}
-            <tr>
-              <td></td>
-              <td></td>
-              <td>{{ team.transition_tournament_without_points.games }}</td>
-              <td>{{ team.transition_tournament_without_points.wins }}</td>
-              <td>{{ team.transition_tournament_without_points.ties }}</td>
-              <td>{{ team.transition_tournament_without_points.losses }}</td>
-              <td><b>{{ team.transition_tournament_without_points.points }}</b></td>
-              <td>{{ team.transition_tournament_without_points.rank }}</td>
-            </tr>
-            {% elif team.additional_tournament_without_points %}
-            <tr>
-              <td></td>
-              <td></td>
-              <td>{{ team.additional_tournament_without_points.games }}</td>
-              <td>{{ team.additional_tournament_without_points.wins }}</td>
-              <td>{{ team.additional_tournament_without_points.ties }}</td>
-              <td>{{ team.additional_tournament_without_points.losses }}</td>
-              <td><b>{{ team.additional_tournament_without_points.points }}</b></td>
-              <td>{{ team.additional_tournament_without_points.rank }}</td>
-            </tr>
-            {% endif %}
+            {% elif team.additional_tournament %}
+              <tr>
+                <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
+                <td>
+                  <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
+                    {{ team.additional_tournament.current_name }}
+                  </a>
+                </td>
+                <td>{{ team.additional_tournament.games }}</td>
+                <td>{{ team.additional_tournament.wins }}</td>
+                <td>{{ team.additional_tournament.ties }}</td>
+                <td>{{ team.additional_tournament.losses }}</td>
+                <td><b>{{ team.additional_tournament.points }}</b></td>
+                <td>{{ team.additional_tournament.rank }}</td>
+              </tr>
+            {% elif team.additional_tournament_second %}
+              <tr>
+                <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
+                <td>
+                  <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
+                    {{ team.additional_tournament_second.current_name }}
+                  </a>
+                </td>
+                <td>{{ team.additional_tournament_second.games }}</td>
+                <td>{{ team.additional_tournament_second.wins }}</td>
+                <td>{{ team.additional_tournament_second.ties }}</td>
+                <td>{{ team.additional_tournament_second.losses }}</td>
+                <td><b>{{ team.additional_tournament_second.points }}</b></td>
+                <td>{{ team.additional_tournament_second.rank }}</td>
+              </tr>
+            {% else %}
+              <tr>
+                <td><a href="{% url 'liga2_seasons:liga2_season' team.season %}">{{ team.season }}</a></td>
+                <td>
+                  <a href="{% url 'liga2_players:players_team_season' team.team_name team.season %}">
+                    {{ team.current_name }}
+                  </a>
+                </td>
+                <td>{{ team.games }}</td>
+                <td>{{ team.wins }}</td>
+                <td>{{ team.ties }}</td>
+                <td>{{ team.losses }}</td>
+                <td><b>{{ team.points }}</b></td>
+                <td>{{ team.rank }}</td>
+              </tr>
+              {% if team.transition_tournament_without_points %}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>{{ team.transition_tournament_without_points.games }}</td>
+                  <td>{{ team.transition_tournament_without_points.wins }}</td>
+                  <td>{{ team.transition_tournament_without_points.ties }}</td>
+                  <td>{{ team.transition_tournament_without_points.losses }}</td>
+                  <td><b>{{ team.transition_tournament_without_points.points }}</b></td>
+                  <td>{{ team.transition_tournament_without_points.rank }}</td>
+                </tr>
+                {% elif team.additional_tournament_without_points %}
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>{{ team.additional_tournament_without_points.games }}</td>
+                    <td>{{ team.additional_tournament_without_points.wins }}</td>
+                    <td>{{ team.additional_tournament_without_points.ties }}</td>
+                    <td>{{ team.additional_tournament_without_points.losses }}</td>
+                    <td><b>{{ team.additional_tournament_without_points.points }}</b></td>
+                    <td>{{ team.additional_tournament_without_points.rank }}</td>
+                  </tr>
+                {% elif team.additional_tournament_without_points_second %}
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>{{ team.additional_tournament_without_points_second.games }}</td>
+                    <td>{{ team.additional_tournament_without_points_second.wins }}</td>
+                    <td>{{ team.additional_tournament_without_points_second.ties }}</td>
+                    <td>{{ team.additional_tournament_without_points_second.losses }}</td>
+                    <td><b>{{ team.additional_tournament_without_points_second.points }}</b></td>
+                    <td>{{ team.additional_tournament_without_points_second.rank }}</td>
+                  </tr>
+              {% endif %}
           {% endif %}
         {% endfor %}
       </tbody>
