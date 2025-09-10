@@ -62,7 +62,6 @@ def liga2_season(request, season):
         'additional_tournament_without_points_second':
         additional_tournament_without_points_second,
         'description_table': description_table,
-
     }
     return render(request, template, context)
 

@@ -52,7 +52,11 @@
     {% for team in teams_transition %}
     <tr>
       <td>{{ team.rank_pict }}</td>
-      <td class="first">{{ team.current_name }} {{ team.team_name.city|capfirst }} </td>
+      <td class="first">
+        <a href="{% url 'liga2_players:players_team_season' team.team_name.title season %}">
+          {{ team.current_name }} {{ team.team_name.city|capfirst }}
+        </a>
+      </td>
       <td>{{ team.games }}</td>
       <td>{{ team.wins }}</td>
       <td>{{ team.ties }}</td>
@@ -109,7 +113,11 @@
     {% for team in teams_transition_without_points %}
     <tr>
       <td>{{ team.rank }}</td>
-      <td class="first">{{ team.current_name }} {{ team.team_name.city|capfirst }}</td>
+      <td class="first">
+        <a href="{% url 'liga2_players:players_team_season' team.team_name.title season %}">
+          {{ team.current_name }} {{ team.team_name.city|capfirst }}
+        </a>
+      </td>
       <td>{{ team.games }}</td>
       <td>{{ team.wins }}</td>
       <td>{{ team.ties }}</td>

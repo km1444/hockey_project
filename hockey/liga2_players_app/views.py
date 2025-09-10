@@ -11,7 +11,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from goalkeeper_liga2_app.models import GoalkeeperStatisticLiga2
 from liga2_seasons_app.models import TeamInTable1gr, TeamInTable2gr
 from rating.forms import AddPlayerForm
-from rating.models import Player, Season, Team
+from rating.models import Player, Season, Team, TeamForTable
 
 from .forms import AddStatisticLiga2Form, EditStatisticLiga2Form
 from .models import StatisticPlayer
@@ -134,6 +134,9 @@ class PlayersTeamSeason(PrevNextSeasonMixin, ListView):
             season__name=self.kwargs['season'])
         context['info_of_team_2gr'] = TeamInTable2gr.objects.filter(
             team_name__title=self.kwargs['team'],
+            season__name=self.kwargs['season'])
+        context['info_of_team_from_major'] = TeamForTable.objects.filter(
+            name__title=self.kwargs['team'],
             season__name=self.kwargs['season'])
         context['goalkeepers'] = GoalkeeperStatisticLiga2.objects.filter(
             team__title=self.kwargs['team'],

@@ -33,6 +33,18 @@
           {{ team.team_name.city}}
         </h4>
       {% endfor %}
+    {% elif info_of_team_from_major %}
+      {% for team in info_of_team_from_major %}
+        <h1> 
+          <a href="">
+            {{ team.current_name }} 
+          </a>
+        </h1> 
+        <h4>
+          {{ team.name.city}}
+        </h4>
+      {% endfor %}
+      <h6>Команда из высшей лиги участвующая в переходном турнире</h6>
     {% endif %}
     
     <h4>

@@ -23,7 +23,15 @@
   <nav class="navbar navbar-light justify-content-between" id="mid-subnav">
     <a class="navbar-brand" href="{% url 'rating:index' %}">
       <i class="fa-solid fa-hockey-sticks"></i>
-      <span style="color:red">45</span>seasons
+      <h4>
+        <span style="color:red">
+          45
+        </span> сезонов</h4>
+      <div style="margin">
+        <h6>
+          Высшая и первая лиги советского хоккея 1946-1991
+        </h6>
+      </div>
     </a>
           
     <form class="d-flex" role="search" action="{% url 'rating:search_result' %}" methog="get">

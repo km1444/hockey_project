@@ -16,11 +16,11 @@
 {% include 'includes/submenu_team.html' %}
 
   <div class="container col-sm-6 p-1 my-1">
-    <h3 align="left"> {{ count_season }} Сезон{{ end_word }} в Высшей лиге  
+    <h4 align="left"> {{ count_season }} Сезон{{ end_word }} в Высшей лиге  
       {% if present_in_league_one %}
         (<a href="{% url 'liga2_teams:history_team' team %}">Первая лига</a>)
       {% endif %}
-    </h3>
+    </h4>
   </div>
 
   <div class="container col-sm-6 p-1 my-1 table-responsive">

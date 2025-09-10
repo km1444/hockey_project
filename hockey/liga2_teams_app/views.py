@@ -5,7 +5,10 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render
 from goalkeeper_liga2_app.models import GoalkeeperStatisticLiga2
 from liga2_players_app.models import StatisticPlayer
-from liga2_seasons_app.models import TeamInTable1gr, TeamInTable2gr
+from liga2_seasons_app.models import (
+    TeamInTable1gr, TeamInTable2gr, TransitionTournament,
+    TransitionWithoutPoints,
+)
 from rating.models import Team
 from rating.secondary import all_team_major_l
 
@@ -17,41 +20,43 @@ def history_team(request, team):
             'season',
             'team_name',
             'transition_tournament',
+            'transition_tournament_without_points',
             'additional_tournament',
             'additional_tournament_second',
             'additional_tournament_without_points',
             'additional_tournament_without_points_second',
-            'transition_tournament_without_points').order_by('-season__name')
+    ).order_by('-season__name')
     team_seasons_2 = TeamInTable2gr.objects.filter(
         team_name__title=team).select_related(
             'season',
             'team_name',
             'transition_tournament',
+            'transition_tournament_without_points',
             'additional_tournament',
             'additional_tournament_second',
             'additional_tournament_without_points',
             'additional_tournament_without_points_second',
-            'transition_tournament_without_points').order_by('-season__name')
+    ).order_by('-season__name')
+    tran_tour = TransitionTournament.objects.filter(
+        team_name__title=team).select_related(
+            'season', 'team_name').order_by('-season__name')
+    tran_tour_wo_points = TransitionWithoutPoints.objects.filter(
+        team_name__title=team).select_related(
+            'season', 'team_name').order_by('-season__name')
     team_seasons = sorted(
-        chain(team_seasons_1, team_seasons_2),
+        chain(team_seasons_1, team_seasons_2, tran_tour, tran_tour_wo_points),
         key=lambda x: x.season.name, reverse=True
     )
+    count_season = len(sorted_seasons(team_seasons))
     team = get_object_or_404(Team, title=team)
-    count_season = team_seasons_1.count() + team_seasons_2.count()
-    if count_season == 1:
-        end_word = ''
-    elif count_season in [2, 3, 4]:
-        end_word = 'а'
-    else:
-        end_word = 'ов'
     present_in_major_l = False
     if str(team) in list(all_team_major_l.keys()):
         present_in_major_l = True
     context = {
-        'team_seasons': team_seasons,
+        'team_seasons': sorted_seasons(team_seasons),
         'team': team,
         'count_season': count_season,
-        'end_word': end_word,
+        'end_word': end_word(count_season),
         'present_in_major_l': present_in_major_l,
         'header_team_season': show_leaders_team_season(team),
         'header_team_career': show_leaders_team_career(team)
@@ -205,3 +210,23 @@ def first_league_team_goalkeepers(request, team):
         'title': 'Вратари каманды первой лиги'
     }
     return render(request, template, context)
+
+
+def end_word(count_season: int) -> str:
+    if count_season in [1, 21, 31, 41]:
+        return ''
+    elif count_season in [2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44]:
+        return 'а'
+    else:
+        return 'ов'
+
+
+def sorted_seasons(list_season: list) -> list:
+    list_season_new = []
+    list_str = []
+    for _ in list_season:
+        if str(_) not in list_str:
+            list_str.append(str(_))
+            list_season_new.append(_)
+    print(len(list_season_new))
+    return list_season_new

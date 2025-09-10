@@ -11,11 +11,11 @@
 {% block content %}
  
   <div class="container col-sm-5 py-1">
-    <h1>{{ player.name }}</h1>
+    <h2>{{ player.name }}</h2>
       {% if goalkeeper %}
-        <h4>Position : {{ position }}</h4>
+        <h5>Position : {{ position }}</h5>
       {% endif %}
-    <h4>Born : {{ player.year_of_birth }}</h4>
+    <h5>Born : {{ player.year_of_birth }}</h5>
     <a href="{{ player.wikip }}">
       <img src="{% static 'img/wiki.png' %}" >
     </a>
