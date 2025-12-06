@@ -228,5 +228,5 @@ def sorted_seasons(list_season: list) -> list:
         if str(_) not in list_str:
             list_str.append(str(_))
             list_season_new.append(_)
-    print(len(list_season_new))
+    # print(len(list_season_new))
     return list_season_new
