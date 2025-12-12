@@ -351,3 +351,8 @@ th.sorted[data-order="1"]::after {
 	display:inline-block;
 	margin: 1px;
 }
+
+#season_emblem {
+	float: left;
+	margin-right: 5px;
+}

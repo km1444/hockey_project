@@ -11,18 +11,28 @@
 
 {% block content %}
 <div class="container col-sm-5 p-1 mb-1">
-      <div>
-      {% thumbnail player.photo "100x150" upscale=True padding=True padding_color="#D3D3D3" as im %}
-        <img src="{{ im.url }}">
-      {% endthumbnail %}
-    </div>
-  <h1> {{ season }} Высшая лига</h1>
+  <div id="season_emblem">
+    {% thumbnail description_season.emblem_season "155x110" upscale=True padding=True padding_color="#D3D3D3" as im %}
+      <img src="{{ im.url }}">
+    {% endthumbnail %}
+  </div>
+  <div>
+    <h3>
+      {{ season }} Высшая лига
+    </h3>
+  </div>
+  <div>
   {% if season != '1946-47' %}
     <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' previous_season %}" role="button"> Previous season </a>
   {% endif %}
   {% if season != '1990-91' %}
     <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' next_season %}" role="button"> Next season </a>
   {% endif %}
+  </div>
+</div>
+
+<div class="container col-sm-5 p-1 mb-1">
+    {{ description_season.description | linebreaksbr }}
 </div>
 
 {% if playoff %}

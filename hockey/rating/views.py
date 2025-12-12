@@ -415,9 +415,7 @@ def statistic(request, stat_rule):
 
 
 def create_table(request, season):
-    # teams = TeamForTable.objects.filter(season__name=season).values(
-    #     'id', 'rank', 'name__title', 'season__name', 'current_name',
-    #     'games', 'wins', 'ties', 'losses', 'points').order_by('rank')
+    description_season = get_object_or_404(Season, name=season)
     teams = TeamForTable.objects.filter(
         season__name=season).select_related('name').order_by('rank')
     teams2 = TeamForTable2.objects.filter(
@@ -480,6 +478,7 @@ def create_table(request, season):
     context = {
         'previous_season': prev_next_season(season)[1],
         'next_season': prev_next_season(season)[0],
+        'description_season': description_season,
         'page_obj': teams,
         'teams2': teams2,
         'teams3': teams3,

@@ -65,6 +65,11 @@ class Position(models.Model):
 class Season(models.Model):
     name = models.CharField('Название сезона', max_length=10)
     description = models.TextField('Описание сезона', blank=True)
+    emblem_season = models.ImageField(
+        'Эмблема сезона',
+        upload_to='emblem_season/',
+        blank=True
+    )
 
     def __str__(self):
         return self.name
