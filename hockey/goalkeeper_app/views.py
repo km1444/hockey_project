@@ -68,7 +68,11 @@ class GoalkeeperStatisticListView(ListView):
                 game=Sum('game'),
                 goal_against=Sum('goal_against'),
                 penalty=Sum('penalty')).order_by('-game')
-        context['goalkeeper'] = True
+        # context['goalkeeper'] = True
+        if context['count'] > 0:
+            context['goalkeeper'] = True
+        else:
+            context['goalkeeper'] = False
         if (GoalkeeperStatisticLiga2.objects.filter(
                 name=self.kwargs['pk']).exists()):
             context['exist_statistic_goalkeeper_of_league1'] = True

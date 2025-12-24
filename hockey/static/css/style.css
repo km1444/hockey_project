@@ -356,3 +356,9 @@ th.sorted[data-order="1"]::after {
 	float: left;
 	margin-right: 5px;
 }
+#header_title {
+	/* word-wrap: break-word;
+	width: 90%;
+	word-break: break-all;*/
+	font-size: 45%;
+}

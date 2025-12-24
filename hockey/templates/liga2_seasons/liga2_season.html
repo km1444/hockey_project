@@ -18,10 +18,10 @@
 <div class="container col-sm-5 p-1 mb-1">
   <h2> {{ season }} Первая лига</h2>
   {% if season != '1946-47' %}
-    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:liga2_season' previous_season %}" role="button"> Previous season </a>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'liga2_seasons:liga2_season' previous_season %}" role="button"> Previous season </a>
   {% endif %}
   {% if season != '1990-91' %}
-    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:liga2_season' next_season %}" role="button"> Next season </a>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'liga2_seasons:liga2_season' next_season %}" role="button"> Next season </a>
   {% endif %}
 </div>
 
@@ -103,11 +103,6 @@
         <th>Ties</th>
         <th>Los</th>
         <th>Points</th>
-        {% comment %} {% if request.user.is_authenticated %}
-          <th>
-            Edit
-          </th>
-        {% endif %} {% endcomment %}
       </tr>
     </thead>
   <tbody>
@@ -125,28 +120,10 @@
       <td>{{ team.ties }}</td>
       <td>{{ team.losses }}</td>
       <td>{{ team.points }}</td>
-      {% comment %} {% if request.user.is_authenticated %}
-      <td>
-        <p>
-          <a href="{% url 'liga2_seasons:edit_team_in_transition_tournament' season team.pk %}">
-            Edit
-          </a>
-          <a href="">
-            Delete
-          </a>
-        </p>
-      </td>
-    {% endif %} {% endcomment %}
     </tr>
     {% endfor %}
   </tbody>
   </table>
-  <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
-  {% comment %} {% if request.user.is_authenticated %}
-    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:add_team_trans_tournament' season %}" role="button">
-      Add Team
-    </a> 
-  {% endif %}     {% endcomment %}
 </div>
 {% endif %}
 
@@ -251,28 +228,10 @@
       <td>{{ team.ties }}</td>
       <td>{{ team.losses }}</td>
       <td>{{ team.points }}</td>
-      {% comment %} {% if request.user.is_authenticated %}
-      <td>
-        <p>
-          <a href="">
-            Edit
-          </a>
-          <a href="">
-            Delete
-          </a>
-        </p>
-      </td>
-    {% endif %} {% endcomment %}
     </tr>
     {% endfor %}
   </tbody>
   </table>
-  <!-- если пользователь не зарегистрирован то добавить статистику по игроку нельзя -->
-  {% comment %} {% if request.user.is_authenticated %}
-    <a class="btn btn-outline-secondary" href="{% url 'liga2_seasons:add_team_addit_tournament' season %}" role="button">
-      Add Team
-    </a> 
-  {% endif %}     {% endcomment %}
 </div>
 {% endif %} 
 

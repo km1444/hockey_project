@@ -23,17 +23,41 @@
   </div>
   <div>
   {% if season != '1946-47' %}
-    <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' previous_season %}" role="button"> Previous season </a>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'rating:create_table' previous_season %}" role="button"> Previous season </a>
   {% endif %}
   {% if season != '1990-91' %}
-    <a class="btn btn-outline-secondary" href="{% url 'rating:create_table' next_season %}" role="button"> Next season </a>
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'rating:create_table' next_season %}" role="button"> Next season </a>
   {% endif %}
   </div>
 </div>
 
+{% comment %} <div class="container col-sm-5 p-1 mb-1">
+<details close>
+  <summary>{{ description_season.description | linebreaksbr | slice:":200" }}</summary>
+  <p>{{ description_season.description | linebreaksbr | slice:"200:"}}</p>
+</details>
+</div> {% endcomment %}
+
+{% comment %} <div class="container col-sm-5 p-1 mb-1">
+    {{ description_season.description | linebreaksbr | truncatewords:40 }}
+</div> {% endcomment %}
+
 <div class="container col-sm-5 p-1 mb-1">
-    {{ description_season.description | linebreaksbr }}
+  <button class="btn btn-link btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Подробности сезона
+  </button>
 </div>
+<div class="collapse" id="collapseExample">
+  <div class="container col-sm-5 p-1 mb-1">
+      {{ description_season.description | linebreaksbr }}
+  </div>
+</div>
+<div class="collapse show" id="collapseExample">
+  <div class="container col-sm-5 p-1 mb-1">
+      {{ description_season.description | linebreaksbr | truncatewords:40  }}
+  </div>
+</div>
+
 
 {% if playoff %}
 <div class="container col-sm-5 p-1 my-1">
@@ -97,6 +121,7 @@
   </table>
 </div>
 {% endif %}
+
 
 {% if teams2round2 %}
 <div class="container col-sm-5 p-1 my-1 table-responsive">

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load thumbnail %}
 {% load user_filters %}
 
 {% block description %}
@@ -9,21 +10,27 @@
 {% block title %} {{ player.name }} {{ player.year_of_birth }} {% endblock %}
 
 {% block content %}
- 
-  <div class="container col-sm-5 py-1">
-    <h2>{{ player.name }}</h2>
-      {% if goalkeeper %}
-        <h5>Position : {{ position }}</h5>
-      {% endif %}
-    <h5>Born : {{ player.year_of_birth }}</h5>
-    <a href="{{ player.wikip }}">
-      <img src="{% static 'img/wiki.png' %}" >
-    </a>
+  <div class="container col-sm-5 py-1"  style="display:flex">
+    <div>
+      {% thumbnail player.photo "100x150" upscale=True padding=True padding_color="#D3D3D3" as im %}
+        <img src="{{ im.url }}">
+      {% endthumbnail %}
+    </div>
+    <div>
+      <h2>{{ player.name }}</h2>
+        {% if goalkeeper %}
+          <h5>Position : {{ position }}</h5>
+        {% endif %}
+      <h5>Born : {{ player.year_of_birth }}</h5>
+      <a href="{{ player.wikip }}">
+        <img src="{% static 'img/wiki.png' %}" >
+      </a>
+    </div>
   </div>
   
   {% if goalkeeper %}
     <div class="container col-sm-5 p-1 my-1">
-      <h4>Статистика игрока в Высшей лиге</h4>
+      <h6>Статистика игрока в Высшей лиге</h6>
       <table class="table table-bordered table-hover table-sm">
         <thead>
           <tr>

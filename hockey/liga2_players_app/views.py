@@ -4,7 +4,7 @@ from functools import reduce
 
 # from django.contrib.auth.decorators import login_required
 # from django.core.paginator import Paginator
-from django.db.models import Max, Q, Sum
+from django.db.models import Max, Q, Sum, Avg, Count
 from django.shortcuts import get_object_or_404, reverse
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -25,6 +25,17 @@ class PlayerStatisticsByCategory(ListView):
     template_name = 'liga2_seasons/liga2_index.html'
     context_object_name = 'list_of_scorers'
     paginate_by = 25
+
+    # pl_list = StatisticPlayer.objects.filter(
+    #     season__name__range=('1970-71', '1979-80'), age='43').values(
+    #         'age').annotate(
+    #             players_count=Count('name'),
+    #             game_all=Sum('game'),
+    #             games_avg=Avg('game'))
+    # summury_list = pl_list.aggregate(avg_game=Avg('games_avg'))
+    # for pl in pl_list:
+    #     print(pl)
+    # print(summury_list)
 
     def get_queryset(self):
         rule = self.kwargs['stat_rule'].split('_')
