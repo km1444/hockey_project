@@ -4,7 +4,7 @@ from .models import (
     DescriptionTable, GoalkeeperStatistic, PersonPlayoff, PersonRound2, Player,
     Playoff, Position, Season, Statistic, Team, TeamForTable, TeamForTable2,
     TeamForTable2Round, TeamForTable2Round2, TeamForTable2Round3,
-    TeamForTable3, TeamForTable4,
+    TeamForTable3, TeamForTable4, ImageTeam
 )
 
 
@@ -95,6 +95,12 @@ class PersonRound2Admin(admin.ModelAdmin):
     pass
 
 
+class ImageTeamAdmin(admin.ModelAdmin):
+    list_display = ('description_image', 'season', 'team')
+    search_fields = ('team',)
+    list_filter = ('team',)
+
+
 admin.site.register(Team)
 admin.site.register(Player, PlayerAdmin)
 admin.site.register(Statistic, StatisticAdmin)
@@ -112,3 +118,4 @@ admin.site.register(PersonPlayoff, PersonPlayoffAdmin)
 admin.site.register(GoalkeeperStatistic, GoalkeeperStatisticAdmin)
 admin.site.register(DescriptionTable, DescriptionTableAdmin)
 admin.site.register(PersonRound2, PersonRound2Admin)
+admin.site.register(ImageTeam, ImageTeamAdmin)

@@ -43,8 +43,11 @@ def liga2_season(request, season):
     additional_tournament_without_points_second = (
         AdditionalTournamentWithoutPointsSecond.objects.filter(
             season__name=season).select_related('team_name').order_by('rank'))
+    details_season = False
     try:
         description_table = DescriptionTable.objects.get(season__name=season)
+        if len(description_table.description_season.split()) > 40:
+            details_season = True
     except DescriptionTable.DoesNotExist:
         description_table = ''
     context = {
@@ -62,6 +65,7 @@ def liga2_season(request, season):
         'additional_tournament_without_points_second':
         additional_tournament_without_points_second,
         'description_table': description_table,
+        'details_season': details_season,
     }
     return render(request, template, context)
 

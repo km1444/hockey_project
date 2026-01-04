@@ -21,9 +21,10 @@ from .forms import (
     EditGoalkeeperStatisticForm, EditStatisticForm,
 )
 from .models import (
-    DescriptionTable, GoalkeeperStatistic, PersonPlayoff, Player, Playoff,
-    Season, Statistic, Team, TeamForTable, TeamForTable2, TeamForTable2Round,
-    TeamForTable2Round2, TeamForTable2Round3, TeamForTable3, TeamForTable4,
+    DescriptionTable, GoalkeeperStatistic, ImageTeam, PersonPlayoff, Player,
+    Playoff, Season, Statistic, Team, TeamForTable, TeamForTable2,
+    TeamForTable2Round, TeamForTable2Round2, TeamForTable2Round3,
+    TeamForTable3, TeamForTable4,
 )
 from .secondary import (
     all_team_league_one, prev_next_season, top_goal, top_point,
@@ -56,6 +57,8 @@ def index(request):
 
 def team_players_in_season(request, team, season):
     team = get_object_or_404(Team, title=team)
+    image_team = ImageTeam.objects.filter(
+        team__title=team, season__name=season)
     season = get_object_or_404(Season, name=season)
     team_statistic = Statistic.objects.filter(
         team__title=team, season__name=season
@@ -117,6 +120,7 @@ def team_players_in_season(request, team, season):
         'page_obj': team_statistic,
         'goalkeepers': goalkeepers,
         'coaches': coaches,
+        'image_team': image_team
     }
     return render(request, template, context)
 
@@ -179,8 +183,9 @@ def player_detail(request, id):
             'amount_teams': amount_teams,
             'exist_statistic_of_major_league': True,
         }
-    elif goalkeeper_seasons or GoalkeeperStatisticLiga2.objects.filter(
-            name=id).exists():
+    # elif goalkeeper_seasons or GoalkeeperStatisticLiga2.objects.filter(
+    #         name=id).exists():
+    elif goalkeeper_seasons:
         game = sum(i['game'] for i in goalkeeper_seasons)
         goal_against = sum(i['goal_against'] for i in goalkeeper_seasons)
         penalty = sum(i['penalty'] for i in goalkeeper_seasons)
@@ -205,7 +210,7 @@ def player_detail(request, id):
             'group_teams': group_teams,
             'amount_teams': amount_teams,
             'goalkeeper': True,
-            'exist_statistic_goalkeeper_of_league1': True
+            # 'exist_statistic_goalkeeper_of_league1': True
         }
     else:
         context = {
@@ -218,6 +223,10 @@ def player_detail(request, id):
             context['position'] = (
                 StatisticPlayer.objects.filter(name=id).values(
                     'position__name')[0]['position__name'])
+    if GoalkeeperStatisticLiga2.objects.filter(name=id).exists():
+        context['position'] = 'Вратарь'
+        context['exist_statistic_goalkeeper_of_league1'] = True
+        template = 'posts/profile_golie.html'
     if CoachStatistic.objects.filter(coach_name=id).exists():
         context['exist_coach_stat'] = True
     return render(request, template, context)
@@ -614,9 +623,9 @@ def history_team(request, team):
             team_view.count() + team_view_2.count()
         ) + (team_view_3.count() + team_view_4.count())
     )
-    if count_season == 1:
+    if count_season in [1, 21, 31, 41]:
         end_word = ''
-    elif count_season in [2, 3, 4]:
+    elif count_season in [2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44]:
         end_word = 'а'
     else:
         end_word = 'ов'

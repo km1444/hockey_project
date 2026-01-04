@@ -18,9 +18,7 @@
     </div>
     <div>
       <h2>{{ player.name }}</h2>
-        {% if goalkeeper %}
-          <h5>Position : {{ position }}</h5>
-        {% endif %}
+      <h5>Position : {{ position }}</h5>
       <h5>Born : {{ player.year_of_birth }}</h5>
       <a href="{{ player.wikip }}">
         <img src="{% static 'img/wiki.png' %}" >

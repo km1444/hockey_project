@@ -498,6 +498,7 @@ class DescriptionTable(models.Model):
         'Второй доп турнир', blank=True, max_length=50)
     description_4tb = models.CharField(
         'Восток', blank=True, max_length=50)
+    description_season = models.TextField('Описание сезона', blank=True)
 
     def __str__(self):
         return f'{self.season}'

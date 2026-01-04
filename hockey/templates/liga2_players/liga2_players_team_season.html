@@ -57,10 +57,10 @@
 
   <div class="container col-sm-5 p-1 mb-1">
     {% if season != '1946-47' %}
-      <a class="btn btn-outline-secondary" href="{% url 'liga2_players:players_team_season' team previous_season %}" role="button"> Previous season </a>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url 'liga2_players:players_team_season' team previous_season %}" role="button"> Previous season </a>
     {% endif %}
     {% if season != '1990-91' %}
-      <a class="btn btn-outline-secondary" href="{% url 'liga2_players:players_team_season' team next_season %}" role="button"> Next season </a>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url 'liga2_players:players_team_season' team next_season %}" role="button"> Next season </a>
     {% endif %}
   </div>
   

@@ -16,7 +16,7 @@
 </div>
 
 <div class="container col-sm-5 p-1 mb-1">
-  <h2> {{ season }} Первая лига</h2>
+  <h3> {{ season }} Первая лига</h3>
   {% if season != '1946-47' %}
     <a class="btn btn-outline-secondary btn-sm" href="{% url 'liga2_seasons:liga2_season' previous_season %}" role="button"> Previous season </a>
   {% endif %}
@@ -25,9 +25,27 @@
   {% endif %}
 </div>
 
+<div class="container col-sm-5 p-1 mb-1">
+  {% if details_season %}
+    <button class="btn btn-link btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+      Подробности сезона
+    </button>
+  {% endif %}
+</div>
+<div class="collapse" id="collapseExample">
+  <div class="container col-sm-5 p-1 mb-1">
+      {{ description_table.description_season | linebreaksbr }}
+  </div>
+</div>
+<div class="collapse show" id="collapseExample">
+  <div class="container col-sm-5 p-1 mb-1">
+      {{ description_table.description_season | linebreaksbr | truncatewords:40  }}
+  </div>
+</div>
+
 <!-- Переходный турнир -->
 {% if teams_transition %}
-<div class="container col-sm-5 py-2 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
       <tr>
@@ -89,7 +107,7 @@
 {% endif %} 
 
 {% if teams_transition_without_points %}
-<div class="container col-sm-5 py-2 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
       <tr>
@@ -129,7 +147,7 @@
 
 <!-- Дополнительный турнир -->
 {% if additional_tournament %}
-<div class="container col-sm-5 py-2 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
       <tr>
@@ -192,7 +210,7 @@
 
 <!-- Второй дополнительный турнир -->
 {% if additional_tournament_second %}
-<div class="container col-sm-5 py-2 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
       <tr>
@@ -237,7 +255,7 @@
 
 <!-- Доп турнир без учета ранее набранных очков -->
 {% if additional_tournament_without_points %}
-<div class="container col-sm-5 py-2 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
       <tr>
@@ -277,7 +295,7 @@
 
 <!-- Второй доп турнир без учета ранее набранных очков -->
 {% if additional_tournament_without_points_second %}
-<div class="container col-sm-5 py-2 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
       <tr>
@@ -316,7 +334,7 @@
 {% endif %} 
 
 <!-- Основной турнир или Западная зона -->
-<div class="container col-sm-5 py-2 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
       <tr>
@@ -378,7 +396,7 @@
 
 <!-- Восточная зона -->
 {% if teams_east %}
-<div class="container col-sm-5 py-2 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm">
     <thead>
       <tr>

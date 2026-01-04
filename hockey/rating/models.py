@@ -792,3 +792,33 @@ class DescriptionTable(models.Model):
         'Название таблицы 3 гр 1 р', blank=True, max_length=50)
     description_4gr_1round = models.CharField(
         'Название таблицы 4 гр 1 р', blank=True, max_length=50)
+
+
+class ImageTeam(models.Model):
+    description_image = models.CharField(
+        "название фотографии", blank=True, max_length=50)
+    season = models.ForeignKey(
+        Season,
+        verbose_name='Сезон',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='image_team'
+    )
+    team = models.ForeignKey(
+        Team,
+        verbose_name="Команда",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='image_team'
+    )
+    image_team = models.ImageField(
+        'фото команды',
+        upload_to='image_team/',
+        blank=True
+    )
+
+    class Meta:
+        verbose_name = "Фотография команды"
+        verbose_name_plural = "Фотографии команды"
