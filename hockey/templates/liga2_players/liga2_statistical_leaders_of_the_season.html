@@ -8,12 +8,12 @@
       {{ season }}
     </a>
   </h3>
-  <h3> {{ title_table }} </h3>
+  <h4> {{ title_table }} </h4>
     {% if season != '1946-47' %}
-      <a class="btn btn-outline-secondary" href="{% url link previous_season %}" role="button"> Previous season </a>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url link previous_season %}" role="button"> Previous season </a>
     {% endif %}
     {% if season != '1990-91' %}
-      <a class="btn btn-outline-secondary" href="{% url link next_season %}" role="button"> Next season </a>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url link next_season %}" role="button"> Next season </a>
     {% endif %}
 </div>
 <div class="container col-sm-5 p-1 my-1 table-responsive">

@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container col-sm-7 py-2">
+<div class="container col-sm-5 py-2">
   <h3>
     Cезон: 
     <a href="{% url 'rating:create_table' season %}">
       {{ season }}
     </a>
   </h3>
-  <h3> Best of {{ stat_rule }}s </h3>
+  <h4> {{ stat_rule }} </h4>
     {% if season != '1946-47' %}
-      <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' previous_season stat_rule %}" role="button"> Previous season </a>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url 'rating:best_of_season' previous_season stat_rule %}" role="button"> Previous season </a>
     {% endif %}
     {% if season != '1990-91' %}
-      <a class="btn btn-outline-secondary" href="{% url 'rating:best_of_season' next_season stat_rule %}" role="button"> Next season </a>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url 'rating:best_of_season' next_season stat_rule %}" role="button"> Next season </a>
     {% endif %}
 </div>
-<div class="container col-sm-7 p-1 my-1 table-responsive">
+<div class="container col-sm-5 p-1 my-1 table-responsive">
   <table class="table table-striped table-bordered table-hover table-sm tcont countLines">
       <thead>
       <tr>

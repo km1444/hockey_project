@@ -26,8 +26,8 @@ class PlayerStatisticsByCategory(ListView):
     context_object_name = 'list_of_scorers'
     paginate_by = 25
 
-    # pl_list = StatisticPlayer.objects.filter(
-    #     season__name__range=('1970-71', '1979-80'), age='43').values(
+    # pl_list = GoalkeeperStatisticLiga2.objects.filter(
+    #     season__name__range=('1970-71', '1979-80'), age='41').values(
     #         'age').annotate(
     #             players_count=Count('name'),
     #             game_all=Sum('game'),
@@ -175,7 +175,8 @@ class LeadersGoalsSeason(PrevNextSeasonMixin, SeasonStatisticMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title_table'] = 'Goals leaders'
+        # context['title_table'] = 'Goals leaders'
+        context['title_table'] = 'Снайперы'
         context['column_heading'] = 'G'
         context['link'] = 'liga2_players:leaders_goals_season'
         return self.get_mixin_context(context)
@@ -195,7 +196,8 @@ class LeadersAssistsSeason(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title_table'] = 'Assists leaders'
+        # context['title_table'] = 'Assists leaders'
+        context['title_table'] = 'Ассистенты'
         context['column_heading'] = 'A'
         context['link'] = 'liga2_players:leaders_assists_season'
         return self.get_mixin_context(context)
@@ -214,7 +216,8 @@ class LeadersPointsSeason(PrevNextSeasonMixin, SeasonStatisticMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title_table'] = 'Points leaders'
+        # context['title_table'] = 'Points leaders'
+        context['title_table'] = 'Бомбардиры'
         context['column_heading'] = 'PTS'
         context['link'] = 'liga2_players:leaders_points_season'
         return self.get_mixin_context(context)
@@ -234,7 +237,8 @@ class LeadersPenaltysSeason(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title_table'] = 'Penalty leaders'
+        # context['title_table'] = 'Penalty leaders'
+        context['title_table'] = 'Штраф'
         context['column_heading'] = 'PIM'
         context['link'] = 'liga2_players:leaders_penaltys_season'
         return self.get_mixin_context(context)

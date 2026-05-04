@@ -59,6 +59,7 @@ def team_players_in_season(request, team, season):
     team = get_object_or_404(Team, title=team)
     image_team = ImageTeam.objects.filter(
         team__title=team, season__name=season)
+    # print(image_team)
     season = get_object_or_404(Season, name=season)
     team_statistic = Statistic.objects.filter(
         team__title=team, season__name=season
@@ -243,12 +244,20 @@ def best_of_season(request, season, stat_rule):
                 penalty=Sum('penalty')).order_by(
                     f'-{stat_rule}', '-goal', 'game')[:20]
     template = 'posts/best_of_season.html'
+    if stat_rule == 'goal':
+        stat_rule_context = 'Снайперы'
+    elif stat_rule == 'assist':
+        stat_rule_context = 'Ассистенты'
+    elif stat_rule == 'point':
+        stat_rule_context = 'Бомбардиры'
+    elif stat_rule == 'penalty':
+        stat_rule_context = 'Штраф'
     context = {
         'season': season,
         'previous_season': prev_next_season(season)[1],
         'next_season': prev_next_season(season)[0],
         'page_obj': player_scores,
-        'stat_rule': stat_rule
+        'stat_rule': stat_rule_context
     }
     return render(request, template, context)
 

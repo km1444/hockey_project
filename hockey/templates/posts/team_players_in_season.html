@@ -71,7 +71,31 @@
     {% endif %}
   </div>
 
-<div class="container col-sm-5 p-1 mb-1">
+<div class="row">
+  <!-- Миниатюры -->
+  {% comment %} <div class="col-md-4"> {% endcomment %}
+  <div class="container col-sm-5 p-1 mb-1">
+      <img src="{{ image_team.0.image_team.url }}" class="img-thumbnail" data-bs-toggle="modal" data-bs-target="#imageModal1">
+  </div>
+  <!-- Увеличить изображение в модальном окне -->
+  <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModal1Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imageModal1Label">{{ product.name }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть">
+                
+              </button>
+          </div>
+          <div class="modal-body">
+            <img src="{{ image_team.0.image_team.url }}" class="img-fluid" alt="Изображение 1">
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} <div class="container col-sm-5 p-1 mb-1">
   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -80,23 +104,24 @@
         {% endthumbnail %}
       </div>
       <div class="carousel-item">
-        <img src="..." class="d-block w-100" alt="...">
+        {% thumbnail image_team.1.image_team "600x400" as im %}
+          <img src="{{ im.url }}" class="d-block w-100" alt="...">
+        {% endthumbnail %}
       </div>
       <div class="carousel-item">
         <img src="..." class="d-block w-100" alt="...">
       </div>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
-    </a>
+    </button>
   </div>
-
-</div>
+</div> {% endcomment %}
   
   <div class="container col-sm-5 p-1 mb-1 table-responsive">
     <table class="table table-striped table-bordered table-hover table-sm tcont countLines">

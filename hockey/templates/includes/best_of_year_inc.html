@@ -10,28 +10,28 @@
     </td>
     <td>{{ post.game }}</td>
 
-    {% if stat_rule == 'goal' %}
+    {% if stat_rule == 'Снайперы' %}
         <td class="table-warning">{{ post.goal }}</td>
-    {% elif stat_rule != 'goal' %}
+    {% elif stat_rule != 'Снайперы' %}
         <td>{{ post.goal }}</td>
     {% endif %}
 
-    {% if stat_rule == 'assist' %}
+    {% if stat_rule == 'Ассистенты' %}
         <td class="table-warning">{{ post.assist }}</td>
-    {% elif stat_rule != 'assist' %}
+    {% elif stat_rule != 'Ассистенты' %}
         <td>{{ post.assist }}</td>
     {% endif %}
 
-    {% if stat_rule == 'point' %}
+    {% if stat_rule == 'Бомбардиры' %}
         <td class="table-warning">{{ post.point }}</td>
-    {% elif stat_rule != 'point' %}
+    {% elif stat_rule != 'Бомбардиры' %}
         <td>{{ post.point }}</td>
     {% endif %}
 
-    {% if stat_rule == 'penalty' %}
+    {% if stat_rule == 'Штраф' %}
         <td class="table-warning">{{ post.penalty }}</td>
-    {% elif stat_rule != 'penalty' %}
+    {% elif stat_rule != 'Штраф' %}
         <td>{{ post.penalty }}</td>
     {% endif %}
-
+    
 </tr>
