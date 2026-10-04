@@ -100,19 +100,27 @@ class PlayerStatisticsByCategory(ListView):
             context['table_description'] = (
                 'Лидеры по ' + f'{dict_rule[rule[0]]}'
                 + ' за карьеру в первой лиге')
+            context['title'] = (
+                'Лидеры по ' + f'{dict_rule[rule[0]]}'
+                + ' за карьеру в первой лиге')
         elif rule[1] == 'season':
             context['table_name'] = (
                 'Most ' + f'{rule[0].title()}''s' + ' Single Season League 1')
             context['table_description'] = (
                 'Лидеры по ' + f'{dict_rule[rule[0]]}'
                 + ' за сезон в первой лиге')
+            context['title'] = (
+                'Лидеры по ' + f'{dict_rule[rule[0]]}'
+                + ' за сезон в первой лиге')
         elif rule[1] == 'yearly':
             context['table_name'] = (
                 'Yearly Leaders for ' + f'{rule[0].title()}''s League 1')
             context['table_description'] = (
-                'Лучшие голеадоры по сезонам'
+                'Лучшие голеадоры по сезонам в первой лиге'
             )
-        context['title'] = 'Лучшие бомбардиры советского хоккея в первой лиге'
+            context['title'] = 'Лучшие голеадоры по сезонам в первой лиге'
+        # context['title'] = 'Лучшие бомбардиры советского
+        # хоккея в первой лиге'
         return context
 
 
@@ -179,6 +187,9 @@ class LeadersGoalsSeason(PrevNextSeasonMixin, SeasonStatisticMixin, ListView):
         context['title_table'] = 'Снайперы'
         context['column_heading'] = 'G'
         context['link'] = 'liga2_players:leaders_goals_season'
+        context['title'] = (
+            f"Лучшие снайперы сезона {self.kwargs['season']} в первой лиге"
+        )
         return self.get_mixin_context(context)
 
 
@@ -200,6 +211,8 @@ class LeadersAssistsSeason(
         context['title_table'] = 'Ассистенты'
         context['column_heading'] = 'A'
         context['link'] = 'liga2_players:leaders_assists_season'
+        context['title'] = (
+            f"Лучшие ассистенты сезона {self.kwargs['season']} в первой лиге")
         return self.get_mixin_context(context)
 
 
@@ -220,6 +233,8 @@ class LeadersPointsSeason(PrevNextSeasonMixin, SeasonStatisticMixin, ListView):
         context['title_table'] = 'Бомбардиры'
         context['column_heading'] = 'PTS'
         context['link'] = 'liga2_players:leaders_points_season'
+        context['title'] = (
+            f"Лучшие бомбардиры сезона {self.kwargs['season']} в первой лиге")
         return self.get_mixin_context(context)
 
 
@@ -241,6 +256,9 @@ class LeadersPenaltysSeason(
         context['title_table'] = 'Штраф'
         context['column_heading'] = 'PIM'
         context['link'] = 'liga2_players:leaders_penaltys_season'
+        context['title'] = (
+            f"Лидеры по штрафным минутам сезона {self.kwargs['season']} "
+            f"в первой лиге")
         return self.get_mixin_context(context)
 
 

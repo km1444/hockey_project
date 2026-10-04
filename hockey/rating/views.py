@@ -2,6 +2,7 @@ import operator
 
 from functools import reduce
 from itertools import chain
+from typing import Any
 
 from coach_app.models import CoachStatistic
 from django.contrib import messages  # type: ignore
@@ -246,18 +247,23 @@ def best_of_season(request, season, stat_rule):
     template = 'posts/best_of_season.html'
     if stat_rule == 'goal':
         stat_rule_context = 'Снайперы'
+        title_description = 'Лидеры по голам'
     elif stat_rule == 'assist':
         stat_rule_context = 'Ассистенты'
+        title_description = 'Лидеры по передачам'
     elif stat_rule == 'point':
         stat_rule_context = 'Бомбардиры'
+        title_description = 'Лидеры по очкам'
     elif stat_rule == 'penalty':
         stat_rule_context = 'Штраф'
+        title_description = 'Лидеры по штрафным минутам'
     context = {
         'season': season,
         'previous_season': prev_next_season(season)[1],
         'next_season': prev_next_season(season)[0],
         'page_obj': player_scores,
-        'stat_rule': stat_rule_context
+        'stat_rule': stat_rule_context,
+        'title': f"{title_description} сезона {season} в высшей лиге"
     }
     return render(request, template, context)
 
@@ -666,6 +672,11 @@ class SearchResultsView(ListView):
             Q(name__icontains=query.title()) | Q(
                 year_of_birth__icontains=query)
         ).order_by('name')
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["title"] = f"Поиск по {self.request.GET.get('q')}"
+        return context
 
 
 @login_required
